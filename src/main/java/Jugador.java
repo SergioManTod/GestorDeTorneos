@@ -1,5 +1,6 @@
+import java.util.Date;
 
-public class Jugador {
+public class Jugador extends Persona {
 	private boolean esJugador=true;
 	private int puntosJugador=0;
 	private int amarillaJugador=0;
@@ -8,22 +9,31 @@ public class Jugador {
 	
 	//------constructores
 	
-	public Jugador(boolean esJugador, int puntosJugador, int amarillaJugador, int rojasJugador) {
+	public Jugador() {
 		super();
+		// TODO Esbozo de constructor generado automáticamente
+	}
+
+	public Jugador(String nombre, String apellidoUno, String apellidoDos, Date fechaNacimiento, String dni,
+			boolean esMayor) {
+		super(nombre, apellidoUno, apellidoDos, fechaNacimiento, dni, esMayor);
+		// TODO Esbozo de constructor generado automáticamente
+	}
+
+
+	public Jugador(String nombre, String apellidoUno, String apellidoDos, Date fechaNacimiento, String dni,
+			boolean esMayor, boolean esJugador, int puntosJugador, int amarillaJugador, int rojasJugador) {
+		super(nombre, apellidoUno, apellidoDos, fechaNacimiento, dni, esMayor);
 		this.esJugador = esJugador;
 		this.puntosJugador = puntosJugador;
 		this.amarillaJugador = amarillaJugador;
 		this.rojasJugador = rojasJugador;
 	}
 
-
-	public Jugador() {
-		super();
-		// TODO Esbozo de constructor generado automáticamente
-	}
-
 	//---- getters y setters
 	
+	
+
 	public boolean isEsJugador() {
 		return esJugador;
 	}
@@ -62,4 +72,12 @@ public class Jugador {
 	public void setRojasJugador(int rojasJugador) {
 		this.rojasJugador = rojasJugador;
 	}
+
+	@Override
+	public String toString() {
+		return "Jugador [esJugador=" + esJugador + ", puntosJugador=" + puntosJugador + ", amarillaJugador="
+				+ amarillaJugador + ", rojasJugador=" + rojasJugador + "]";
+	}
+	
+	
 }
