@@ -9,11 +9,17 @@ public class Jugador extends Persona {
 	
 	//------constructores
 	
-
 	public Jugador() {
 		super();
 		// TODO Esbozo de constructor generado automáticamente
 	}
+
+	public Jugador(String nombre, String apellidoUno, String apellidoDos, Date fechaNacimiento, String dni,
+			boolean esMayor) {
+		super(nombre, apellidoUno, apellidoDos, fechaNacimiento, dni, esMayor);
+		// TODO Esbozo de constructor generado automáticamente
+	}
+
 
 	public Jugador(String nombre, String apellidoUno, String apellidoDos, Date fechaNacimiento, String dni,
 			boolean esMayor, boolean esJugador, int puntosJugador, int amarillaJugador, int rojasJugador) {
@@ -26,6 +32,8 @@ public class Jugador extends Persona {
 
 	//---- getters y setters
 	
+	
+
 	public boolean isEsJugador() {
 		return esJugador;
 	}
