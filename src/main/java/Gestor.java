@@ -46,7 +46,7 @@ public class Gestor extends JFrame {
 		setForeground(new Color(255, 255, 255));
 		setResizable(false);
 		setType(Type.POPUP);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Acer\\OneDrive - Educacyl\\Programacion\\eclipse\\GestorDeTorneos\\img\\icono_trofeo.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
 		setTitle("Aplicac\u00EDon Gestora de Torneos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
