@@ -1,5 +1,6 @@
 import java.util.Date;
 
+
 public class Jugador extends Persona {
 	private boolean esJugador=true;
 	private int puntosJugador=0;

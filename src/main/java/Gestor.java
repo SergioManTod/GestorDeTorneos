@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import java.awt.Window.Type;
 
+
 public class Gestor extends JFrame {
 
 	private static final long serialVersionUID = 1L;

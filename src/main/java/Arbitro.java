@@ -1,5 +1,6 @@
 import java.util.Date;
 
+
 public class Arbitro extends Persona{
 	private boolean esArbitro=true;
 	
