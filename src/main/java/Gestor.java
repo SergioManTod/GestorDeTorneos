@@ -1,21 +1,17 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.JMenuBar;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import javax.swing.border.TitledBorder;
+import javax.swing.JButton;
 import javax.swing.UIManager;
-import java.awt.Window.Type;
 
 
 public class Gestor extends JFrame {
@@ -47,38 +43,48 @@ public class Gestor extends JFrame {
 		setResizable(false);
 		setType(Type.POPUP);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-		setTitle("Aplicac\u00EDon Gestora de Torneos");
+		setTitle("Aplicac\u00EDon Gestora de Torneos  -  Menú principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(UIManager.getBorder("TitledBorder.border"));
 	
-		contentPane.setPreferredSize(new Dimension(400, 300));
+		contentPane.setPreferredSize(new Dimension(600, 400));
         contentPane.setBackground(new Color(152, 180, 216));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		
-		JLabel creaFromularioInscripcion = new JLabel("Crear nuevo formulario de inscripci\u00F3n:");
-		creaFromularioInscripcion.setForeground(new Color(255, 255, 255));
-		creaFromularioInscripcion.setHorizontalAlignment(SwingConstants.RIGHT);
-		creaFromularioInscripcion.setBounds(10, 25, 400, 25);
-		contentPane.add(creaFromularioInscripcion);
+		JLabel creaNuevoTorneo = new JLabel("Crear nuevo torneo:");
+		creaNuevoTorneo.setForeground(new Color(255, 255, 255));
+		creaNuevoTorneo.setHorizontalAlignment(SwingConstants.RIGHT);
+		creaNuevoTorneo.setBounds(10, 25, 400, 25);
+		contentPane.add(creaNuevoTorneo);
 		
-		JButton botonCrearFormulario = new JButton("CREAR");
-		botonCrearFormulario.setBounds(420, 25, 120, 25);
-		botonCrearFormulario.addMouseListener(new java.awt.event.MouseAdapter() {
+		JButton botonCreaTorneo = new JButton("CREAR");
+		botonCreaTorneo.setBounds(420, 25, 120, 25);
+		botonCreaTorneo.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	botonCrearFormulario.setBackground(Color.LIGHT_GRAY);
-		    	botonCrearFormulario.setForeground(Color.WHITE);
+		    	botonCreaTorneo.setBackground(Color.LIGHT_GRAY);
+		    	botonCreaTorneo.setForeground(Color.WHITE);
 		    }
 
 		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	botonCrearFormulario.setBackground(Color.WHITE);
-		    	botonCrearFormulario.setForeground(Color.BLACK);
+		    	botonCreaTorneo.setBackground(Color.WHITE);
+		    	botonCreaTorneo.setForeground(Color.BLACK);
 		    }
 		});
-		contentPane.add(botonCrearFormulario);
+		botonCreaTorneo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false); // Ocultar la clase Gestor
+                
+                CreaTorneo creaTorneo = new CreaTorneo();
+                creaTorneo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra toda la aplicación al cerrar esta ventana
+                creaTorneo.setVisible(true);
+            }
+        });
+		contentPane.add(botonCreaTorneo);
 		
 		JLabel listarSolicitudes = new JLabel("Listar Formularios de inscrpci\u00F3n recibidos:");
 		listarSolicitudes.setForeground(new Color(255, 255, 255));
@@ -101,26 +107,26 @@ public class Gestor extends JFrame {
 		});
 		contentPane.add(botonListarFormulariosRecibidos);
 		
-		JLabel crearNuevoTorneo = new JLabel("Crear nuevo torneo:");
-		crearNuevoTorneo.setForeground(new Color(255, 255, 255));
-		crearNuevoTorneo.setHorizontalAlignment(SwingConstants.RIGHT);
-		crearNuevoTorneo.setBounds(150, 125, 260, 25);
-		contentPane.add(crearNuevoTorneo);
+		JLabel iniciaTorneo = new JLabel("Inicia un torneo:");
+		iniciaTorneo.setForeground(new Color(255, 255, 255));
+		iniciaTorneo.setHorizontalAlignment(SwingConstants.RIGHT);
+		iniciaTorneo.setBounds(150, 125, 260, 25);
+		contentPane.add(iniciaTorneo);
 		
-		JButton botonCrearNuevoTorneo = new JButton("CREAR");
-		botonCrearNuevoTorneo.setBounds(420, 125, 120, 25);
-		botonCrearNuevoTorneo.addMouseListener(new java.awt.event.MouseAdapter() {
+		JButton botonIniciaTorneo = new JButton("INICIAR");
+		botonIniciaTorneo.setBounds(420, 125, 120, 25);
+		botonIniciaTorneo.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	botonCrearNuevoTorneo.setBackground(Color.LIGHT_GRAY);
-		    	botonCrearNuevoTorneo.setForeground(Color.WHITE);
+		    	botonIniciaTorneo.setBackground(Color.LIGHT_GRAY);
+		    	botonIniciaTorneo.setForeground(Color.WHITE);
 		    }
 
 		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	botonCrearNuevoTorneo.setBackground(Color.WHITE);
-		    	botonCrearNuevoTorneo.setForeground(Color.BLACK);
+		    	botonIniciaTorneo.setBackground(Color.WHITE);
+		    	botonIniciaTorneo.setForeground(Color.BLACK);
 		    }
 		});
-		contentPane.add(botonCrearNuevoTorneo);
+		contentPane.add(botonIniciaTorneo);
 		
 		JLabel modificarDatosDeEquipo = new JLabel("Modificar datos de un equipo:");
 		modificarDatosDeEquipo.setForeground(new Color(255, 255, 255));
@@ -183,8 +189,22 @@ public class Gestor extends JFrame {
 		    	botonVerTablaGoleadores.setForeground(Color.BLACK);
 		    }
 		});
-		contentPane.add(botonVerTablaGoleadores);
 		
+		
+		
+		contentPane.add(botonVerTablaGoleadores);
+		 // Crea un JLabel para mostrar la imagen
+        JLabel imagenFondo = new JLabel();
+        
+        // Carga la imagen desde un archivo (asegúrate de tener la imagen en el mismo directorio que tu código)
+        ImageIcon icono = new ImageIcon("img\\icono_trofeo.png");
+        
+        // Asigna el icono al JLabel
+        imagenFondo.setIcon(icono);
+        imagenFondo.setBounds(-250, 5, 512, 512);
+        
+        // Agrega el JLabel al JFrame
+        add(imagenFondo);
 		
 	}
 }
