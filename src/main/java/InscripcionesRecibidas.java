@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
-import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,27 +9,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JList;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import java.awt.Font;
-import javax.swing.AbstractListModel;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumnModel;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.DropMode;
-import javax.swing.ListSelectionModel;
 import javax.swing.JTable;
 
 public class InscripcionesRecibidas extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
-	private JTable table_1;
+
 
 	/**
 	 * Launch the application.
@@ -65,6 +53,7 @@ public class InscripcionesRecibidas extends JFrame {
         contentPane.setBackground(new Color(152, 180, 216));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 		
 		JButton botonRechazados = new JButton("INSC. RECHAZADAS");
 		botonRechazados.setFont(new Font("Tahoma", Font.BOLD, 9));
@@ -141,9 +130,6 @@ public class InscripcionesRecibidas extends JFrame {
 		        });
 		contentPane.add(botonMenuPrincipal);
 		
-		
-		
-		
 		String[] columnNames = {"Nº","EQUIPO", "ESTADO", "MOTIVOS"};
 		Object[][] data = {
 		    {1,"La marina social club", "valido", },
@@ -183,49 +169,17 @@ public class InscripcionesRecibidas extends JFrame {
 		    {35,"Cuatro locos", "rechazado", "No tiene arbitro asignado"},
 		    {36,"Los amigo de Maria", "rechazado", "No llega al minimo de jugadores"}
 		    };
-		table_1 = new JTable();
-		table_1.setRowSelectionAllowed(false);
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column", "New column"
-			}
-		));
-		table_1.getColumnModel().getColumn(0).setPreferredWidth(23);
-		table_1.getColumnModel().getColumn(1).setPreferredWidth(110);
-		table_1.getColumnModel().getColumn(2).setPreferredWidth(130);
-		table_1.getColumnModel().getColumn(3).setPreferredWidth(216);
-		table_1.setBounds(0, 0, 600, 300);
-		contentPane.add(table_1);
+		// Crear el modelo de la tabla con los datos y nombres de columna
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+
+        // Crear la JTable con el modelo
+        JTable table = new JTable(model);
+
+        // Crear un JScrollPane y agregar la tabla a él
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(0, 1, 585, 305); // Establecer la posición y tamaño del JScrollPane
+
+        // Agregar el JScrollPane al contentPane
+        contentPane.add(scrollPane);
 	}
 }
