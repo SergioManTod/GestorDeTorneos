@@ -3,6 +3,9 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -54,6 +57,7 @@ public class CreaTorneo extends JFrame {
         contentPane.setBackground(new Color(152, 180, 216));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 		
 		JLabel instrucciones = new JLabel("RELLENA LOS CAMPOS TAL COMO SE PIDE \r\nPARA QUE EL FORMULARIO DE INSCRIPCI\u00D3N SE CONSTRUYA CON EXITO");
 		instrucciones.setToolTipText("");
@@ -85,7 +89,7 @@ public class CreaTorneo extends JFrame {
 		contentPane.add(etiquetaCantidadDeEquipos);
 		
 		JSpinner cantidadDeEquipos = new JSpinner();
-		cantidadDeEquipos.setModel(new SpinnerNumberModel(3, null, 10, 1));
+		cantidadDeEquipos.setModel(new SpinnerNumberModel(3, 3, 10, 1));
 		cantidadDeEquipos.setBounds(306, 129, 40, 25);
 		contentPane.add(cantidadDeEquipos);
 		
@@ -96,7 +100,7 @@ public class CreaTorneo extends JFrame {
 		contentPane.add(etiquetaCantidadDeJugadores);
 		
 		JSpinner cantidadDeJugadores = new JSpinner();
-		cantidadDeJugadores.setModel(new SpinnerNumberModel(0, null, 15, 1));
+		cantidadDeJugadores.setModel(new SpinnerNumberModel(0, 0, 20, 1));
 		cantidadDeJugadores.setBounds(308, 188, 40, 25);
 		contentPane.add(cantidadDeJugadores);
 		
@@ -114,7 +118,32 @@ public class CreaTorneo extends JFrame {
 		    }
 		});
 		contentPane.add(botonCrearTorneo);
-		setLocationRelativeTo(null);
+		
+		JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
+		botonMenuPrincipal.setBounds(225, 300, 150, 25);
+		botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	botonMenuPrincipal.setBackground(Color.LIGHT_GRAY);
+		    	botonMenuPrincipal.setForeground(Color.WHITE);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	botonMenuPrincipal.setBackground(Color.WHITE);
+		    	botonMenuPrincipal.setForeground(Color.BLACK);
+		    }
+		});
+		//aqui linkeamos a la otra clase
+		botonMenuPrincipal.addActionListener(new ActionListener() {
+		            @Override
+		            public void actionPerformed(ActionEvent e) {
+		                setVisible(false); // Ocultar la clase Gestor
+		                
+		                Gestor gestor = new Gestor();
+		                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra toda la aplicación al cerrar esta ventana
+		                gestor.setVisible(true);
+		            }
+		        });
+		contentPane.add(botonMenuPrincipal);
 		 // Crea un JLabel para mostrar la imagen
         JLabel imagenFondo = new JLabel();
         
