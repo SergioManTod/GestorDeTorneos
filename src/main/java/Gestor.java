@@ -74,6 +74,7 @@ public class Gestor extends JFrame {
 		    	botonCreaTorneo.setForeground(Color.BLACK);
 		    }
 		});
+		//aqui linkeamos a la otra clase
 		botonCreaTorneo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,6 +106,17 @@ public class Gestor extends JFrame {
 		    	botonListarFormulariosRecibidos.setForeground(Color.BLACK);
 		    }
 		});
+		//aqui linkeamos a la otra clase
+		botonListarFormulariosRecibidos.addActionListener(new ActionListener() {
+		            @Override
+		            public void actionPerformed(ActionEvent e) {
+		                setVisible(false); // Ocultar la clase Gestor
+		                
+		                InscripcionesRecibidas inscripcionesRecibidas = new InscripcionesRecibidas();
+		                inscripcionesRecibidas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra toda la aplicación al cerrar esta ventana
+		                inscripcionesRecibidas.setVisible(true);
+		            }
+		        });
 		contentPane.add(botonListarFormulariosRecibidos);
 		
 		JLabel iniciaTorneo = new JLabel("Inicia un torneo:");
