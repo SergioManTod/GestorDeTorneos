@@ -138,6 +138,17 @@ public class Gestor extends JFrame {
 		    	botonIniciaTorneo.setForeground(Color.BLACK);
 		    }
 		});
+		//aqui linkeamos a la otra clase
+		botonIniciaTorneo.addActionListener(new ActionListener() {
+				            @Override
+				            public void actionPerformed(ActionEvent e) {
+				                setVisible(false); // Ocultar la clase Gestor
+				                
+				                IniciaTorneo iniciaTorneo = new IniciaTorneo();
+				                iniciaTorneo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra toda la aplicación al cerrar esta ventana
+				                iniciaTorneo.setVisible(true);
+				            }
+				        });
 		contentPane.add(botonIniciaTorneo);
 		
 		JLabel modificarDatosDeEquipo = new JLabel("Modificar datos de un equipo:");
