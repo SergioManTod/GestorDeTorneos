@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JTable;
@@ -132,37 +133,37 @@ public class InscripcionesRecibidas extends JFrame {
 		
 		String[] columnNames = {"Nº","EQUIPO", "ESTADO", "MOTIVOS"};
 		Object[][] data = {
-		    {1,"La marina social club", "valido", },
-		    {2,"club amigos de la cerveza", "valido", },
+		    {1,"La marina social club", "valido"},
+		    {2,"club amigos de la cerveza", "valido"},
 		    {3,"Pelota vieja", "rechazado", "Menores de edad alineados."},
 		    {4,"La viga de trapo", "rechazado", "No tiene arbitro asignado"},
 		    {5,"Cuatro locos", "rechazado", "No tiene arbitro asignado"},
 		    {6,"Los amigo de Maria", "rechazado", "No llega al minimo de jugadores"},
-		    {7,"La marina social club", "valido", },
+		    {7,"La marina social club", "valido"},
 		    {8,"club amigos de la cerveza", "valido", },
 		    {9,"Pelota vieja", "rechazado", "Menores de edad alineados."},
 		    {10,"La viga de trapo", "rechazado", "No tiene arbitro asignado"},
 		    {11,"Cuatro locos", "rechazado", "No tiene arbitro asignado"},
 		    {12,"Los amigo de Maria", "rechazado", "No llega al minimo de jugadores"},
-		    {13,"La marina social club", "valido", },
+		    {13,"La marina social club", "valido"},
 		    {14,"club amigos de la cerveza", "valido", },
 		    {15,"Pelota vieja", "rechazado", "Menores de edad alineados."},
 		    {16,"La viga de trapo", "rechazado", "No tiene arbitro asignado"},
 		    {17,"Cuatro locos", "rechazado", "No tiene arbitro asignado"},
 		    {18,"Los amigo de Maria", "rechazado", "No llega al minimo de jugadores"},
-		    {19,"La marina social club", "valido", },
+		    {19,"La marina social club", "valido"},
 		    {20,"club amigos de la cerveza", "valido", },
 		    {21,"Pelota vieja", "rechazado", "Menores de edad alineados."},
 		    {22,"La viga de trapo", "rechazado", "No tiene arbitro asignado"},
 		    {23,"Cuatro locos", "rechazado", "No tiene arbitro asignado"},
 		    {24,"Los amigo de Maria", "rechazado", "No llega al minimo de jugadores"},
-		    {25,"La marina social club", "valido", },
+		    {25,"La marina social club", "valido"},
 		    {26,"club amigos de la cerveza", "valido", },
 		    {27,"Pelota vieja", "rechazado", "Menores de edad alineados."},
 		    {28,"La viga de trapo", "rechazado", "No tiene arbitro asignado"},
 		    {29,"Cuatro locos", "rechazado", "No tiene arbitro asignado"},
 		    {30,"Los amigo de Maria", "rechazado", "No llega al minimo de jugadores"},
-		    {31,"La marina social club", "valido", },
+		    {31,"La marina social club", "valido"},
 		    {32,"club amigos de la cerveza", "valido", },
 		    {33,"Pelota vieja", "rechazado", "Menores de edad alineados."},
 		    {34,"La viga de trapo", "rechazado", "No tiene arbitro asignado"},
@@ -174,7 +175,26 @@ public class InscripcionesRecibidas extends JFrame {
 
         // Crear la JTable con el modelo
         JTable table = new JTable(model);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // Desactivar el ajuste automático del ancho de las columnas
 
+        // Ajustar el ancho de cada columna según su contenido
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            TableColumn column = table.getColumnModel().getColumn(i);
+            int width = (int) table.getTableHeader().getDefaultRenderer()
+                    .getTableCellRendererComponent(table, column.getHeaderValue(), false, false, -1, i)
+                    .getPreferredSize().getWidth();
+            for (int j = 0; j < table.getRowCount(); j++) {
+                int preferedWidth = (int) table.getCellRenderer(j, i)
+                        .getTableCellRendererComponent(table, table.getValueAt(j, i), false, false, j, i)
+                        .getPreferredSize().getWidth();
+                width = Math.max(width, preferedWidth);
+            }
+            column.setPreferredWidth(width + 10); // Añadir un pequeño espacio adicional
+        }
+     // Ajustar el ancho de la última columna para que ocupe el espacio restante
+        TableColumn lastColumn = table.getColumnModel().getColumn(table.getColumnCount() - 1);
+        lastColumn.setPreferredWidth(315); // Un valor grande para que ocupe todo el espacio restante
+        // Crear un JScrollPane y agregar la tabla a él
         // Crear un JScrollPane y agregar la tabla a él
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(0, 1, 585, 305); // Establecer la posición y tamaño del JScrollPane

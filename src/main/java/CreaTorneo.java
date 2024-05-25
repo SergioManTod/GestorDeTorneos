@@ -100,7 +100,7 @@ public class CreaTorneo extends JFrame {
 		contentPane.add(etiquetaCantidadDeJugadores);
 		
 		JSpinner cantidadDeJugadores = new JSpinner();
-		cantidadDeJugadores.setModel(new SpinnerNumberModel(0, 0, 20, 1));
+		cantidadDeJugadores.setModel(new SpinnerNumberModel(10, 10, 20, 1));
 		cantidadDeJugadores.setBounds(308, 188, 40, 25);
 		contentPane.add(cantidadDeJugadores);
 		
