@@ -109,7 +109,7 @@ public class IniciaTorneo extends JFrame {
             }
             columna.setPreferredWidth(width + 10);
         }
-        // AJUSTA EL ANCHO DE LA ULTIMA COLUMNA PARA QUE OCUPE TODO
+        // AJUSTA EL ANCHO DE LA ULTIMA COLUMNA PARA QUE OCUPE 
         TableColumn ultimaColumna = tablaEquipos.getColumnModel().getColumn(tablaEquipos.getColumnCount() - 1);
         ultimaColumna.setPreferredWidth(260); 
         JScrollPane scrollPane = new JScrollPane(tablaEquipos);
@@ -117,45 +117,50 @@ public class IniciaTorneo extends JFrame {
         scrollPane.setBounds(300, 1, 285, 360); 
         contentPane.add(scrollPane);
         
+        // AQUI SE SELECCIONA AL EQUIPO
+        JLabel tagSelTorneo = new JLabel("INGRESA EL N\u00BA DEL TORNEO SELECCIONADO");
+        tagSelTorneo.setBackground(new Color(240, 240, 240));
+        tagSelTorneo.setHorizontalAlignment(SwingConstants.LEFT);
+        tagSelTorneo.setForeground(new Color(255, 255, 255));
+        tagSelTorneo.setFont(new Font("Tahoma", Font.BOLD, 10));
+        tagSelTorneo.setBounds(10, 15, 240, 25);
+        contentPane.add(tagSelTorneo);
         
-        JLabel etiquetaSelTorneo = new JLabel("INGRESA EL N\u00BA DEL TORNEO SELECCIONADO");
-        etiquetaSelTorneo.setBackground(new Color(240, 240, 240));
-        etiquetaSelTorneo.setHorizontalAlignment(SwingConstants.LEFT);
-        etiquetaSelTorneo.setForeground(new Color(255, 255, 255));
-        etiquetaSelTorneo.setFont(new Font("Tahoma", Font.BOLD, 10));
-        etiquetaSelTorneo.setBounds(10, 15, 240, 25);
-        contentPane.add(etiquetaSelTorneo);
+        //EN ESTE SPINNER SELECCIONAMOS EL NUMERO, EN REFERENCIA A LA TABLA
+        JSpinner JspinnerSelTorneo = new JSpinner();
+        JspinnerSelTorneo.setModel(new SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        JspinnerSelTorneo.setBounds(249, 15, 40, 25);
+        contentPane.add(JspinnerSelTorneo);
         
-        JSpinner spinnerSelTorneo = new JSpinner();
-        spinnerSelTorneo.setModel(new SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
-        spinnerSelTorneo.setBounds(249, 15, 40, 25);
-        contentPane.add(spinnerSelTorneo);
+        // AQUI SELECCIONAMOS LA FECHA DE INICIO DEL TORNEO
+        JLabel tagSelFecha = new JLabel("SELECCIONE FECHA DE INICIO:");
+        tagSelFecha.setHorizontalAlignment(SwingConstants.CENTER);
+        tagSelFecha.setForeground(Color.WHITE);
+        tagSelFecha.setFont(new Font("Tahoma", Font.BOLD, 10));
+        tagSelFecha.setBackground(UIManager.getColor("Button.background"));
+        tagSelFecha.setBounds(10, 45, 280, 25);
+        contentPane.add(tagSelFecha);
         
-        JLabel etiquetaSelFecha = new JLabel("SELECCIONE FECHA DE INICIO:");
-        etiquetaSelFecha.setHorizontalAlignment(SwingConstants.CENTER);
-        etiquetaSelFecha.setForeground(Color.WHITE);
-        etiquetaSelFecha.setFont(new Font("Tahoma", Font.BOLD, 10));
-        etiquetaSelFecha.setBackground(UIManager.getColor("Button.background"));
-        etiquetaSelFecha.setBounds(10, 45, 280, 25);
-        contentPane.add(etiquetaSelFecha);
-        
-        JCalendar calendar = new JCalendar();
-        calendar.setBounds(5, 80, 290, 197);
-        contentPane.add(calendar);
+        //ES EN ESTE CALENDARIO DONDE SE SELECCIONA LA FECHA
+        JCalendar calendario = new JCalendar();
+        calendario.setBounds(5, 80, 290, 197);
+        contentPane.add(calendario);
         
         
+        // ESTA ETIQUETA VA VACIA Y SOLO MUESTRA EL MENSAJE SI SE CREO CON EXITO O SI NO SE PUDO CREAR
+        JLabel tagStatusCal = new JLabel("calendario creado con exito");
+        tagStatusCal.setHorizontalAlignment(SwingConstants.LEFT);
+        tagStatusCal.setForeground(Color.WHITE);
+        tagStatusCal.setFont(new Font("Tahoma", Font.BOLD, 10));
+        tagStatusCal.setBackground(UIManager.getColor("Button.background"));
+        tagStatusCal.setBounds(10, 275, 280, 35);
+        contentPane.add(tagStatusCal);
         
-        JLabel lblCalendarioCreadoCon = new JLabel("calendario creado con exito");
-        lblCalendarioCreadoCon.setHorizontalAlignment(SwingConstants.LEFT);
-        lblCalendarioCreadoCon.setForeground(Color.WHITE);
-        lblCalendarioCreadoCon.setFont(new Font("Tahoma", Font.BOLD, 10));
-        lblCalendarioCreadoCon.setBackground(UIManager.getColor("Button.background"));
-        lblCalendarioCreadoCon.setBounds(10, 275, 280, 35);
-        contentPane.add(lblCalendarioCreadoCon);
-        
+        //BOTON PARA CREAR EL CALENDARIO
         JButton cotonCrearCalendario = new JButton("CREAR CALENDARIO");
         cotonCrearCalendario.setFont(new Font("Tahoma", Font.PLAIN, 9));
         cotonCrearCalendario.setBounds(10, 320, 135, 23);
+     // INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
         cotonCrearCalendario.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
 		    	cotonCrearCalendario.setBackground(Color.LIGHT_GRAY);
@@ -167,11 +172,14 @@ public class IniciaTorneo extends JFrame {
 		    	cotonCrearCalendario.setForeground(Color.BLACK);
 		    }
 		});
+     // FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
         contentPane.add(cotonCrearCalendario);
         
+     // BOTON PARA VOLVER AL MENU PRINCIPAL
         JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
         botonMenuPrincipal.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		botonMenuPrincipal.setBounds(155, 320, 135, 23);
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
 		    	botonMenuPrincipal.setBackground(Color.LIGHT_GRAY);
@@ -183,14 +191,15 @@ public class IniciaTorneo extends JFrame {
 		    	botonMenuPrincipal.setForeground(Color.BLACK);
 		    }
 		});
-		//aqui linkeamos a la otra clase
+		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		// CODIGO PARA LINKEAR AL LA CLASE GESTOR
 		botonMenuPrincipal.addActionListener(new ActionListener() {
 		            @Override
 		            public void actionPerformed(ActionEvent e) {
-		                setVisible(false); // Ocultar la clase Gestor
+		                setVisible(false); // OCULTA LA CLASE ACTUAL
 		                
 		                Gestor gestor = new Gestor();
-		                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra toda la aplicación al cerrar esta ventana
+		                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA EL JFRAME ACTUAL
 		                gestor.setVisible(true);
 		            }
 		        });

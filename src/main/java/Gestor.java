@@ -191,6 +191,7 @@ public class Gestor extends JFrame {
 						        });
 		contentPane.add(botonModEquipo);
 		
+		// SECCION PARA VER LAS CLASIFICACIONES DE LOS TORNEOS
 		JLabel verClasificacion = new JLabel("Ver clasificaci\u00F3n:");
 		verClasificacion.setForeground(new Color(255, 255, 255));
 		verClasificacion.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -199,6 +200,7 @@ public class Gestor extends JFrame {
 		
 		JButton botonVerClasificacion = new JButton("VER");
 		botonVerClasificacion.setBounds(420, 225, 120, 25);
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonVerClasificacion.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
 		    	botonVerClasificacion.setBackground(Color.LIGHT_GRAY);
@@ -210,8 +212,21 @@ public class Gestor extends JFrame {
 		    	botonVerClasificacion.setForeground(Color.BLACK);
 		    }
 		});
+		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		// AQUI LINKEAMOS A OTRA CLASE
+		botonVerClasificacion.addActionListener(new ActionListener() {
+								            @Override
+								            public void actionPerformed(ActionEvent e) {
+								                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
+								                
+								                Clasificaciones clasificaciones = new Clasificaciones();
+								                clasificaciones.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
+								                clasificaciones.setVisible(true);
+								            }
+								        });
 		contentPane.add(botonVerClasificacion);
 		
+		// SECCION PARA VER LOS GOLEADORES DE LOS TORNEOS
 		JLabel verTablaDeGoleadores = new JLabel("Ver tabla de goleadores:");
 		verTablaDeGoleadores.setForeground(new Color(255, 255, 255));
 		verTablaDeGoleadores.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -220,6 +235,7 @@ public class Gestor extends JFrame {
 		
 		JButton botonVerTablaGoleadores = new JButton("VER");
 		botonVerTablaGoleadores.setBounds(420, 275, 120, 25);
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonVerTablaGoleadores.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
 		    	botonVerTablaGoleadores.setBackground(Color.LIGHT_GRAY);
@@ -231,6 +247,18 @@ public class Gestor extends JFrame {
 		    	botonVerTablaGoleadores.setForeground(Color.BLACK);
 		    }
 		});
+		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+				// AQUI LINKEAMOS A OTRA CLASE
+		botonVerTablaGoleadores.addActionListener(new ActionListener() {
+										            @Override
+										            public void actionPerformed(ActionEvent e) {
+										                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
+										                
+										                Goleadores goleadores = new Goleadores();
+										                goleadores.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
+										                goleadores.setVisible(true);
+										            }
+										        });
 		contentPane.add(botonVerTablaGoleadores);
 		
 		// BOTON PARA CERRAR LA APLICACION
@@ -264,10 +292,8 @@ public class Gestor extends JFrame {
         ImageIcon copa = new ImageIcon("img\\icono_trofeo.png");
         // SE LE ASIGNA EL IMAGEICON A LA ETIQUETA
         tagImagenDeFondo.setIcon(copa);
-        tagImagenDeFondo.setBounds(-250, 5, 512, 512); // Agrega el JLabel al JFrame
+        tagImagenDeFondo.setBounds(-250, 5, 512, 512);
         getContentPane().add(tagImagenDeFondo);
-        
-       
-		
+    
 	}
 }
