@@ -1,38 +1,31 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JSpinner;
-import javax.swing.JButton;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SpinnerDateModel;
 import com.toedter.calendar.JCalendar;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
-import javax.swing.ScrollPaneConstants;
 
 public class IniciaTorneo extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -46,10 +39,10 @@ public class IniciaTorneo extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public IniciaTorneo() {
+		
+		// FORMATO DEL CONTENTPANE
 		setForeground(new Color(255, 255, 255));
 		setResizable(false);
 		setType(Type.POPUP);
@@ -64,66 +57,66 @@ public class IniciaTorneo extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
-		String[] columnNames = {"Nº","NOMBRE DEL TORNEO"};
-		Object[][] data = {
+		// FIN FORMATO DEL CONTENTPANE
+		
+		//ARRAY DE OBJETOS DE PRUEBA CON LOS NOMBRES DE LOS TORNEOS
+		String[] tituloColumna = {"Nº","NOMBRE DEL TORNEO"};
+		Object[][] equipos = {
 		    {1,"TORNEO lA MARINA"},
 		    {2,"TORNEO DEL ANIVERSARIO" },
 		    {3,"TORNEO VIEJAS GLORIAS"},
-		    {4,"TORNEO POLICIAS CONTRA BOMBEROS"},
+		    {4,"TORNEO POLICIAS CONTRA"},
 		    {5,"TORNEO DE INVIERNO"},
 		    {6,"TORNEO DE VERANO"},
 		    {1,"TORNEO lA MARINA"},
 		    {2,"TORNEO DEL ANIVERSARIO" },
 		    {3,"TORNEO VIEJAS GLORIAS"},
-		    {4,"TORNEO POLICIAS CONTRA BOMBEROS"},
+		    {4,"TORNEO POLICIAS CONTRA"},
 		    {5,"TORNEO DE INVIERNO"},
 		    {6,"TORNEO DE VERANO"},
 		    {1,"TORNEO lA MARINA"},
 		    {2,"TORNEO DEL ANIVERSARIO" },
 		    {3,"TORNEO VIEJAS GLORIAS"},
-		    {4,"TORNEO POLICIAS CONTRA BOMBEROS"},
+		    {4,"TORNEO POLICIAS CONTRA"},
 		    {5,"TORNEO DE INVIERNO"},
 		    {6,"TORNEO DE VERANO"},
 		    {1,"TORNEO lA MARINA"},
 		    {2,"TORNEO DEL ANIVERSARIO" },
 		    {3,"TORNEO VIEJAS GLORIAS"},
-		    {4,"TORNEO POLICIAS CONTRA BOMBEROS"},
+		    {4,"TORNEO POLICIAS CONTRA"},
 		    {5,"TORNEO DE INVIERNO"},
 		    {6,"TORNEO DE VERANO"},
 		    {17,"TORNEO DE DESPEDIDA"}
 		    };
-		// Crear el modelo de la tabla con los datos y nombres de columna
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-		// Crear la JTable con el modelo
-        JTable table = new JTable(model);
-        table.setSurrendersFocusOnKeystroke(true);
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // Desactivar el ajuste automático del ancho de las columnas
+		
+		//TABLA PARA MOSTRAR LOS EQUIPOS
+		DefaultTableModel modelo = new DefaultTableModel(equipos, tituloColumna);// CREA UN MODELO DE LA TABLA CON LOS EQUIPOS Y LOS TITULOS DE LAS COLUMNAS
+		JTable tablaEquipos = new JTable(modelo);// CREA LA TABLA CON EL MODELO
+        tablaEquipos.setSurrendersFocusOnKeystroke(true);
+        tablaEquipos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // DESACTIVA EL ANCHO AUTOMATICO DE LAS COLUMNAS
 
-        // Ajustar el ancho de cada columna según su contenido
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            TableColumn column = table.getColumnModel().getColumn(i);
-            int width = (int) table.getTableHeader().getDefaultRenderer()
-                    .getTableCellRendererComponent(table, column.getHeaderValue(), false, false, -1, i)
+        // AJUSTA EL ANCHO DE CADA COLUMNA A SU CONTENIDO
+        for (int i = 0; i < tablaEquipos.getColumnCount(); i++) {
+            TableColumn columna = tablaEquipos.getColumnModel().getColumn(i);
+            int width = (int) tablaEquipos.getTableHeader().getDefaultRenderer()
+                    .getTableCellRendererComponent(tablaEquipos, columna.getHeaderValue(), false, false, -1, i)
                     .getPreferredSize().getWidth();
-            for (int j = 0; j < table.getRowCount(); j++) {
-                int preferedWidth = (int) table.getCellRenderer(j, i)
-                        .getTableCellRendererComponent(table, table.getValueAt(j, i), false, false, j, i)
+            for (int j = 0; j < tablaEquipos.getRowCount(); j++) {
+                int preferedWidth = (int) tablaEquipos.getCellRenderer(j, i)
+                        .getTableCellRendererComponent(tablaEquipos, tablaEquipos.getValueAt(j, i), false, false, j, i)
                         .getPreferredSize().getWidth();
                 width = Math.max(width, preferedWidth);
             }
-            column.setPreferredWidth(width + 10); // Añadir un pequeño espacio adicional
+            columna.setPreferredWidth(width + 10);
         }
-     // Ajustar el ancho de la última columna para que ocupe el espacio restante
-        TableColumn lastColumn = table.getColumnModel().getColumn(table.getColumnCount() - 1);
-        lastColumn.setPreferredWidth(260); // Un valor grande para que ocupe todo el espacio restante
-        // Crear un JScrollPane y agregar la tabla a él
-        // Crear un JScrollPane y agregar la tabla a él
-        JScrollPane scrollPane = new JScrollPane(table);
+        // AJUSTA EL ANCHO DE LA ULTIMA COLUMNA PARA QUE OCUPE TODO
+        TableColumn ultimaColumna = tablaEquipos.getColumnModel().getColumn(tablaEquipos.getColumnCount() - 1);
+        ultimaColumna.setPreferredWidth(260); 
+        JScrollPane scrollPane = new JScrollPane(tablaEquipos);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(300, 1, 285, 360); // Establecer la posición y tamaño del JScrollPane
-
-        // Agregar el JScrollPane al contentPane
+        scrollPane.setBounds(300, 1, 285, 360); 
         contentPane.add(scrollPane);
+        
         
         JLabel etiquetaSelTorneo = new JLabel("INGRESA EL N\u00BA DEL TORNEO SELECCIONADO");
         etiquetaSelTorneo.setBackground(new Color(240, 240, 240));
@@ -146,10 +139,11 @@ public class IniciaTorneo extends JFrame {
         etiquetaSelFecha.setBounds(10, 45, 280, 25);
         contentPane.add(etiquetaSelFecha);
         
-        JCalendar calendario = new JCalendar();
-        calendario.setBounds(0, 75, 300, 190);
-        contentPane.add(calendario);
-        calendario.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{calendario.getMonthChooser(), calendario.getMonthChooser().getSpinner(), calendario.getMonthChooser().getComboBox(), calendario.getYearChooser(), calendario.getYearChooser().getSpinner(), calendario.getDayChooser(), calendario.getDayChooser().getDayPanel()}));
+        JCalendar calendar = new JCalendar();
+        calendar.setBounds(5, 80, 290, 197);
+        contentPane.add(calendar);
+        
+        
         
         JLabel lblCalendarioCreadoCon = new JLabel("calendario creado con exito");
         lblCalendarioCreadoCon.setHorizontalAlignment(SwingConstants.LEFT);

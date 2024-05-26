@@ -19,9 +19,6 @@ public class Gestor extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -35,10 +32,9 @@ public class Gestor extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Gestor() {
+		
+		// FORMATO DEL CONTENTPANE
 		setForeground(new Color(255, 255, 255));
 		setResizable(false);
 		setType(Type.POPUP);
@@ -48,53 +44,58 @@ public class Gestor extends JFrame {
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(UIManager.getBorder("TitledBorder.border"));
-	
 		contentPane.setPreferredSize(new Dimension(600, 400));
         contentPane.setBackground(new Color(152, 180, 216));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
+		// FIN DEL FORMATO DEL CONTENTPANE
 		
-		JLabel creaNuevoTorneo = new JLabel("Crear nuevo torneo:");
-		creaNuevoTorneo.setForeground(new Color(255, 255, 255));
-		creaNuevoTorneo.setHorizontalAlignment(SwingConstants.RIGHT);
-		creaNuevoTorneo.setBounds(10, 25, 400, 25);
-		contentPane.add(creaNuevoTorneo);
+		// CREAR NUEVO TORNEO
+		JLabel tagNuevoTorneo = new JLabel("Crear nuevo torneo:");
+		tagNuevoTorneo.setForeground(new Color(255, 255, 255));
+		tagNuevoTorneo.setHorizontalAlignment(SwingConstants.RIGHT);
+		tagNuevoTorneo.setBounds(10, 25, 400, 25);
+		contentPane.add(tagNuevoTorneo);
 		
 		JButton botonCreaTorneo = new JButton("CREAR");
 		botonCreaTorneo.setBounds(420, 25, 120, 25);
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonCreaTorneo.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	botonCreaTorneo.setBackground(Color.LIGHT_GRAY);
-		    	botonCreaTorneo.setForeground(Color.WHITE);
-		    }
+				    public void mouseEntered(java.awt.event.MouseEvent evt) {
+				    	botonCreaTorneo.setBackground(Color.LIGHT_GRAY);
+				    	botonCreaTorneo.setForeground(Color.WHITE);
+				    }
 
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	botonCreaTorneo.setBackground(Color.WHITE);
-		    	botonCreaTorneo.setForeground(Color.BLACK);
-		    }
-		});
-		//aqui linkeamos a la otra clase
+				    public void mouseExited(java.awt.event.MouseEvent evt) {
+				    	botonCreaTorneo.setBackground(Color.WHITE);
+				    	botonCreaTorneo.setForeground(Color.BLACK);
+				    }
+				});
+				// FIN DE CODIGO PARA DAR ESTILO HOVER AL BOTON
+		// AQUI LINKEAMOS A OTRA CLASE
 		botonCreaTorneo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false); // Ocultar la clase Gestor
+                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
                 
                 CreaTorneo creaTorneo = new CreaTorneo();
-                creaTorneo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra toda la aplicación al cerrar esta ventana
+                creaTorneo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
                 creaTorneo.setVisible(true);
             }
         });
 		contentPane.add(botonCreaTorneo);
 		
-		JLabel listarSolicitudes = new JLabel("Listar Formularios de inscrpci\u00F3n recibidos:");
-		listarSolicitudes.setForeground(new Color(255, 255, 255));
-		listarSolicitudes.setHorizontalAlignment(SwingConstants.RIGHT);
-		listarSolicitudes.setBounds(10, 75, 400, 25);
-		contentPane.add(listarSolicitudes);
+		// LISTA LOS EQUIPOS QUE HAN ENVIADO SOLICITUD DE INSCRIPCION
+		JLabel taglistsolicitudes = new JLabel("Listar Formularios de inscrpci\u00F3n recibidos:");
+		taglistsolicitudes.setForeground(new Color(255, 255, 255));
+		taglistsolicitudes.setHorizontalAlignment(SwingConstants.RIGHT);
+		taglistsolicitudes.setBounds(10, 75, 400, 25);
+		contentPane.add(taglistsolicitudes);
 		
 		JButton botonListarFormulariosRecibidos = new JButton("LISTAR");
 		botonListarFormulariosRecibidos.setBounds(420, 75, 120, 25);
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonListarFormulariosRecibidos.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
 		    	botonListarFormulariosRecibidos.setBackground(Color.LIGHT_GRAY);
@@ -106,27 +107,30 @@ public class Gestor extends JFrame {
 		    	botonListarFormulariosRecibidos.setForeground(Color.BLACK);
 		    }
 		});
-		//aqui linkeamos a la otra clase
+		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		//AQUI LINKEAMOS A OTRA CLASE
 		botonListarFormulariosRecibidos.addActionListener(new ActionListener() {
 		            @Override
 		            public void actionPerformed(ActionEvent e) {
-		                setVisible(false); // Ocultar la clase Gestor
+		                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
 		                
 		                InscripcionesRecibidas inscripcionesRecibidas = new InscripcionesRecibidas();
-		                inscripcionesRecibidas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra toda la aplicación al cerrar esta ventana
+		                inscripcionesRecibidas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
 		                inscripcionesRecibidas.setVisible(true);
 		            }
 		        });
 		contentPane.add(botonListarFormulariosRecibidos);
 		
-		JLabel iniciaTorneo = new JLabel("Inicia un torneo:");
-		iniciaTorneo.setForeground(new Color(255, 255, 255));
-		iniciaTorneo.setHorizontalAlignment(SwingConstants.RIGHT);
-		iniciaTorneo.setBounds(150, 125, 260, 25);
-		contentPane.add(iniciaTorneo);
+		// SECCION PARA LA CREACION DE NUEVOS CALENDARIOS DE PARTIDOS
+		JLabel tagIniciaTorneo = new JLabel("Inicia un torneo:");
+		tagIniciaTorneo.setForeground(new Color(255, 255, 255));
+		tagIniciaTorneo.setHorizontalAlignment(SwingConstants.RIGHT);
+		tagIniciaTorneo.setBounds(150, 125, 260, 25);
+		contentPane.add(tagIniciaTorneo);
 		
 		JButton botonIniciaTorneo = new JButton("INICIAR");
 		botonIniciaTorneo.setBounds(420, 125, 120, 25);
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonIniciaTorneo.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
 		    	botonIniciaTorneo.setBackground(Color.LIGHT_GRAY);
@@ -138,39 +142,54 @@ public class Gestor extends JFrame {
 		    	botonIniciaTorneo.setForeground(Color.BLACK);
 		    }
 		});
-		//aqui linkeamos a la otra clase
+		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		// AQUI LINKEAMOS A OTRA CLASE
 		botonIniciaTorneo.addActionListener(new ActionListener() {
 				            @Override
 				            public void actionPerformed(ActionEvent e) {
-				                setVisible(false); // Ocultar la clase Gestor
+				                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
 				                
 				                IniciaTorneo iniciaTorneo = new IniciaTorneo();
-				                iniciaTorneo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra toda la aplicación al cerrar esta ventana
+				                iniciaTorneo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
 				                iniciaTorneo.setVisible(true);
 				            }
 				        });
 		contentPane.add(botonIniciaTorneo);
 		
-		JLabel modificarDatosDeEquipo = new JLabel("Modificar datos de un equipo:");
-		modificarDatosDeEquipo.setForeground(new Color(255, 255, 255));
-		modificarDatosDeEquipo.setHorizontalAlignment(SwingConstants.RIGHT);
-		modificarDatosDeEquipo.setBounds(150, 175, 260, 25);
-		contentPane.add(modificarDatosDeEquipo);
+		// SECCION PARA MODIFICAR O ELIMINAR  EQUIPOS Y AÑADIR, MODIFICAR O ELIMINAR JUGADORES
+		JLabel tagModEquipos = new JLabel("Modificar datos de un equipo:");
+		tagModEquipos.setForeground(new Color(255, 255, 255));
+		tagModEquipos.setHorizontalAlignment(SwingConstants.RIGHT);
+		tagModEquipos.setBounds(150, 175, 260, 25);
+		contentPane.add(tagModEquipos);
 		
-		JButton botonModificarEquipo = new JButton("OPCIONES");
-		botonModificarEquipo.setBounds(420, 175, 120, 25);
-		botonModificarEquipo.addMouseListener(new java.awt.event.MouseAdapter() {
+		JButton botonModEquipo = new JButton("OPCIONES");
+		botonModEquipo.setBounds(420, 175, 120, 25);
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		botonModEquipo.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	botonModificarEquipo.setBackground(Color.LIGHT_GRAY);
-		    	botonModificarEquipo.setForeground(Color.WHITE);
+		    	botonModEquipo.setBackground(Color.LIGHT_GRAY);
+		    	botonModEquipo.setForeground(Color.WHITE);
 		    }
 
 		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	botonModificarEquipo.setBackground(Color.WHITE);
-		    	botonModificarEquipo.setForeground(Color.BLACK);
+		    	botonModEquipo.setBackground(Color.WHITE);
+		    	botonModEquipo.setForeground(Color.BLACK);
 		    }
 		});
-		contentPane.add(botonModificarEquipo);
+		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		// AQUI LINKEAMOS A OTRA CLASE
+		botonModEquipo.addActionListener(new ActionListener() {
+						            @Override
+						            public void actionPerformed(ActionEvent e) {
+						                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
+						                
+						                ModificaDatosEquipo modificaDatosEquipo = new ModificaDatosEquipo();
+						                modificaDatosEquipo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
+						                modificaDatosEquipo.setVisible(true);
+						            }
+						        });
+		contentPane.add(botonModEquipo);
 		
 		JLabel verClasificacion = new JLabel("Ver clasificaci\u00F3n:");
 		verClasificacion.setForeground(new Color(255, 255, 255));
@@ -212,22 +231,43 @@ public class Gestor extends JFrame {
 		    	botonVerTablaGoleadores.setForeground(Color.BLACK);
 		    }
 		});
-		
-		
-		
 		contentPane.add(botonVerTablaGoleadores);
-		 // Crea un JLabel para mostrar la imagen
-        JLabel imagenFondo = new JLabel();
+		
+		// BOTON PARA CERRAR LA APLICACION
+		JButton botonCerrar = new JButton("CERRAR APLICACI\u00D3N");
+	        botonCerrar.setBounds(200, 320, 200, 25);
+	     // INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+	        botonCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+			    public void mouseEntered(java.awt.event.MouseEvent evt) {
+			    	botonCerrar.setBackground(Color.LIGHT_GRAY);
+			    	botonCerrar.setForeground(Color.WHITE);
+			    }
+
+			    public void mouseExited(java.awt.event.MouseEvent evt) {
+			    	botonCerrar.setBackground(Color.WHITE);
+			    	botonCerrar.setForeground(Color.BLACK);
+			    }
+			});
+			// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+			// AQUI LINKEAMOS A OTRA CLASE
+	        botonCerrar.addActionListener(new ActionListener() {
+							            @Override
+							            public void actionPerformed(ActionEvent e) {
+							                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
+							            }
+							        });
+	        contentPane.add(botonCerrar);
+
+		// IMAGEN DE FONDO
+        JLabel tagImagenDeFondo = new JLabel();
+        // SE CREA UN IMAGEICON CON LA IMAGEN DE FONDO
+        ImageIcon copa = new ImageIcon("img\\icono_trofeo.png");
+        // SE LE ASIGNA EL IMAGEICON A LA ETIQUETA
+        tagImagenDeFondo.setIcon(copa);
+        tagImagenDeFondo.setBounds(-250, 5, 512, 512); // Agrega el JLabel al JFrame
+        getContentPane().add(tagImagenDeFondo);
         
-        // Carga la imagen desde un archivo (asegúrate de tener la imagen en el mismo directorio que tu código)
-        ImageIcon icono = new ImageIcon("img\\icono_trofeo.png");
-        
-        // Asigna el icono al JLabel
-        imagenFondo.setIcon(icono);
-        imagenFondo.setBounds(-250, 5, 512, 512);
-        
-        // Agrega el JLabel al JFrame
-        add(imagenFondo);
+       
 		
 	}
 }
