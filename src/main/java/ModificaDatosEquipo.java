@@ -1,4 +1,4 @@
-package org.eclipse.wb.swing;
+
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -80,7 +80,6 @@ public class ModificaDatosEquipo extends JFrame {
 		comboBoxEquipo.setModel(new DefaultComboBoxModel(new String[] {"-->SELECCIONE EQUIPO<--", "Los gauchitos", "Diseminados por el viento", "LA MARINA", "Cuatro locos"}));//AQUI VA LA CONEXION CON LA BBDD
 		comboBoxEquipo.setBounds(70, 30, 190, 25);
 		contentPane.add(comboBoxEquipo);
-		setLocationRelativeTo(null);
 		
 		// DATOS DEL NOMBRE DEL EQUIPO
 		JLabel tagNombEquipo = new JLabel("NOMBRE:");

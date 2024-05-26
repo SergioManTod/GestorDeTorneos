@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,16 +13,13 @@ import javax.swing.table.TableColumn;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 
 public class InscripcionesRecibidas extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -37,10 +33,10 @@ public class InscripcionesRecibidas extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public InscripcionesRecibidas() {
+		
+		// FORMATO DEL CONTENTPANE
 		setForeground(new Color(255, 255, 255));
 		setResizable(false);
 		setType(Type.POPUP);
@@ -55,84 +51,11 @@ public class InscripcionesRecibidas extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
+		// FIN FORMATO DEL CONTENTPANE
 		
-		JButton botonRechazados = new JButton("INSC. RECHAZADAS");
-		botonRechazados.setFont(new Font("Tahoma", Font.BOLD, 9));
-		botonRechazados.setBounds(8, 320, 140, 25);
-		botonRechazados.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	botonRechazados.setBackground(Color.LIGHT_GRAY);
-		    	botonRechazados.setForeground(Color.WHITE);
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	botonRechazados.setBackground(Color.WHITE);
-		    	botonRechazados.setForeground(Color.BLACK);
-		    }
-		});
-		contentPane.add(botonRechazados);
-		
-		JButton botonValidas = new JButton("INSC. ACEPTADAS");
-		botonValidas.setFont(new Font("Tahoma", Font.BOLD, 9));
-		botonValidas.setBounds(151, 320, 140, 25);
-		botonValidas.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	botonValidas.setBackground(Color.LIGHT_GRAY);
-		    	botonValidas.setForeground(Color.WHITE);
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	botonValidas.setBackground(Color.WHITE);
-		    	botonValidas.setForeground(Color.BLACK);
-		    }
-		});
-		contentPane.add(botonValidas);
-		
-		JButton botonNotificar = new JButton("NOTIFICAR RECH.");
-		botonNotificar.setFont(new Font("Tahoma", Font.BOLD, 9));
-		botonNotificar.setBounds(294, 320, 140, 25);
-		botonNotificar.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	botonNotificar.setBackground(Color.LIGHT_GRAY);
-		    	botonNotificar.setForeground(Color.WHITE);
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	botonNotificar.setBackground(Color.WHITE);
-		    	botonNotificar.setForeground(Color.BLACK);
-		    }
-		});
-		contentPane.add(botonNotificar);
-		
-		JButton botonMenuPrincipal = new JButton("MEN\u00DA PRINCIPAL");
-		botonMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 9));
-		botonMenuPrincipal.setBounds(438, 320, 140, 25);
-		botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	botonMenuPrincipal.setBackground(Color.LIGHT_GRAY);
-		    	botonMenuPrincipal.setForeground(Color.WHITE);
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	botonMenuPrincipal.setBackground(Color.WHITE);
-		    	botonMenuPrincipal.setForeground(Color.BLACK);
-		    }
-		});
-		//aqui linkeamos a la otra clase
-		botonMenuPrincipal.addActionListener(new ActionListener() {
-		            @Override
-		            public void actionPerformed(ActionEvent e) {
-		                setVisible(false); // Ocultar la clase Gestor
-		                
-		                Gestor gestor = new Gestor();
-		                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra toda la aplicación al cerrar esta ventana
-		                gestor.setVisible(true);
-		            }
-		        });
-		contentPane.add(botonMenuPrincipal);
-		
-		String[] columnNames = {"Nº","EQUIPO", "ESTADO", "MOTIVOS"};
-		Object[][] data = {
+		// ARRAY DE OBJETOS PARA PRUEBA
+		String[] nomColumnas = {"Nº","EQUIPO", "ESTADO", "MOTIVOS"};
+		Object[][] equipos = {
 		    {1,"La marina social club", "valido"},
 		    {2,"club amigos de la cerveza", "valido"},
 		    {3,"Pelota vieja", "rechazado", "Menores de edad alineados."},
@@ -162,7 +85,7 @@ public class InscripcionesRecibidas extends JFrame {
 		    {27,"Pelota vieja", "rechazado", "Menores de edad alineados."},
 		    {28,"La viga de trapo", "rechazado", "No tiene arbitro asignado"},
 		    {29,"Cuatro locos", "rechazado", "No tiene arbitro asignado"},
-		    {30,"Los amigo de Maria", "rechazado", "No llega al minimo de jugadores"},
+		    {30,"Los amigo de Maria", "rechazado", "No llega al minimo de jugadoresNo llega al minimo de jugadoresNo llega al minimo de jugadores"},
 		    {31,"La marina social club", "valido"},
 		    {32,"club amigos de la cerveza", "valido", },
 		    {33,"Pelota vieja", "rechazado", "Menores de edad alineados."},
@@ -170,36 +93,119 @@ public class InscripcionesRecibidas extends JFrame {
 		    {35,"Cuatro locos", "rechazado", "No tiene arbitro asignado"},
 		    {36,"Los amigo de Maria", "rechazado", "No llega al minimo de jugadores"}
 		    };
-		// Crear el modelo de la tabla con los datos y nombres de columna
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+		
+		// TABLA PARA MOSTRAR LOS EQUIPOS QUE ENVIARON INSCRIPCION
+        DefaultTableModel modelo = new DefaultTableModel(equipos, nomColumnas);// CREA EL MODELO DE LA TABLA CON LOES EQUIPOS Y LOS NOMBRE DE LAS COLUMNAS
 
-        // Crear la JTable con el modelo
-        JTable table = new JTable(model);
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // Desactivar el ajuste automático del ancho de las columnas
-
-        // Ajustar el ancho de cada columna según su contenido
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            TableColumn column = table.getColumnModel().getColumn(i);
-            int width = (int) table.getTableHeader().getDefaultRenderer()
-                    .getTableCellRendererComponent(table, column.getHeaderValue(), false, false, -1, i)
+        
+        JTable tablaEquipos = new JTable(modelo);// CREA LA TABLA CON EL MODELO
+        tablaEquipos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); 
+        for (int i = 0; i < tablaEquipos.getColumnCount(); i++) {// AJUSTA EL ANCHO DE LAS COLUMNAS A SU CONTENIDO
+            TableColumn columna = tablaEquipos.getColumnModel().getColumn(i);
+            int width = (int) tablaEquipos.getTableHeader().getDefaultRenderer()
+                    .getTableCellRendererComponent(tablaEquipos, columna.getHeaderValue(), false, false, -1, i)
                     .getPreferredSize().getWidth();
-            for (int j = 0; j < table.getRowCount(); j++) {
-                int preferedWidth = (int) table.getCellRenderer(j, i)
-                        .getTableCellRendererComponent(table, table.getValueAt(j, i), false, false, j, i)
+            for (int j = 0; j < tablaEquipos.getRowCount(); j++) {
+                int preferedWidth = (int) tablaEquipos.getCellRenderer(j, i)
+                        .getTableCellRendererComponent(tablaEquipos, tablaEquipos.getValueAt(j, i), false, false, j, i)
                         .getPreferredSize().getWidth();
                 width = Math.max(width, preferedWidth);
             }
-            column.setPreferredWidth(width + 10); // Añadir un pequeño espacio adicional
+            columna.setPreferredWidth(width + 10);
         }
-     // Ajustar el ancho de la última columna para que ocupe el espacio restante
-        TableColumn lastColumn = table.getColumnModel().getColumn(table.getColumnCount() - 1);
-        lastColumn.setPreferredWidth(315); // Un valor grande para que ocupe todo el espacio restante
-        // Crear un JScrollPane y agregar la tabla a él
-        // Crear un JScrollPane y agregar la tabla a él
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(0, 1, 585, 305); // Establecer la posición y tamaño del JScrollPane
-
-        // Agregar el JScrollPane al contentPane
+        TableColumn ultimaColumna = tablaEquipos.getColumnModel().getColumn(tablaEquipos.getColumnCount() - 1);// AJUSTA EL ANCHO DE LA ULTIMA COLUMNA PARA QUE LLEGUE AL FINAL
+        ultimaColumna.setPreferredWidth(320); 
+        JScrollPane scrollPane = new JScrollPane(tablaEquipos);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBounds(0, 1, 585, 305); 
         contentPane.add(scrollPane);
+        
+        // BOTON PARA SOLO LISTAR LAS INSCRIPCIONES RECHAZADAS
+		JButton botonRechazados = new JButton("INSC. RECHAZADAS");
+		botonRechazados.setFont(new Font("Tahoma", Font.BOLD, 9));
+		botonRechazados.setBounds(8, 320, 140, 25);
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		botonRechazados.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	botonRechazados.setBackground(Color.LIGHT_GRAY);
+		    	botonRechazados.setForeground(Color.WHITE);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	botonRechazados.setBackground(Color.WHITE);
+		    	botonRechazados.setForeground(Color.BLACK);
+		    }
+		});
+		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		contentPane.add(botonRechazados);
+		
+		// BOTON PARA LISTAR SOLO LAS INSCRIPCIONES VALIDAS
+		JButton botonValidas = new JButton("INSC. ACEPTADAS");
+		botonValidas.setFont(new Font("Tahoma", Font.BOLD, 9));
+		botonValidas.setBounds(151, 320, 140, 25);
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		botonValidas.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	botonValidas.setBackground(Color.LIGHT_GRAY);
+		    	botonValidas.setForeground(Color.WHITE);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	botonValidas.setBackground(Color.WHITE);
+		    	botonValidas.setForeground(Color.BLACK);
+		    }
+		});
+		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		
+		contentPane.add(botonValidas);
+		
+		//BOTON PARA GENERAR MAIL O ARCHIVO QUE NOTIFIQUE A LOS EQUIPOS RECHAZADOS
+		JButton botonNotificar = new JButton("NOTIFICAR RECH.");
+		botonNotificar.setFont(new Font("Tahoma", Font.BOLD, 9));
+		botonNotificar.setBounds(294, 320, 140, 25);
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		botonNotificar.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	botonNotificar.setBackground(Color.LIGHT_GRAY);
+		    	botonNotificar.setForeground(Color.WHITE);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	botonNotificar.setBackground(Color.WHITE);
+		    	botonNotificar.setForeground(Color.BLACK);
+		    }
+		});
+		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		contentPane.add(botonNotificar);
+		
+		// BOTON PARA VOLVER AL MENU PRINCIPAL
+		JButton botonMenuPrincipal = new JButton("MEN\u00DA PRINCIPAL");
+		botonMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 9));
+		botonMenuPrincipal.setBounds(438, 320, 140, 25);
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	botonMenuPrincipal.setBackground(Color.LIGHT_GRAY);
+		    	botonMenuPrincipal.setForeground(Color.WHITE);
+		    }
+
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	botonMenuPrincipal.setBackground(Color.WHITE);
+		    	botonMenuPrincipal.setForeground(Color.BLACK);
+		    }
+		});
+		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		//aqui linkeamos a la otra clase
+		botonMenuPrincipal.addActionListener(new ActionListener() {
+		            @Override
+		            public void actionPerformed(ActionEvent e) {
+		                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
+		                
+		                Gestor gestor = new Gestor();
+		                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
+		                gestor.setVisible(true);
+		            }
+		        });
+		contentPane.add(botonMenuPrincipal);
 	}
 }
