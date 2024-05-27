@@ -22,7 +22,9 @@ public class CreaTorneo extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldNomTorneo;
-
+	//DATOS A CAPTURAR
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -122,6 +124,17 @@ public class CreaTorneo extends JFrame {
 		    }
 		});
 		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		botonCrearTorneo.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                
+	            	String nombreTorneo=textFieldNomTorneo.getText();
+	                 int cantEquipos = (int) jSpinnerCantEquipos.getValue();
+	                int cantJugadores = (int) jSpinnerCantJugadores.getValue();
+	               
+	                Torneo nuevotorneo = new Torneo(nombreTorneo,cantEquipos,cantJugadores);
+	            }
+	        });
 		contentPane.add(botonCrearTorneo);
 		
 		// BOTON PARA VOLVER AL MENU PRINCIPAL
@@ -161,5 +174,10 @@ public class CreaTorneo extends JFrame {
         tagImagenDeFondo.setIcon(balon);
         tagImagenDeFondo.setBounds(300, 150, 512, 512);
         add(tagImagenDeFondo);
+	}
+	//METODOS
+	public void creandoTorneo(String nomTorneo, int cantEquipos, int cantJugadores){
+		CreaTorneo creaTorneo = new CreaTorneo();
+        System.out.println("Nombre del torneo: " + nomTorneo);
 	}
 }

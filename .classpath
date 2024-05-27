@@ -32,12 +32,12 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/juamp/Downloads/spire.pdf.free-9.12.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/alumno_t/Downloads/spire.pdf-10.4.9.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
