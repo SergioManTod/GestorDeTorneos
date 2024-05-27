@@ -1,0 +1,53 @@
+create  database if not exists gestorTorneos;
+use gestorTorneos;
+
+create table torneos(
+id int auto_increment primary key,
+nombre varchar (50) unique,
+numero_jugadores int (10),
+numero_equipos int 
+);
+create table equipos(
+id int auto_increment primary key,
+nombre varchar(50) unique,
+email varchar(50) unique,
+responsable int,
+arbitro int, 
+torneo int
+);
+
+create table jugadores(
+id int auto_increment primary key,
+nombre varchar(20) ,
+apellido1 varchar(20),
+apellido2 varchar(20),
+dni varchar(9),
+fecha_nacimiento date,
+equipo int
+);
+create table partidos(
+id int auto_increment primary key,
+fecha date,
+e_visitante int,
+e_local int,
+arbitro int
+);
+create table goles(
+partido int,
+jugador int,
+primary key(partido,jugador)
+);
+ alter table equipos add foreign key (responsable) references jugadores(id);
+  alter table equipos add foreign key (arbitro) references jugadores(id);
+   alter table equipos add foreign key (torneo) references torneos(id);
+   
+   alter table jugadores add foreign key (equipo) references equipos(id);
+    
+    
+    alter table partidos add foreign key (e_visitante) references equipos(id);
+    alter table partidos add foreign key (e_local) references equipos(id);
+    alter table partidos add foreign key (arbitro) references jugadores(id);
+    
+    alter table goles add foreign key (partido) references partidos(id);
+    alter table goles add foreign key (jugador) references jugadores(id);
+    
