@@ -132,10 +132,15 @@ public class CreaTorneo extends JFrame {
 	                 int cantEquipos = (int) jSpinnerCantEquipos.getValue();
 	                int cantJugadores = (int) jSpinnerCantJugadores.getValue();
 	               
+<<<<<<< HEAD
 	                Torneo nuevotorneo = new Torneo(nombreTorneo,cantEquipos,cantJugadores);
 	                BaseDeDatos nueva = new BaseDeDatos();
 	                nueva.conectar();
 	                nueva.insertar(nuevotorneo);
+=======
+	                Torneo nuevoTorneo = new Torneo(nombreTorneo,cantEquipos,cantJugadores);
+	                nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
+>>>>>>> branch 'main' of https://github.com/SergioManTod/GestorDeTorneos.git
 	            }
 	        });
 		contentPane.add(botonCrearTorneo);
