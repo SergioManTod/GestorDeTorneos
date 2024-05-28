@@ -132,14 +132,21 @@ public class CreaTorneo extends JFrame {
 	                 int cantEquipos = (int) jSpinnerCantEquipos.getValue();
 	                int cantJugadores = (int) jSpinnerCantJugadores.getValue();
 	               
+<<<<<<< HEAD
+	                Torneo nuevotorneo = new Torneo(nombreTorneo,cantEquipos,cantJugadores);
+	                BaseDeDatos nueva = new BaseDeDatos();
+	                nueva.conectar();
+	                nueva.insertar(nuevotorneo);
+=======
 	                Torneo nuevoTorneo = new Torneo(nombreTorneo,cantEquipos,cantJugadores);
 	                nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
+>>>>>>> branch 'main' of https://github.com/SergioManTod/GestorDeTorneos.git
 	            }
 	        });
 		contentPane.add(botonCrearTorneo);
 		
 		// BOTON PARA VOLVER AL MENU PRINCIPAL
-		JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
+		JButton botonMenuPrincipal = new JButton("MENï¿½ PRINCIPAL");
 		botonMenuPrincipal.setBounds(225, 300, 150, 25);
 		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
