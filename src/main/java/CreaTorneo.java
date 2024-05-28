@@ -132,7 +132,8 @@ public class CreaTorneo extends JFrame {
 	                 int cantEquipos = (int) jSpinnerCantEquipos.getValue();
 	                int cantJugadores = (int) jSpinnerCantJugadores.getValue();
 	               
-	                Torneo nuevotorneo = new Torneo(nombreTorneo,cantEquipos,cantJugadores);
+	                Torneo nuevoTorneo = new Torneo(nombreTorneo,cantEquipos,cantJugadores);
+	                nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
 	            }
 	        });
 		contentPane.add(botonCrearTorneo);
