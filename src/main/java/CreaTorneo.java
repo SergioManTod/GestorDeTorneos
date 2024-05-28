@@ -133,12 +133,15 @@ public class CreaTorneo extends JFrame {
 	                int cantJugadores = (int) jSpinnerCantJugadores.getValue();
 	               
 	                Torneo nuevotorneo = new Torneo(nombreTorneo,cantEquipos,cantJugadores);
+	                BaseDeDatos nueva = new BaseDeDatos();
+	                nueva.conectar();
+	                nueva.insertar(nuevotorneo);
 	            }
 	        });
 		contentPane.add(botonCrearTorneo);
 		
 		// BOTON PARA VOLVER AL MENU PRINCIPAL
-		JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
+		JButton botonMenuPrincipal = new JButton("MENï¿½ PRINCIPAL");
 		botonMenuPrincipal.setBounds(225, 300, 150, 25);
 		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
