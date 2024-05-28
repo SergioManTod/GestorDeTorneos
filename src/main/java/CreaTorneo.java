@@ -134,12 +134,13 @@ public class CreaTorneo extends JFrame {
 	               
 	                Torneo nuevoTorneo = new Torneo(nombreTorneo,cantEquipos,cantJugadores);
 	                nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
+	                nuevoTorneo.getNombTorneo();
 	            }
 	        });
 		contentPane.add(botonCrearTorneo);
 		
 		// BOTON PARA VOLVER AL MENU PRINCIPAL
-		JButton botonMenuPrincipal = new JButton("MENï¿½ PRINCIPAL");
+		JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
 		botonMenuPrincipal.setBounds(225, 300, 150, 25);
 		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {

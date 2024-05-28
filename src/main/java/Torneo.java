@@ -106,6 +106,9 @@ public class Torneo {
 					System.out.println("");
 				}
 				this.nombTorneo = nombTorneo;
+				System.out.println("");
+				System.out.println(" eL Nombre: "+nombTorneo+" esta ok");
+				System.out.println("");
 			}
 		} catch (SQLException e) {
 			System.out.println("Error al hacer la consulta en la base de datos.");
