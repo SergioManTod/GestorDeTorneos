@@ -18,7 +18,8 @@ public class Torneo {
 	//CONSTRUCTORES
 	public Torneo(String nombTorneo, int cantEquipos, int cantJugadores) {
 		super();
-		this.nombTorneo = comprobarNombreTorneo(nombTorneo);
+		boolean resul = comprobarNombreTorneo(nombTorneo);
+		
 		this.cantEquipos = cantEquipos;
 		this.cantJugadores = cantJugadores;
 	}
@@ -65,12 +66,16 @@ public class Torneo {
 		return "Torneo [nombTorneo=" + nombTorneo + ", cantEquipos=" + cantEquipos + ", cantJugadores=" + cantJugadores
 				+ "]";
 	}
-	public String comprobarNombreTorneo(String nombTorneo) {
+	public Boolean comprobarNombreTorneo(String nombTorneo) {
+		boolean resul=false;
+		if(resul) {
+			this.nombTorneo=nombTorneo;
+		}else {}
 		Connection con = null;
 		Properties prop = new Properties();
 		InputStream is = null;
 		try {
-			is = new FileInputStream("src/main/resources/bd.propertiedades_casa_sergio");
+			is = new FileInputStream("src/main/resources/bd.properties");
 			prop.load(is);
 			
 			String user = prop.getProperty("user","");
@@ -98,21 +103,15 @@ public class Torneo {
 			Statement st = con.createStatement();
 			String sql="SELECT nombre FROM torneos WHERE nombre='"+nombTorneo+"'";
 			ResultSet rs = st.executeQuery(sql);
-			while (rs.next()) {
-				String nombre = rs.getString("nombre");
-				if (nombre == nombTorneo) {
-					System.out.println("");
-					System.out.println(" eL Nombre: "+nombTorneo+" ya existe en la base de datos");
-					System.out.println("");
+			if (rs.next()) {
+					resul=false;
+				}else {
+					resul=true;
 				}
-				this.nombTorneo = nombTorneo;
-				System.out.println("");
-				System.out.println(" eL Nombre: "+nombTorneo+" esta ok");
-				System.out.println("");
-			}
+			
 		} catch (SQLException e) {
 			System.out.println("Error al hacer la consulta en la base de datos.");
 		}
-		return nombTorneo;
+		return resul;
 	}
 }

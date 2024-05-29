@@ -23,7 +23,8 @@ apellido1 varchar(20),
 apellido2 varchar(20),
 dni varchar(9),
 fecha_nacimiento date,
-equipo int
+equipo int,
+
 );
 create table partidos(
 id int auto_increment primary key,
@@ -50,4 +51,5 @@ primary key(partido,jugador)
     
     alter table goles add foreign key (partido) references partidos(id);
     alter table goles add foreign key (jugador) references jugadores(id);
+    
     

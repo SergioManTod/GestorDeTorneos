@@ -38,6 +38,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Acer/OneDrive - Educacyl/Programacion/eclipse/GestorDeTorneos/spire.pdf-10.3.4.jar"/>
+	<classpathentry kind="lib" path="spire.pdf-10.3.4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

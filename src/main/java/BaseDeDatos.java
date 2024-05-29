@@ -37,7 +37,7 @@ public class BaseDeDatos {
 		String driver = prop.getProperty("driver", "");
 
 			try {
-				Class.forName(driver).newInstance();
+				Class.forName(driver).newInstance();System.out.println("driverok");
 			} catch (InstantiationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -52,6 +52,7 @@ public class BaseDeDatos {
 		
 			try {
 				con = DriverManager.getConnection(url, user, password);
+				System.out.println("conexion  ok");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

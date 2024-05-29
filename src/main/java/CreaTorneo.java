@@ -134,7 +134,7 @@ public class CreaTorneo extends JFrame {
 	               
 	                Torneo nuevoTorneo = new Torneo(nombreTorneo,cantEquipos,cantJugadores);
 	                nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
-	                nuevoTorneo.getNombTorneo();
+	               System.out.println(nuevoTorneo.getNombTorneo()); 
 	            }
 	        });
 		contentPane.add(botonCrearTorneo);
