@@ -12,7 +12,7 @@ public class BaseDeDatos {
     private Connection con;
 
     // Constructor privado para evitar la instanciación externa
-    private BaseDeDatos() {
+    BaseDeDatos() {
         conectar();
     }
 

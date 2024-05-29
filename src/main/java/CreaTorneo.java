@@ -134,6 +134,11 @@ public class CreaTorneo extends JFrame {
 	               
 	                Torneo nuevoTorneo = new Torneo(nombreTorneo, cantEquipos, cantJugadores, BaseDeDatos.obtenerInstancia().obtenerConexion());
 	                nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
+	                if (nuevoTorneo.getNombTorneo()!=null) {
+	                	BaseDeDatos baseDeDatos = new BaseDeDatos();
+						baseDeDatos.insertar(nuevoTorneo);
+	                	System.out.println("Torneo "+nuevoTorneo.getNombTorneo()+" guardado en la Base de Datos");
+	                }
 	               System.out.println(nuevoTorneo.getNombTorneo()); 
 	            }
 	        });
