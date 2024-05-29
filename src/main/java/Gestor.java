@@ -18,12 +18,15 @@ public class Gestor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
+	private BaseDeDatos baseDeDatos;
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Gestor frame = new Gestor();
+					
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,6 +36,8 @@ public class Gestor extends JFrame {
 	}
 
 	public Gestor() {
+		// CONEXION A LA BB DD
+		baseDeDatos = BaseDeDatos.obtenerInstancia();
 		
 		// FORMATO DEL CONTENTPANE
 		setForeground(new Color(255, 255, 255));
@@ -281,7 +286,9 @@ public class Gestor extends JFrame {
 	        botonCerrar.addActionListener(new ActionListener() {
 							            @Override
 							            public void actionPerformed(ActionEvent e) {
-							                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
+							            	 // Cerrar la conexión a la base de datos al cerrar la aplicación
+							                baseDeDatos.cerrarConexion();
+							                setVisible(false); // OCULTAMOS LA CLASE EN LA QUE ESTAMOS
 							            }
 							        });
 	        contentPane.add(botonCerrar);

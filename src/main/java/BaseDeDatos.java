@@ -1,68 +1,82 @@
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class BaseDeDatos {
+    private static BaseDeDatos instancia;
+    private Connection con;
 
-	Properties prop = new Properties(); 
-	InputStream is = null;
-	Connection con = null; 
-	ResultSet rs = null;
-	public void conectar() {
-		
-		
-		try {
-			is = new FileInputStream("src/main/resources/bd.properties");
-		
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			prop.load(is);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		String user = prop.getProperty("user", "");
-		String password = prop.getProperty("password", ""); 
-		String url = prop.getProperty("url", "");
-		String driver = prop.getProperty("driver", "");
+    // Constructor privado para evitar la instanciación externa
+    private BaseDeDatos() {
+        conectar();
+    }
 
-			try {
-				Class.forName(driver).newInstance();System.out.println("driverok");
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-		
-			try {
-				con = DriverManager.getConnection(url, user, password);
-				System.out.println("conexion  ok");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-			// TODO Auto-generated catch block
-			
-			System.out.println("conexion  ok");
-		
-	}
+    // Método estático para obtener la instancia única de la clase
+    public static BaseDeDatos obtenerInstancia() {
+        if (instancia == null) {
+            instancia = new BaseDeDatos();
+        }
+        return instancia;
+    }
+
+    // Método para conectar a la base de datos
+    private void conectar() {
+        if (con != null) {
+            return; // Si la conexión ya está establecida, no hacer nada
+        }
+
+        Properties prop = new Properties();
+
+        try (InputStream is = new FileInputStream("src/main/resources/bd.propertiedades_casa_sergio")) {
+            prop.load(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        String user = prop.getProperty("user", "");
+        String password = prop.getProperty("password", ""); 
+        String url = prop.getProperty("url", "");
+        String driver = prop.getProperty("driver", "");
+
+        try {
+            Class.forName(driver);
+            System.out.println("Driver cargado correctamente.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        try {
+            con = DriverManager.getConnection(url, user, password);
+            System.out.println("Conexión establecida correctamente.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Método para obtener la conexión
+    public Connection obtenerConexion() {
+        return con;
+    }
+ // Método para cerrar la conexión a la base de datos
+    public void cerrarConexion() {
+        try {
+            if (con != null) {
+                con.close();
+                System.out.println("Conexión cerrada correctamente.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+	// INSERTAR EQUIPO NUEVO
 	public void insertar(Torneo nuevoTorneo ) {
 		 String nombre=nuevoTorneo.getNombTorneo();
 		 int numero_jugadores=nuevoTorneo.getCantJugadores();

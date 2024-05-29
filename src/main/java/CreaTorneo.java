@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -132,7 +134,7 @@ public class CreaTorneo extends JFrame {
 	                 int cantEquipos = (int) jSpinnerCantEquipos.getValue();
 	                int cantJugadores = (int) jSpinnerCantJugadores.getValue();
 	               
-	                Torneo nuevoTorneo = new Torneo(nombreTorneo,cantEquipos,cantJugadores);
+	                Torneo nuevoTorneo = new Torneo(nombreTorneo, cantEquipos, cantJugadores, BaseDeDatos.obtenerInstancia().obtenerConexion());
 	                nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
 	               System.out.println(nuevoTorneo.getNombTorneo()); 
 	            }
