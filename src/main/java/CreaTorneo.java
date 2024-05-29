@@ -132,7 +132,7 @@ public class CreaTorneo extends JFrame {
 	                nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
 	                if (nuevoTorneo.getNombTorneo() != null) {
 	                	BaseDeDatos baseDeDatos = new BaseDeDatos();
-						baseDeDatos.insertar(nuevoTorneo);
+						baseDeDatos.insertaTorneoNuevo(nuevoTorneo);
 						JLabel tagMsgeIntroNuevoTorneoBbDd = new JLabel("<html>El Torneo " + nuevoTorneo.getNombTorneo() + "<br>se a guardado correctamente en la Base de Datos.<br>Con un minimo de "+nuevoTorneo.getCantEquipos()+" de equipos participantes <br>y un minimo de "+nuevoTorneo.getCantJugadores()+" jugadores por equipo.</html>");
 				        tagMsgeIntroNuevoTorneoBbDd.setToolTipText("");
 				        tagMsgeIntroNuevoTorneoBbDd.setHorizontalAlignment(SwingConstants.CENTER);

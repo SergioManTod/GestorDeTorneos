@@ -1,7 +1,11 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -77,7 +81,7 @@ public class BaseDeDatos {
     }
 
 	// INSERTAR EQUIPO NUEVO
-	public void insertar(Torneo nuevoTorneo ) {
+	public void insertaTorneoNuevo(Torneo nuevoTorneo ) {
 		 String nombre=nuevoTorneo.getNombTorneo();
 		 int numero_jugadores=nuevoTorneo.getCantJugadores();
 		 int numero_equipos=nuevoTorneo.getCantEquipos();
@@ -101,4 +105,20 @@ public class BaseDeDatos {
 			e.printStackTrace();
 		} 
 	}	
+	
+	//CONSULTA PARA LISTAR TODOS LOS TORNEOS
+	public List<Object[]> listarTorneosInactivos() throws SQLException {
+        List<Object[]> torneos = new ArrayList<>();
+        Statement st = con.createStatement();
+        String sql = "SELECT id, nombre FROM torneos ORDER BY id ASC;";
+        ResultSet rs = st.executeQuery(sql);
+        
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String nombre = rs.getString("nombre");
+            torneos.add(new Object[]{id, nombre});
+        }
+        
+        return torneos;
+    }
 }

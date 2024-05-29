@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -60,42 +62,27 @@ public class IniciaTorneo extends JFrame {
 		// FIN FORMATO DEL CONTENTPANE
 		
 		//ARRAY DE OBJETOS DE PRUEBA CON LOS NOMBRES DE LOS TORNEOS
-		String[] tituloColumna = {"Nº","NOMBRE DEL TORNEO"};
-		Object[][] equipos = {
-		    {1,"TORNEO lA MARINA"},
-		    {2,"TORNEO DEL ANIVERSARIO" },
-		    {3,"TORNEO VIEJAS GLORIAS"},
-		    {4,"TORNEO POLICIAS CONTRA"},
-		    {5,"TORNEO DE INVIERNO"},
-		    {6,"TORNEO DE VERANO"},
-		    {1,"TORNEO lA MARINA"},
-		    {2,"TORNEO DEL ANIVERSARIO" },
-		    {3,"TORNEO VIEJAS GLORIAS"},
-		    {4,"TORNEO POLICIAS CONTRA"},
-		    {5,"TORNEO DE INVIERNO"},
-		    {6,"TORNEO DE VERANO"},
-		    {1,"TORNEO lA MARINA"},
-		    {2,"TORNEO DEL ANIVERSARIO" },
-		    {3,"TORNEO VIEJAS GLORIAS"},
-		    {4,"TORNEO POLICIAS CONTRA"},
-		    {5,"TORNEO DE INVIERNO"},
-		    {6,"TORNEO DE VERANO"},
-		    {1,"TORNEO lA MARINA"},
-		    {2,"TORNEO DEL ANIVERSARIO" },
-		    {3,"TORNEO VIEJAS GLORIAS"},
-		    {4,"TORNEO POLICIAS CONTRA"},
-		    {5,"TORNEO DE INVIERNO"},
-		    {6,"TORNEO DE VERANO"},
-		    {17,"TORNEO DE DESPEDIDA"}
-		    };
-		
-		//TABLA PARA MOSTRAR LOS EQUIPOS
-		DefaultTableModel modelo = new DefaultTableModel(equipos, tituloColumna);// CREA UN MODELO DE LA TABLA CON LOS EQUIPOS Y LOS TITULOS DE LAS COLUMNAS
-		JTable tablaEquipos = new JTable(modelo);// CREA LA TABLA CON EL MODELO
-        tablaEquipos.setSurrendersFocusOnKeystroke(true);
-        tablaEquipos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // DESACTIVA EL ANCHO AUTOMATICO DE LAS COLUMNAS
+		 // Títulos de las columnas
+        String[] tituloColumna = {"Nº", "NOMBRE DEL TORNEO"};
+        DefaultTableModel modelo = new DefaultTableModel(tituloColumna, 0);
 
-        // AJUSTA EL ANCHO DE CADA COLUMNA A SU CONTENIDO
+        // Obtener los datos de la base de datos y llenar el modelo
+        BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia();
+        try {
+            List<Object[]> torneos = baseDeDatos.listarTorneosInactivos();
+            for (Object[] torneo : torneos) {
+                modelo.addRow(torneo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Crear la tabla con el modelo
+        JTable tablaEquipos = new JTable(modelo);
+        tablaEquipos.setSurrendersFocusOnKeystroke(true);
+        tablaEquipos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        // Ajustar el ancho de las columnas
         for (int i = 0; i < tablaEquipos.getColumnCount(); i++) {
             TableColumn columna = tablaEquipos.getColumnModel().getColumn(i);
             int width = (int) tablaEquipos.getTableHeader().getDefaultRenderer()
@@ -109,12 +96,14 @@ public class IniciaTorneo extends JFrame {
             }
             columna.setPreferredWidth(width + 10);
         }
-        // AJUSTA EL ANCHO DE LA ULTIMA COLUMNA PARA QUE OCUPE 
+        // Ajustar el ancho de la última columna
         TableColumn ultimaColumna = tablaEquipos.getColumnModel().getColumn(tablaEquipos.getColumnCount() - 1);
-        ultimaColumna.setPreferredWidth(260); 
+        ultimaColumna.setPreferredWidth(260);
+
+        // Crear el JScrollPane y agregar la tabla
         JScrollPane scrollPane = new JScrollPane(tablaEquipos);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(300, 1, 285, 360); 
+        scrollPane.setBounds(300, 1, 285, 360);
         contentPane.add(scrollPane);
         
         // AQUI SE SELECCIONA AL EQUIPO
