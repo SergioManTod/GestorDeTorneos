@@ -22,9 +22,7 @@ public class CreaTorneo extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldNomTorneo;
-	//DATOS A CAPTURAR
-	
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -56,7 +54,6 @@ public class CreaTorneo extends JFrame {
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		// FIN FORMATO DEL CONTENTPANE
-		
 		
 		JLabel tagInstrucciones = new JLabel("RELLENA LOS CAMPOS TAL COMO SE PIDE \r\nPARA QUE EL FORMULARIO DE INSCRIPCI\u00D3N SE CONSTRUYA CON EXITO");
 		tagInstrucciones.setToolTipText("");
@@ -110,7 +107,7 @@ public class CreaTorneo extends JFrame {
 		
 		// BOTON PARA CREAR EN TORNEO Y GENERAR EL PDF DE INSCRIPCION
 		JButton botonCrearTorneo = new JButton("CREAR TORNEO");
-		botonCrearTorneo.setBounds(225, 250, 150, 25);
+		botonCrearTorneo.setBounds(389, 129, 150, 25);
 		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonCrearTorneo.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -127,26 +124,32 @@ public class CreaTorneo extends JFrame {
 		botonCrearTorneo.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                
-	            	String nombreTorneo=textFieldNomTorneo.getText();
-	                 int cantEquipos = (int) jSpinnerCantEquipos.getValue();
+	            	String nombreTorneo = textFieldNomTorneo.getText();
+	                int cantEquipos = (int) jSpinnerCantEquipos.getValue();
 	                int cantJugadores = (int) jSpinnerCantJugadores.getValue();
 	               
 	                Torneo nuevoTorneo = new Torneo(nombreTorneo, cantEquipos, cantJugadores, BaseDeDatos.obtenerInstancia().obtenerConexion());
 	                nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
-	                if (nuevoTorneo.getNombTorneo()!=null) {
+	                if (nuevoTorneo.getNombTorneo() != null) {
 	                	BaseDeDatos baseDeDatos = new BaseDeDatos();
 						baseDeDatos.insertar(nuevoTorneo);
-	                	System.out.println("Torneo "+nuevoTorneo.getNombTorneo()+" guardado en la Base de Datos");
+						JLabel tagMsgeIntroNuevoTorneoBbDd = new JLabel("<html>El Torneo " + nuevoTorneo.getNombTorneo() + "<br>se a guardado correctamente en la Base de Datos.<br>Con un minimo de "+nuevoTorneo.getCantEquipos()+" de equipos participantes <br>y un minimo de "+nuevoTorneo.getCantJugadores()+" jugadores por equipo.</html>");
+				        tagMsgeIntroNuevoTorneoBbDd.setToolTipText("");
+				        tagMsgeIntroNuevoTorneoBbDd.setHorizontalAlignment(SwingConstants.CENTER);
+				        tagMsgeIntroNuevoTorneoBbDd.setForeground(Color.WHITE);
+				        tagMsgeIntroNuevoTorneoBbDd.setFont(new Font("Tahoma", Font.BOLD, 12));
+				        tagMsgeIntroNuevoTorneoBbDd.setBounds(26, 250,300, 75);
+				        contentPane.add(tagMsgeIntroNuevoTorneoBbDd);
+				        contentPane.revalidate();
+				        contentPane.repaint();
 	                }
-	               System.out.println(nuevoTorneo.getNombTorneo()); 
 	            }
 	        });
 		contentPane.add(botonCrearTorneo);
 		
 		// BOTON PARA VOLVER AL MENU PRINCIPAL
 		JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
-		botonMenuPrincipal.setBounds(225, 300, 150, 25);
+		botonMenuPrincipal.setBounds(389, 190, 150, 25);
 		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -177,14 +180,11 @@ public class CreaTorneo extends JFrame {
         JLabel tagImagenDeFondo = new JLabel();
         // SE CREA UN IMAGEICON CON LA IMAGEN DE FONDO
         ImageIcon balon = new ImageIcon("img\\balon.png");
+        
+        
         // SE LE ASIGNA EL IMAGEICON A LA ETIQUETA
         tagImagenDeFondo.setIcon(balon);
         tagImagenDeFondo.setBounds(300, 150, 512, 512);
-        add(tagImagenDeFondo);
+        getContentPane().add(tagImagenDeFondo);
 	}
-	//METODOS
-	public void creandoTorneo(String nomTorneo, int cantEquipos, int cantJugadores){
-		CreaTorneo creaTorneo = new CreaTorneo();
-        System.out.println("Nombre del torneo: " + nomTorneo);
-	}
-}
+}	
