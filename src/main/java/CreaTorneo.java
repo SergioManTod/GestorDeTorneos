@@ -43,7 +43,7 @@ public class CreaTorneo extends JFrame {
 		setResizable(false);
 		setType(Type.POPUP);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-		setTitle("Aplicac\u00EDon Gestora de Torneos  -  Creac\u00EDon de nuevo Torneo");
+		setTitle("Aplicación Gestora de Torneos  -  Creación de nuevo Torneo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -55,7 +55,7 @@ public class CreaTorneo extends JFrame {
 		setLocationRelativeTo(null);
 		// FIN FORMATO DEL CONTENTPANE
 		
-		JLabel tagInstrucciones = new JLabel("RELLENA LOS CAMPOS TAL COMO SE PIDE \r\nPARA QUE EL FORMULARIO DE INSCRIPCI\u00D3N SE CONSTRUYA CON EXITO");
+		JLabel tagInstrucciones = new JLabel("RELLENA LOS CAMPOS TAL COMO SE PIDE PARA QUE EL FORMULARIO DE INSCRIPCIÓN SE CONSTRUYA CON EXITO");
 		tagInstrucciones.setToolTipText("");
 		tagInstrucciones.setFont(new Font("Tahoma", Font.BOLD, 9));
 		tagInstrucciones.setForeground(new Color(255, 255, 255));
@@ -101,7 +101,7 @@ public class CreaTorneo extends JFrame {
 		contentPane.add(tagCantJugadores);
 		
 		JSpinner jSpinnerCantJugadores = new JSpinner();
-		jSpinnerCantJugadores.setModel(new SpinnerNumberModel(10, 10, 20, 1));
+		jSpinnerCantJugadores.setModel(new SpinnerNumberModel(5, 5, 15, 1));
 		jSpinnerCantJugadores.setBounds(308, 188, 40, 25);
 		contentPane.add(jSpinnerCantJugadores);
 		
@@ -129,8 +129,8 @@ public class CreaTorneo extends JFrame {
 	                int cantJugadores = (int) jSpinnerCantJugadores.getValue();
 	               
 	                Torneo nuevoTorneo = new Torneo(nombreTorneo, cantEquipos, cantJugadores, BaseDeDatos.obtenerInstancia().obtenerConexion());
-	                nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
-	                if (nuevoTorneo.getNombTorneo() != null) {
+	               
+	                if ( nuevoTorneo.comprobarNombreTorneo(nombreTorneo)) {
 	                	BaseDeDatos baseDeDatos = new BaseDeDatos();
 						baseDeDatos.insertaTorneoNuevo(nuevoTorneo);
 						JLabel tagMsgeIntroNuevoTorneoBbDd = new JLabel("<html>El Torneo " + nuevoTorneo.getNombTorneo() + "<br>se a guardado correctamente en la Base de Datos.<br>Con un minimo de "+nuevoTorneo.getCantEquipos()+" de equipos participantes <br>y un minimo de "+nuevoTorneo.getCantJugadores()+" jugadores por equipo.</html>");
@@ -142,13 +142,15 @@ public class CreaTorneo extends JFrame {
 				        contentPane.add(tagMsgeIntroNuevoTorneoBbDd);
 				        contentPane.revalidate();
 				        contentPane.repaint();
-	                }
+				        PdfCrear inscripcion = new PdfCrear();
+				        inscripcion.crearpdfFormulario(nombreTorneo, cantJugadores);
+	                }else {System.out.println("no");}
 	            }
 	        });
 		contentPane.add(botonCrearTorneo);
 		
 		// BOTON PARA VOLVER AL MENU PRINCIPAL
-		JButton botonMenuPrincipal = new JButton("MEN� PRINCIPAL");
+		JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
 		botonMenuPrincipal.setBounds(389, 190, 150, 25);
 		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {

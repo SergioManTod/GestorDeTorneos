@@ -15,12 +15,12 @@ public class BaseDeDatos {
     private static BaseDeDatos instancia;
     private Connection con;
 
-    // Constructor privado para evitar la instanciación externa
+    // Constructor privado para evitar la instanciaciï¿½n externa
     BaseDeDatos() {
         conectar();
     }
 
-    // Método estático para obtener la instancia única de la clase
+    // Mï¿½todo estï¿½tico para obtener la instancia ï¿½nica de la clase
     public static BaseDeDatos obtenerInstancia() {
         if (instancia == null) {
             instancia = new BaseDeDatos();
@@ -28,15 +28,15 @@ public class BaseDeDatos {
         return instancia;
     }
 
-    // Método para conectar a la base de datos
+    // Mï¿½todo para conectar a la base de datos
     private void conectar() {
         if (con != null) {
-            return; // Si la conexión ya está establecida, no hacer nada
+            return; // Si la conexiï¿½n ya estï¿½ establecida, no hacer nada
         }
 
         Properties prop = new Properties();
 
-        try (InputStream is = new FileInputStream("src/main/resources/bd.propertiedades_casa_sergio")) {
+        try (InputStream is = new FileInputStream("src/main/resources/bd.properties")) {
             prop.load(is);
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,22 +58,22 @@ public class BaseDeDatos {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            System.out.println("Conexión establecida correctamente.");
+            System.out.println("ConexiÃ³n establecida correctamente.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Método para obtener la conexión
+    // Mï¿½todo para obtener la conexiï¿½n
     public Connection obtenerConexion() {
         return con;
     }
- // Método para cerrar la conexión a la base de datos
+ // Mï¿½todo para cerrar la conexiï¿½n a la base de datos
     public void cerrarConexion() {
         try {
             if (con != null) {
                 con.close();
-                System.out.println("Conexión cerrada correctamente.");
+                System.out.println("ConexiÃ³n cerrada correctamente.");
             }
         } catch (SQLException e) {
             e.printStackTrace();

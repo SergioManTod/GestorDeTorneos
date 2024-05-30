@@ -21,7 +21,7 @@ public class Torneo {
 
 	public Torneo(String nombTorneo, int cantEquipos, int cantJugadores, Connection con) {
 	    super();
-	    this.con = con; // Establece la conexión
+	    this.con = con; // Establece la conexiï¿½n
 	    this.nombTorneo = nombTorneo;
 	    this.cantEquipos = cantEquipos;
 	    this.cantJugadores = cantJugadores;
@@ -76,7 +76,7 @@ public class Torneo {
 	//COMPROBAR QUE EL TORNEO NO EXISTE EN LA BBDD
 	public Boolean comprobarNombreTorneo(String nombTorneo) {
         boolean resul = false;
-        
+        if (nombTorneo.length() > 0 ) {
         String sql = "SELECT nombre FROM torneos WHERE nombre = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, nombTorneo);
@@ -86,7 +86,8 @@ public class Torneo {
         } catch (SQLException e) {
             System.err.println("Error al hacer la consulta en la base de datos: " + e.getMessage());
         }
-        
+	}System.out.println("No puede estar el campo nombre vacio");
         return resul;
     }
+        
 }

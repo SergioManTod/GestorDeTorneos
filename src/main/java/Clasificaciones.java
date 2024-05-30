@@ -46,7 +46,7 @@ public class Clasificaciones extends JFrame {
 				setResizable(false);
 				setType(Type.POPUP);
 				setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-				setTitle("Aplicac\u00EDon Gestora de Torneos  -  Clasificaciones");
+				setTitle("Aplicación Gestora de Torneos  -  Clasificaciones");
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				setBounds(100, 100, 600, 400);
 				contentPane = new JPanel();
@@ -58,7 +58,7 @@ public class Clasificaciones extends JFrame {
 				setLocationRelativeTo(null);
 				// FIN DEL FORMATO DEL CONTENTPANE
 				
-				JLabel tagInstrucciones = new JLabel("SELECCIONA EL TORNEO DEL QUE QUIERES VER LA CLASIFICAC�ON");
+				JLabel tagInstrucciones = new JLabel("SELECCIONA EL TORNEO DEL QUE QUIERES VER LA CLASIFICACIÓN");
 				tagInstrucciones.setToolTipText("");
 				tagInstrucciones.setFont(new Font("Tahoma", Font.BOLD, 15));
 				tagInstrucciones.setForeground(new Color(255, 255, 255));
@@ -145,7 +145,7 @@ public class Clasificaciones extends JFrame {
 		        contentPane.add(scrollPane);
 		        
 		     // BOTON PARA VOLVER AL MENU PRINCIPAL
-				JButton botonMenuPrincipal = new JButton("MEN\u00DA PRINCIPAL");
+				JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
 				botonMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 10));
 				botonMenuPrincipal.setBounds(50, 280, 200, 25);
 				// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER

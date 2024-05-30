@@ -62,8 +62,8 @@ public class IniciaTorneo extends JFrame {
 		// FIN FORMATO DEL CONTENTPANE
 		
 		//ARRAY DE OBJETOS DE PRUEBA CON LOS NOMBRES DE LOS TORNEOS
-		 // Títulos de las columnas
-        String[] tituloColumna = {"Nº", "NOMBRE DEL TORNEO"};
+		 // Tï¿½tulos de las columnas
+        String[] tituloColumna = {"NÂº", "NOMBRE DEL TORNEO"};
         DefaultTableModel modelo = new DefaultTableModel(tituloColumna, 0);
 
         // Obtener los datos de la base de datos y llenar el modelo
@@ -96,7 +96,7 @@ public class IniciaTorneo extends JFrame {
             }
             columna.setPreferredWidth(width + 10);
         }
-        // Ajustar el ancho de la última columna
+        // Ajustar el ancho de la ï¿½ltima columna
         TableColumn ultimaColumna = tablaEquipos.getColumnModel().getColumn(tablaEquipos.getColumnCount() - 1);
         ultimaColumna.setPreferredWidth(260);
 
@@ -107,7 +107,7 @@ public class IniciaTorneo extends JFrame {
         contentPane.add(scrollPane);
         
         // AQUI SE SELECCIONA AL EQUIPO
-        JLabel tagSelTorneo = new JLabel("INGRESA EL N\u00BA DEL TORNEO SELECCIONADO");
+        JLabel tagSelTorneo = new JLabel("INGRESA EL NÃšMERO DEL TORNEO SELECCIONADO");
         tagSelTorneo.setBackground(new Color(240, 240, 240));
         tagSelTorneo.setHorizontalAlignment(SwingConstants.LEFT);
         tagSelTorneo.setForeground(new Color(255, 255, 255));
@@ -165,7 +165,7 @@ public class IniciaTorneo extends JFrame {
         contentPane.add(cotonCrearCalendario);
         
      // BOTON PARA VOLVER AL MENU PRINCIPAL
-        JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
+        JButton botonMenuPrincipal = new JButton("MENÃš PRINCIPAL");
         botonMenuPrincipal.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		botonMenuPrincipal.setBounds(155, 320, 135, 23);
 		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER

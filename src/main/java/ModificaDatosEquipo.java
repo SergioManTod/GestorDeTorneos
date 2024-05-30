@@ -51,7 +51,7 @@ public class ModificaDatosEquipo extends JFrame {
 		setResizable(false);
 		setType(Type.POPUP);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-		setTitle("Aplicac\u00EDon Gestora de Torneos  -  Modificar datos de un equipo");
+		setTitle("AplicaciÃ³n Gestora de Torneos  -  Modificar datos de un equipo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -136,7 +136,7 @@ public class ModificaDatosEquipo extends JFrame {
 		// FIN DE CODIGO PARA DAR ESTILO HOVER AL BOTON
 		contentPane.add(botonModificaEquipo);
 		
-		// CON ESTE BOTON SE ELIMINA AL EQUIPO Y TODOS SUS JUGADORES DE LAS BBDD (¿DEBERIAMOS TAMBIEN ELIMINAR TODOS LOS ARCHIVOS GENERADOS?)
+		// CON ESTE BOTON SE ELIMINA AL EQUIPO Y TODOS SUS JUGADORES DE LAS BBDD (ï¿½DEBERIAMOS TAMBIEN ELIMINAR TODOS LOS ARCHIVOS GENERADOS?)
 		JButton botonEliminaEquipo = new JButton("ELIMINAR  EQUIPO");
 		botonEliminaEquipo.setFont(new Font("Tahoma", Font.BOLD, 8));
 		botonEliminaEquipo.setBounds(430, 30, 150, 25);
@@ -214,36 +214,36 @@ public class ModificaDatosEquipo extends JFrame {
 		contentPane.add(tagDescFecNacJugador);
 		
 		// DATOS PRIMER APELLIDO JUGADOR
-		JLabel tagPriApJugador = new JLabel("1\u00BA APELLIDO:");
+		JLabel tagPriApJugador = new JLabel("1Âº APELLIDO:");
 		tagPriApJugador.setForeground(Color.WHITE);
 		tagPriApJugador.setBounds(10, 220, 80, 25);
 		contentPane.add(tagPriApJugador);
 		
-		// EN ESTE TEXTFIEL, DEBE MOSTRARSE EL 1º APELLIDO  DEL JUGADOR PILLADO DE LA BASE DE DATOS Y TAMBIEN SE PUEDE SOBRE ESCRIBIR Y HACER UNA EDIT EN LA BBDD
+		// EN ESTE TEXTFIEL, DEBE MOSTRARSE EL 1ï¿½ APELLIDO  DEL JUGADOR PILLADO DE LA BASE DE DATOS Y TAMBIEN SE PUEDE SOBRE ESCRIBIR Y HACER UNA EDIT EN LA BBDD
 		textFieldPrApellido = new JTextField();
 		textFieldPrApellido.setColumns(10);
 		textFieldPrApellido.setBounds(90, 220, 200, 25);
 		contentPane.add(textFieldPrApellido);
 		
-		JLabel tagDescPriAp = new JLabel("Introduce el nuevo 1\u00BA apellido del jugador");
+		JLabel tagDescPriAp = new JLabel("Introduce el nuevo 1Âº apellido del jugador");
 		tagDescPriAp.setForeground(Color.WHITE);
 		tagDescPriAp.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		tagDescPriAp.setBounds(100, 240, 220, 25);
 		contentPane.add(tagDescPriAp);
 		
 		// DATOS SEGUNDO APELLIDO
-		JLabel tagSegApJugador = new JLabel("2\u00BA APELLIDO:");
+		JLabel tagSegApJugador = new JLabel("2Âº APELLIDO:");
 		tagSegApJugador.setForeground(Color.WHITE);
 		tagSegApJugador.setBounds(300, 220, 80, 25);
 		contentPane.add(tagSegApJugador);
 		
-		// EN ESTE TEXTFIEL, DEBE MOSTRARSE EL 1º APELLIDO  DEL JUGADOR PILLADO DE LA BASE DE DATOS Y TAMBIEN SE PUEDE SOBRE ESCRIBIR Y HACER UNA EDIT EN LA BBDD
+		// EN ESTE TEXTFIEL, DEBE MOSTRARSE EL 1ï¿½ APELLIDO  DEL JUGADOR PILLADO DE LA BASE DE DATOS Y TAMBIEN SE PUEDE SOBRE ESCRIBIR Y HACER UNA EDIT EN LA BBDD
 		textFieldSegApellido = new JTextField();
 		textFieldSegApellido.setColumns(10);
 		textFieldSegApellido.setBounds(380, 220, 200, 25);
 		contentPane.add(textFieldSegApellido);
 		
-		JLabel tagDescSegAp = new JLabel("Introduce el nuevo 2\u00BA apellido del jugador");
+		JLabel tagDescSegAp = new JLabel("Introduce el nuevo 2Âº apellido del jugador");
 		tagDescSegAp.setForeground(Color.WHITE);
 		tagDescSegAp.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		tagDescSegAp.setBounds(390, 240, 180, 25);
@@ -255,7 +255,7 @@ public class ModificaDatosEquipo extends JFrame {
 		tagDni.setBounds(40, 265, 80, 25);
 		contentPane.add(tagDni);
 		
-		// EN ESTE TEXTFIEL, DEBE MOSTRARSE EL 1º APELLIDO  DEL JUGADOR PILLADO DE LA BASE DE DATOS Y TAMBIEN SE PUEDE SOBRE ESCRIBIR Y HACER UNA EDIT EN LA BBDD
+		// EN ESTE TEXTFIEL, DEBE MOSTRARSE EL 1ï¿½ APELLIDO  DEL JUGADOR PILLADO DE LA BASE DE DATOS Y TAMBIEN SE PUEDE SOBRE ESCRIBIR Y HACER UNA EDIT EN LA BBDD
 		textFieldDni = new JTextField();
 		textFieldDni.setColumns(10);
 		textFieldDni.setBounds(78, 265, 80, 25);
@@ -306,8 +306,8 @@ public class ModificaDatosEquipo extends JFrame {
 		separator_1.setBounds(0, 310, 600, 2);
 		contentPane.add(separator_1);
 		
-		// BOTON PARA AÑADIR A UN JUGADOR NUEVO
-		JButton botonNuevoJugador = new JButton("A\u00D1ADIR JUGADOR");
+		// BOTON PARA Aï¿½ADIR A UN JUGADOR NUEVO
+		JButton botonNuevoJugador = new JButton("AÃ‘ADIR JUGADOR");
 		botonNuevoJugador.setFont(new Font("Tahoma", Font.BOLD, 9));
 		botonNuevoJugador.setBounds(20, 325, 130, 25);
 		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
@@ -364,7 +364,7 @@ public class ModificaDatosEquipo extends JFrame {
 		contentPane.add(botonEliminaJugador);
 		
 		// BOTON PARA VOLVER AL MENU PRINCIPAL
-		JButton botonMenuPrincipal = new JButton("MEN\u00DA PRINCIPAL");
+		JButton botonMenuPrincipal = new JButton("MENÃš PRINCIPAL");
 		botonMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 9));
 		botonMenuPrincipal.setBounds(440, 325, 130, 25);
 		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER

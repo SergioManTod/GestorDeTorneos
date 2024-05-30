@@ -41,7 +41,7 @@ public class InscripcionesRecibidas extends JFrame {
 		setResizable(false);
 		setType(Type.POPUP);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-		setTitle("Aplicac\u00EDon Gestora de Torneos  -  Inscripciones recibidas");
+		setTitle("AplicaciÃ³n Gestora de Torneos  -  Inscripciones recibidas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -54,7 +54,7 @@ public class InscripcionesRecibidas extends JFrame {
 		// FIN FORMATO DEL CONTENTPANE
 		
 		// ARRAY DE OBJETOS PARA PRUEBA
-		String[] nomColumnas = {"Nº","EQUIPO", "ESTADO", "MOTIVOS"};
+		String[] nomColumnas = {"NÂº","EQUIPO", "ESTADO", "MOTIVOS"};
 		Object[][] equipos = {
 		    {1,"La marina social club", "valido"},
 		    {2,"club amigos de la cerveza", "valido"},
@@ -179,7 +179,7 @@ public class InscripcionesRecibidas extends JFrame {
 		contentPane.add(botonNotificar);
 		
 		// BOTON PARA VOLVER AL MENU PRINCIPAL
-		JButton botonMenuPrincipal = new JButton("MEN\u00DA PRINCIPAL");
+		JButton botonMenuPrincipal = new JButton("MENÃš PRINCIPAL");
 		botonMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 9));
 		botonMenuPrincipal.setBounds(438, 320, 140, 25);
 		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
@@ -202,7 +202,7 @@ public class InscripcionesRecibidas extends JFrame {
 		                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
 		                
 		                Gestor gestor = new Gestor();
-		                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
+		                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIï¿½N AL CERRAR ESTA VENTANA
 		                gestor.setVisible(true);
 		            }
 		        });

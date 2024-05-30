@@ -19,6 +19,7 @@ public class PdfCrear {
 	
 	
 	public  PdfCrear crearpdfFormulario(String nombreTorneo,int cantidadJugadores) {
+		
 		PdfDocument doc = new PdfDocument();
 
 	    PdfPageBase page = doc.getPages().add();
@@ -187,7 +188,7 @@ public class PdfCrear {
 	    }
 	    
 	    // Guardar el documento PDF
-	    doc.saveToFile("FormularioUsuario5.pdf");
+	    doc.saveToFile("FormularioInscripcion_"+nombreTorneo+".pdf");
 	    doc.close();
 		return null;
 	}

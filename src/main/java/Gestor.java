@@ -44,7 +44,7 @@ public class Gestor extends JFrame {
 		setResizable(false);
 		setType(Type.POPUP);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-		setTitle("Aplicac\u00EDon Gestora de Torneos  -  Menú principal");
+		setTitle("AplicaciÃ³n Gestora de Torneos  -  MenÃº principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -85,14 +85,14 @@ public class Gestor extends JFrame {
                 setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
                 
                 CreaTorneo creaTorneo = new CreaTorneo();
-                creaTorneo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
+                creaTorneo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIï¿½N AL CERRAR ESTA VENTANA
                 creaTorneo.setVisible(true);
             }
         });
 		contentPane.add(botonCreaTorneo);
 		
 		// LISTA LOS EQUIPOS QUE HAN ENVIADO SOLICITUD DE INSCRIPCION
-		JLabel taglistsolicitudes = new JLabel("Listar Formularios de inscrpci\u00F3n recibidos:");
+		JLabel taglistsolicitudes = new JLabel("Listar Formularios de inscrpciÃ³n recibidos:");
 		taglistsolicitudes.setForeground(new Color(255, 255, 255));
 		taglistsolicitudes.setHorizontalAlignment(SwingConstants.RIGHT);
 		taglistsolicitudes.setBounds(10, 75, 400, 25);
@@ -120,7 +120,7 @@ public class Gestor extends JFrame {
 		                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
 		                
 		                InscripcionesRecibidas inscripcionesRecibidas = new InscripcionesRecibidas();
-		                inscripcionesRecibidas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
+		                inscripcionesRecibidas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// CIERRA LA APLICACIï¿½N AL CERRAR ESTA VENTANA
 		                inscripcionesRecibidas.setVisible(true);
 		            }
 		        });
@@ -155,13 +155,13 @@ public class Gestor extends JFrame {
 				                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
 				                
 				                IniciaTorneo iniciaTorneo = new IniciaTorneo();
-				                iniciaTorneo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
+				                iniciaTorneo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIï¿½N AL CERRAR ESTA VENTANA
 				                iniciaTorneo.setVisible(true);
 				            }
 				        });
 		contentPane.add(botonIniciaTorneo);
 		
-		// SECCION PARA MODIFICAR O ELIMINAR  EQUIPOS Y AÑADIR, MODIFICAR O ELIMINAR JUGADORES
+		// SECCION PARA MODIFICAR O ELIMINAR  EQUIPOS Y Aï¿½ADIR, MODIFICAR O ELIMINAR JUGADORES
 		JLabel tagModEquipos = new JLabel("Modificar datos de un equipo:");
 		tagModEquipos.setForeground(new Color(255, 255, 255));
 		tagModEquipos.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -190,14 +190,14 @@ public class Gestor extends JFrame {
 						                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
 						                
 						                ModificaDatosEquipo modificaDatosEquipo = new ModificaDatosEquipo();
-						                modificaDatosEquipo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
+						                modificaDatosEquipo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIï¿½N AL CERRAR ESTA VENTANA
 						                modificaDatosEquipo.setVisible(true);
 						            }
 						        });
 		contentPane.add(botonModEquipo);
 		
 		// SECCION PARA VER LAS CLASIFICACIONES DE LOS TORNEOS
-		JLabel verClasificacion = new JLabel("Ver clasificaci\u00F3n:");
+		JLabel verClasificacion = new JLabel("Ver clasificaciÃ³n:");
 		verClasificacion.setForeground(new Color(255, 255, 255));
 		verClasificacion.setHorizontalAlignment(SwingConstants.RIGHT);
 		verClasificacion.setBounds(150, 225, 260, 25);
@@ -225,7 +225,7 @@ public class Gestor extends JFrame {
 								                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
 								                
 								                Clasificaciones clasificaciones = new Clasificaciones();
-								                clasificaciones.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
+								                clasificaciones.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIï¿½N AL CERRAR ESTA VENTANA
 								                clasificaciones.setVisible(true);
 								            }
 								        });
@@ -260,14 +260,14 @@ public class Gestor extends JFrame {
 										                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
 										                
 										                Goleadores goleadores = new Goleadores();
-										                goleadores.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIÓN AL CERRAR ESTA VENTANA
+										                goleadores.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACIï¿½N AL CERRAR ESTA VENTANA
 										                goleadores.setVisible(true);
 										            }
 										        });
 		contentPane.add(botonVerTablaGoleadores);
 		
 		// BOTON PARA CERRAR LA APLICACION
-		JButton botonCerrar = new JButton("CERRAR APLICACI\u00D3N");
+		JButton botonCerrar = new JButton("CERRAR APLICACIÃ“N");
 	        botonCerrar.setBounds(200, 320, 200, 25);
 	     // INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 	        botonCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -286,7 +286,7 @@ public class Gestor extends JFrame {
 	        botonCerrar.addActionListener(new ActionListener() {
 							            @Override
 							            public void actionPerformed(ActionEvent e) {
-							            	 // Cerrar la conexión a la base de datos al cerrar la aplicación
+							            	 // Cerrar la conexiï¿½n a la base de datos al cerrar la aplicaciï¿½n
 							                baseDeDatos.cerrarConexion();
 							                setVisible(false); // OCULTAMOS LA CLASE EN LA QUE ESTAMOS
 							            }
