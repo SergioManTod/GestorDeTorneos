@@ -144,6 +144,8 @@ public class CreaTorneo extends JFrame {
 				        contentPane.repaint();
 				        PdfCrear inscripcion = new PdfCrear();
 				        inscripcion.crearpdfFormulario(nombreTorneo, cantJugadores);
+				        CreaDirectorios nuevoArbolDeDirectorios = new CreaDirectorios();
+				        nuevoArbolDeDirectorios.arbolDeCarpetas(nombreTorneo);
 	                }else {System.out.println("no");}
 	            }
 	        });

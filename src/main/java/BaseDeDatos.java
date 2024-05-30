@@ -36,7 +36,7 @@ public class BaseDeDatos {
 
         Properties prop = new Properties();
 
-        try (InputStream is = new FileInputStream("src/main/resources/bd.properties")) {
+        try (InputStream is = new FileInputStream("src/main/resources/bd_casa_sergio.properties")) {
             prop.load(is);
         } catch (IOException e) {
             e.printStackTrace();

@@ -188,7 +188,7 @@ public class PdfCrear {
 	    }
 	    
 	    // Guardar el documento PDF
-	    doc.saveToFile("FormularioInscripcion_"+nombreTorneo+".pdf");
+	    doc.saveToFile("toneo_"+nombreTorneo+"/Formulario_de_inscripcion/Formulario_Inscripcion_torneo_"+nombreTorneo+".pdf");
 	    doc.close();
 		return null;
 	}
