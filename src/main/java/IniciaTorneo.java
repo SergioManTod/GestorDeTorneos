@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -45,21 +46,21 @@ public class IniciaTorneo extends JFrame {
 	public IniciaTorneo() {
 		
 		// FORMATO DEL CONTENTPANE
-		setForeground(new Color(255, 255, 255));
-		setResizable(false);
-		setType(Type.POPUP);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-		setTitle("Aplicac\u00EDon Gestora de Torneos  -  Inicia Torneo");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
-		contentPane = new JPanel();
-		contentPane.setBorder(UIManager.getBorder("TitledBorder.border"));
-		contentPane.setPreferredSize(new Dimension(600, 400));
-        contentPane.setBackground(new Color(152, 180, 216));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		setLocationRelativeTo(null);
-		// FIN FORMATO DEL CONTENTPANE
+				setForeground(new Color(255, 255, 255));
+				setResizable(false);
+				setType(Type.POPUP);
+				setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
+				setTitle("Aplicación Gestora de Torneos  -  Iniciar torneos");
+				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				setBounds(100, 100, 600, 420);
+				contentPane = new JPanel();
+				contentPane.setBorder(UIManager.getBorder("TitledBorder.border"));
+				contentPane.setPreferredSize(new Dimension(600, 420));
+		        contentPane.setBackground(new Color(152, 180, 216));
+				setContentPane(contentPane);
+				contentPane.setLayout(null);
+				setLocationRelativeTo(null);
+				// FIN DEL FORMATO DEL CONTENTPANE
 		
 		//ARRAY DE OBJETOS DE PRUEBA CON LOS NOMBRES DE LOS TORNEOS
 		 // T�tulos de las columnas
@@ -67,7 +68,7 @@ public class IniciaTorneo extends JFrame {
         DefaultTableModel modelo = new DefaultTableModel(tituloColumna, 0);
 
         // Obtener los datos de la base de datos y llenar el modelo
-        BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia();
+        BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(null);
         try {
             List<Object[]> torneos = baseDeDatos.listarTorneosInactivos();
             for (Object[] torneo : torneos) {

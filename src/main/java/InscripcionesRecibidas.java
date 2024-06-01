@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -37,21 +38,21 @@ public class InscripcionesRecibidas extends JFrame {
 	public InscripcionesRecibidas() {
 		
 		// FORMATO DEL CONTENTPANE
-		setForeground(new Color(255, 255, 255));
-		setResizable(false);
-		setType(Type.POPUP);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-		setTitle("Aplicación Gestora de Torneos  -  Inscripciones recibidas");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
-		contentPane = new JPanel();
-		contentPane.setBorder(UIManager.getBorder("TitledBorder.border"));
-		contentPane.setPreferredSize(new Dimension(600, 400));
-        contentPane.setBackground(new Color(152, 180, 216));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		setLocationRelativeTo(null);
-		// FIN FORMATO DEL CONTENTPANE
+				setForeground(new Color(255, 255, 255));
+				setResizable(false);
+				setType(Type.POPUP);
+				setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
+				setTitle("Aplicación Gestora de Torneos  -  Inscripciones recibidas");
+				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				setBounds(100, 100, 600, 420);
+				contentPane = new JPanel();
+				contentPane.setBorder(UIManager.getBorder("TitledBorder.border"));
+				contentPane.setPreferredSize(new Dimension(600, 420));
+		        contentPane.setBackground(new Color(152, 180, 216));
+				setContentPane(contentPane);
+				contentPane.setLayout(null);
+				setLocationRelativeTo(null);
+				// FIN DEL FORMATO DEL CONTENTPANE
 		
 		// ARRAY DE OBJETOS PARA PRUEBA
 		String[] nomColumnas = {"Nº","EQUIPO", "ESTADO", "MOTIVOS"};

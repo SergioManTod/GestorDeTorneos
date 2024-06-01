@@ -10,20 +10,23 @@ import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import javax.swing.JLabel;
 
 public class BaseDeDatos {
     private static BaseDeDatos instancia;
     private Connection con;
+    private JLabel mensajeLabel;
 
     // Constructor privado para evitar la instanciaci�n externa
-    BaseDeDatos() {
+    public BaseDeDatos(JLabel mensajeLabel) {
+        this.mensajeLabel = mensajeLabel;
         conectar();
     }
 
     // M�todo est�tico para obtener la instancia �nica de la clase
-    public static BaseDeDatos obtenerInstancia() {
+    public static BaseDeDatos obtenerInstancia(JLabel tagMsgeConBbDd) {
         if (instancia == null) {
-            instancia = new BaseDeDatos();
+            instancia = new BaseDeDatos(tagMsgeConBbDd);
         }
         return instancia;
     }
@@ -31,7 +34,7 @@ public class BaseDeDatos {
     // M�todo para conectar a la base de datos
     private void conectar() {
         if (con != null) {
-            return; // Si la conexi�n ya est� establecida, no hacer nada
+            return; // Si la conexión ya está establecida, no hacer nada
         }
 
         Properties prop = new Properties();
@@ -40,6 +43,7 @@ public class BaseDeDatos {
             prop.load(is);
         } catch (IOException e) {
             e.printStackTrace();
+            mensajeLabel.setText("Error al cargar el archivo de propiedades: " + e.getMessage());
             return;
         }
 
@@ -50,33 +54,37 @@ public class BaseDeDatos {
 
         try {
             Class.forName(driver);
-            System.out.println("Driver cargado correctamente.");
+            mensajeLabel.setText("Driver cargado correctamente.");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            mensajeLabel.setText("Error al cargar el driver: " + e.getMessage());
             return;
         }
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            System.out.println("Conexión establecida correctamente.");
+            mensajeLabel.setText("Conexión establecida correctamente.");
         } catch (SQLException e) {
             e.printStackTrace();
+            mensajeLabel.setText("Error al establecer la conexión: " + e.getMessage());
         }
     }
-
-    // M�todo para obtener la conexi�n
+    
     public Connection obtenerConexion() {
         return con;
     }
- // M�todo para cerrar la conexi�n a la base de datos
+    
+ // Método para cerrar la conexión a la base de datos
     public void cerrarConexion() {
-        try {
-            if (con != null) {
+        if (con != null) {
+            try {
                 con.close();
-                System.out.println("Conexión cerrada correctamente.");
+                mensajeLabel.setText("Conexión cerrada correctamente.");
+                con = null;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                mensajeLabel.setText("Error al cerrar la conexión: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 

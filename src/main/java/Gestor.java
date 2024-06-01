@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Toolkit;
@@ -13,48 +15,56 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.UIManager;
 
-
 public class Gestor extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private BaseDeDatos baseDeDatos;
-	
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Gestor frame = new Gestor();
-					
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private BaseDeDatos baseDeDatos;
+    private JLabel tagMsgeConBbDd;
 
-	public Gestor() {
-		// CONEXION A LA BB DD
-		baseDeDatos = BaseDeDatos.obtenerInstancia();
-		
-		// FORMATO DEL CONTENTPANE
-		setForeground(new Color(255, 255, 255));
-		setResizable(false);
-		setType(Type.POPUP);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-		setTitle("Aplicación Gestora de Torneos  -  Menú principal");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
-		contentPane = new JPanel();
-		contentPane.setBorder(UIManager.getBorder("TitledBorder.border"));
-		contentPane.setPreferredSize(new Dimension(600, 400));
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Gestor frame = new Gestor();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public Gestor() {
+        // FORMATO DEL CONTENTPANE
+        setForeground(new Color(255, 255, 255));
+        setResizable(false);
+        setType(Type.POPUP);
+        setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
+        setTitle("Aplicación Gestora de Torneos  -  Menú principal");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 600, 420);
+        contentPane = new JPanel();
+        contentPane.setBorder(UIManager.getBorder("TitledBorder.border"));
+        contentPane.setPreferredSize(new Dimension(600, 420));
         contentPane.setBackground(new Color(152, 180, 216));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		setLocationRelativeTo(null);
-		// FIN DEL FORMATO DEL CONTENTPANE
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+        setLocationRelativeTo(null);
+        // FIN DEL FORMATO DEL CONTENTPANE
+
+        // JLABLE MENSAJE DE CONEXION EN LA BBDD
+        tagMsgeConBbDd = new JLabel();
+        tagMsgeConBbDd.setToolTipText("");
+        tagMsgeConBbDd.setHorizontalAlignment(SwingConstants.CENTER);
+        tagMsgeConBbDd.setForeground(Color.WHITE);
+        tagMsgeConBbDd.setFont(new Font("Tahoma", Font.BOLD, 12));
+        tagMsgeConBbDd.setBounds(20, 300, 350, 75);
+        contentPane.add(tagMsgeConBbDd);
+
+        // CONEXION A LA BB DD
+        baseDeDatos = BaseDeDatos.obtenerInstancia(tagMsgeConBbDd);
+
 		
 		// CREAR NUEVO TORNEO
 		JLabel tagNuevoTorneo = new JLabel("Crear nuevo torneo:");
@@ -268,7 +278,7 @@ public class Gestor extends JFrame {
 		
 		// BOTON PARA CERRAR LA APLICACION
 		JButton botonCerrar = new JButton("CERRAR APLICACIÓN");
-	        botonCerrar.setBounds(200, 320, 200, 25);
+	        botonCerrar.setBounds(395, 325, 170, 25);
 	     // INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 	        botonCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
 			    public void mouseEntered(java.awt.event.MouseEvent evt) {

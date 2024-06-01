@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -41,17 +42,17 @@ public class Clasificaciones extends JFrame {
 	}
 
 	public Clasificaciones() {
-				// FORMATO DEL CONTENTPANE
+		// FORMATO DEL CONTENTPANE
 				setForeground(new Color(255, 255, 255));
 				setResizable(false);
 				setType(Type.POPUP);
 				setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
 				setTitle("Aplicación Gestora de Torneos  -  Clasificaciones");
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				setBounds(100, 100, 600, 400);
+				setBounds(100, 100, 600, 420);
 				contentPane = new JPanel();
 				contentPane.setBorder(UIManager.getBorder("TitledBorder.border"));
-				contentPane.setPreferredSize(new Dimension(600, 400));
+				contentPane.setPreferredSize(new Dimension(600, 420));
 		        contentPane.setBackground(new Color(152, 180, 216));
 				setContentPane(contentPane);
 				contentPane.setLayout(null);
