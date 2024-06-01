@@ -129,4 +129,24 @@ public class BaseDeDatos {
         
         return torneos;
     }
+	
+	//CONSULTA PARA CAMBIAR ESTADO DE TORNEO
+	public List<Object[]> listarIdTorIna() throws SQLException {
+		List<Object[]> selTorIna = new ArrayList<>();
+		Statement st = con.createStatement();
+		String sql = "SELECT * FROM torneos;";
+		ResultSet rs = st.executeQuery(sql);
+		
+		while(rs.next()) {
+			
+			int id = rs.getInt("id");
+			String nombre=rs.getString("nombre");
+			int numJug = rs.getInt("numero_jugadores");
+			int numEquip = rs.getInt("numero_equipos");
+			int estaActivo = rs.getInt("estaActivo");
+			selTorIna.add(new Object[] {id,numJug, numEquip,estaActivo});
+		}
+				
+		return selTorIna;
+	}
 }

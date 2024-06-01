@@ -208,5 +208,9 @@ public class InscripcionesRecibidas extends JFrame {
 		            }
 		        });
 		contentPane.add(botonMenuPrincipal);
+		
+		//METODOS
+		
+		
 	}
 }

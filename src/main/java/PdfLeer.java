@@ -1,3 +1,4 @@
+import com.spire.ms.System.Collections.Generic.List;
 import com.spire.pdf.PdfDocument;
 import com.spire.pdf.fields.PdfField;
 import com.spire.pdf.widget.PdfFormWidget;
@@ -7,13 +8,13 @@ import com.spire.pdf.widget.PdfTextBoxFieldWidget;
 
 public class PdfLeer {
 	
-	
-	
+  
 public  PdfLeer leerPdf() {
+	
 		
 		// Cargar el documento PDF
         PdfDocument pdf = new PdfDocument();
-        pdf.loadFromFile("FormularioUsuario5relleno.pdf");
+       // pdf.loadFromFile("torneo_"+nombre+"/Inscripciones_recibidas/Formulario_Inscripcion_torneo_"+nombre+".pdf");
 
         // Obtener el widget del formulario
         PdfFormWidget formWidget = (PdfFormWidget) pdf.getForm();
