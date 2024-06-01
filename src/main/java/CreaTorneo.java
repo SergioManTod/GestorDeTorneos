@@ -5,8 +5,11 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -22,6 +25,7 @@ public class CreaTorneo extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldNomTorneo;
+	private JLabel tagMsgeIntroNuevoTorneoBbDd;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -54,6 +58,15 @@ public class CreaTorneo extends JFrame {
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		// FIN FORMATO DEL CONTENTPANE
+		
+		//JLABEL MENSAJE DE RESEULTADO DE INSERCION EN LA BBDD
+	    tagMsgeIntroNuevoTorneoBbDd = new JLabel();
+	    tagMsgeIntroNuevoTorneoBbDd.setToolTipText("");
+	    tagMsgeIntroNuevoTorneoBbDd.setHorizontalAlignment(SwingConstants.CENTER);
+	    tagMsgeIntroNuevoTorneoBbDd.setForeground(Color.WHITE);
+	    tagMsgeIntroNuevoTorneoBbDd.setFont(new Font("Tahoma", Font.BOLD, 12));
+	    tagMsgeIntroNuevoTorneoBbDd.setBounds(26, 250, 350, 75);
+	    contentPane.add(tagMsgeIntroNuevoTorneoBbDd);
 		
 		JLabel tagInstrucciones = new JLabel("RELLENA LOS CAMPOS TAL COMO SE PIDE PARA QUE EL FORMULARIO DE INSCRIPCIÓN SE CONSTRUYA CON EXITO");
 		tagInstrucciones.setToolTipText("");
@@ -122,34 +135,41 @@ public class CreaTorneo extends JFrame {
 		});
 		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
 		botonCrearTorneo.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	String nombreTorneo = textFieldNomTorneo.getText();
-	                int cantEquipos = (int) jSpinnerCantEquipos.getValue();
-	                int cantJugadores = (int) jSpinnerCantJugadores.getValue();
-	               
-	                Torneo nuevoTorneo = new Torneo(nombreTorneo, cantEquipos, cantJugadores, BaseDeDatos.obtenerInstancia().obtenerConexion());
-	               
-	                if ( nuevoTorneo.comprobarNombreTorneo(nombreTorneo)) {
-	                	BaseDeDatos baseDeDatos = new BaseDeDatos();
-						baseDeDatos.insertaTorneoNuevo(nuevoTorneo);
-						JLabel tagMsgeIntroNuevoTorneoBbDd = new JLabel("<html>El Torneo " + nuevoTorneo.getNombTorneo() + "<br>se a guardado correctamente en la Base de Datos.<br>Con un minimo de "+nuevoTorneo.getCantEquipos()+" de equipos participantes <br>y un minimo de "+nuevoTorneo.getCantJugadores()+" jugadores por equipo.</html>");
-				        tagMsgeIntroNuevoTorneoBbDd.setToolTipText("");
-				        tagMsgeIntroNuevoTorneoBbDd.setHorizontalAlignment(SwingConstants.CENTER);
-				        tagMsgeIntroNuevoTorneoBbDd.setForeground(Color.WHITE);
-				        tagMsgeIntroNuevoTorneoBbDd.setFont(new Font("Tahoma", Font.BOLD, 12));
-				        tagMsgeIntroNuevoTorneoBbDd.setBounds(26, 250,300, 75);
-				        contentPane.add(tagMsgeIntroNuevoTorneoBbDd);
-				        contentPane.revalidate();
-				        contentPane.repaint();
-				        PdfCrear inscripcion = new PdfCrear();
-				        inscripcion.crearpdfFormulario(nombreTorneo, cantJugadores);
-				        CreaDirectorios nuevoArbolDeDirectorios = new CreaDirectorios();
-				        nuevoArbolDeDirectorios.arbolDeCarpetas(nombreTorneo);
-	                }else {System.out.println("no");}
-	            }
-	        });
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        tagMsgeIntroNuevoTorneoBbDd.setText("");
+		        String nombreTorneo = textFieldNomTorneo.getText();
+		        int cantEquipos = (int) jSpinnerCantEquipos.getValue();
+		        int cantJugadores = (int) jSpinnerCantJugadores.getValue();
+		        Torneo nuevoTorneo = new Torneo(nombreTorneo, cantEquipos, cantJugadores, BaseDeDatos.obtenerInstancia().obtenerConexion());
+		        String mensajeError = null;
+		        try {
+		            boolean nombreTorneoValido = nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
+		            if (nombreTorneo.length() == 0) {
+		                mensajeError = "No puede estar el campo nombre vacío.";
+		            } else if (!nombreTorneoValido) {
+		                mensajeError = "<html>El torneo "+nombreTorneo+" ya existe en la base de datos.<br>Intentalo asignando otro nombre.</html>";
+		            }
+		            if (mensajeError == null) {
+		                BaseDeDatos baseDeDatos = new BaseDeDatos();
+		                baseDeDatos.insertaTorneoNuevo(nuevoTorneo);
+		                tagMsgeIntroNuevoTorneoBbDd.setText("<html>El Torneo " + nuevoTorneo.getNombTorneo() + "<br>se ha guardado correctamente en la Base de Datos.<br>Con un mínimo de " + nuevoTorneo.getCantEquipos() + " equipos participantes <br>y un mínimo de " + nuevoTorneo.getCantJugadores() + " jugadores por equipo.</html>");
+		                PdfCrear inscripcion = new PdfCrear();
+		                inscripcion.crearpdfFormulario(nombreTorneo, cantJugadores);
+		                CreaDirectorios nuevoArbolDeDirectorios = new CreaDirectorios();
+		                nuevoArbolDeDirectorios.arbolDeCarpetas(nombreTorneo);
+		            } else {
+		                tagMsgeIntroNuevoTorneoBbDd.setText(mensajeError);
+		            }
+		        } catch (SQLException ex) {
+		            JOptionPane.showMessageDialog(contentPane, "Error al hacer la consulta en la base de datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		        }
+		        contentPane.revalidate();
+		        contentPane.repaint();
+		    }
+		});
 		contentPane.add(botonCrearTorneo);
+	
 		
 		// BOTON PARA VOLVER AL MENU PRINCIPAL
 		JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
