@@ -97,7 +97,7 @@ public class IniciaTorneo extends JFrame {
         JLabel tagStatusCal = new JLabel("");
         tagStatusCal.setHorizontalAlignment(SwingConstants.LEFT);
         tagStatusCal.setForeground(Color.WHITE);
-        tagStatusCal.setFont(new Font("Tahoma", Font.BOLD, 10));
+        tagStatusCal.setFont(new Font("Tahoma", Font.PLAIN, 9));
         tagStatusCal.setBackground(UIManager.getColor("Button.background"));
         tagStatusCal.setBounds(10, 285, 290, 44);
         contentPane.add(tagStatusCal);
@@ -152,8 +152,9 @@ public class IniciaTorneo extends JFrame {
         });
         contentPane.add(botonMenuPrincipal);
         
-        List<String> torneos =baseDeDatos.listarTorneosInactivos();
-        JComboBox comboBox = new JComboBox<>(torneos.toArray(new String[0]));
+        List<String> torneos = baseDeDatos.listarTorneosInactivos();
+        torneos.add(0, "SELECCIONE UN TORNEO"); // Agrega el mensaje al principio de la lista
+        JComboBox<String> comboBox = new JComboBox<>(torneos.toArray(new String[0]));
         comboBox.setBounds(10, 20, 290, 25);
         contentPane.add(comboBox);
         
@@ -167,6 +168,7 @@ public class IniciaTorneo extends JFrame {
        
         JButton botonAniadirFecha = new JButton("AÑADIR FECHA");
         botonAniadirFecha.setBounds(50, 350, 140, 25);
+        botonAniadirFecha.setFont(new Font("Tahoma", Font.PLAIN, 9));
      // INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
         botonAniadirFecha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -206,7 +208,7 @@ public class IniciaTorneo extends JFrame {
         JLabel lblNewLabel = new JLabel("Número de partidos por dia");
         lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         lblNewLabel.setForeground(new Color(255, 255, 255));
-        lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 9));
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
         lblNewLabel.setBounds(330, 20, 160, 25);
         contentPane.add(lblNewLabel);
         
@@ -223,23 +225,7 @@ public class IniciaTorneo extends JFrame {
         numPartidosDia.setBounds(500, 20, 50, 25);
         contentPane.add(numPartidosDia);
         numPartidosDia.setColumns(10);
-<<<<<<< HEAD
-        JList<String> list= new JList<>(listModel);
-        list.setBounds(330, 80, 112, 239);
-        contentPane.add(list);
-=======
-        
-        botonCrearCalendario.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		    	String nombreTorneo =(String)comboBox.getSelectedItem();
-		      if(crearTorneo(nombreTorneo,baseDeDatos)) {
-		    	  
-		      };
-		    	
-		    }
-		});
->>>>>>> rama «main» de https://github.com/SergioManTod/GestorDeTorneos.git
+
 
         
         botonCrearCalendario.addActionListener(new ActionListener() {

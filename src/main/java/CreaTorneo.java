@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -154,26 +153,6 @@ public class CreaTorneo extends JFrame {
 		                mensajeError = "<html>El torneo "+nombreTorneo+" ya existe en la base de datos.<br>Intentalo asignando otro nombre.</html>";
 		            }
 		            if (mensajeError == null) {
-<<<<<<< HEAD
-		            	
-	                    baseDeDatos.insertaTorneoNuevo(nuevoTorneo);
-	                    tagMsgeIntroNuevoTorneoBbDd.setText("<html>El Torneo " + nuevoTorneo.getNombTorneo() + "<br>se ha guardado correctamente en la Base de Datos.<br>Con un mínimo de " + nuevoTorneo.getCantEquipos() + " equipos participantes <br>y un mínimo de " + nuevoTorneo.getCantJugadores() + " jugadores por equipo.</html>");
-	                    PdfCrear inscripcion = new PdfCrear();
-	                    inscripcion.crearpdfFormulario(nombreTorneo, cantJugadores);
-	                    CreaDirectorios nuevoArbolDeDirectorios = new CreaDirectorios();
-	                    nuevoArbolDeDirectorios.arbolDeCarpetas(nombreTorneo);
-	                } else {
-	                    tagMsgeIntroNuevoTorneoBbDd.setText(mensajeError);
-	                }
-	            } catch (SQLException ex) {
-	                JOptionPane.showMessageDialog(contentPane, "Error al hacer la consulta en la base de datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-	            }
-	            contentPane.revalidate();
-	            contentPane.repaint();
-	        }
-	    });
-=======
-		                BaseDeDatos baseDeDatos = new BaseDeDatos(tagMsgeConBbDd);
 		                baseDeDatos.insertaTorneoNuevo(nuevoTorneo);
 		                tagMsgeIntroNuevoTorneoBbDd.setText("<html>El Torneo " + nuevoTorneo.getNombTorneo() + "<br>se ha guardado correctamente en la Base de Datos.<br>Con un mínimo de " + nuevoTorneo.getCantEquipos() + " equipos participantes <br>y un mínimo de " + nuevoTorneo.getCantJugadores() + " jugadores por equipo.</html>");
 		                PdfCrear inscripcion = new PdfCrear();
@@ -191,7 +170,6 @@ public class CreaTorneo extends JFrame {
 		        contentPane.repaint();
 		    }
 		});
->>>>>>> rama «main» de https://github.com/SergioManTod/GestorDeTorneos.git
 		contentPane.add(botonCrearTorneo);
 	
 		
