@@ -213,8 +213,9 @@ public class IniciaTorneo extends JFrame {
         botonCrearCalendario.addActionListener(new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
-		    	String nombreTorneo =(String)comboBox.getSelectedItem();
-		      if(crearTorneo(nombreTorneo,baseDeDatos)) {
+		    	String nombreTorneoCombo =(String)comboBox.getSelectedItem();
+		    	System.out.println("combo"+nombreTorneoCombo);
+		      if(crearTorneo(nombreTorneoCombo,baseDeDatos)) {
 		    	  
 		      };
 		    	
@@ -222,58 +223,86 @@ public class IniciaTorneo extends JFrame {
 		});
     }
 
-    public static boolean crearTorneo(String nombreTorneo, BaseDeDatos baseDeDatos) {
+    public static boolean crearTorneo(String nombreTorneocombo, BaseDeDatos baseDeDatos) {
     	List <String[]> datosTorneo=new ArrayList<>();
     	PdfLeer nuevaLectura=new PdfLeer();
     	try {
-			datosTorneo=baseDeDatos.consultaTorneo(nombreTorneo);
+			datosTorneo=baseDeDatos.consultaTorneo(nombreTorneocombo);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	int id=Integer.parseInt(datosTorneo.get(0)[0]);
-    	nombreTorneo=datosTorneo.get(0)[1];
-    	int numMinJugadores=Integer.parseInt(datosTorneo.get(0)[2]);
-    	int numMinEquipos=Integer.parseInt(datosTorneo.get(0)[3]);
-    	
+    	System.out.println("id = "+id);
+    	 String nombreTorneo=datosTorneo.get(1)[0];
+    	 System.out.println("nombre torneo ="+nombreTorneo);
+    	int numMinJugadores=Integer.parseInt(datosTorneo.get(2)[0]);
+    	System.out.println("numero minimimos de jugaderos="+numMinJugadores);
+    	int numMinEquipos=Integer.parseInt(datosTorneo.get(3)[0]);
+    	System.out.println("numero minimimos de equipos ="+numMinEquipos);
+//    	int activo=Integer.parseInt(datosTorneo.get(4)[0]);
+//    	System.out.println("activo ="+activo);
     	
     	 ArrayList<Object[]> listaequipos = new ArrayList<Object[]>();
-    	 List<String> nombreArchivos=nombreArchivos(nombreTorneo);
+    	 List<String> nombreArchivos=nombreArchivos(nombreTorneocombo);
+    	 for(int i=0;i<nombreArchivos.size();i++) {
+    		 System.out.println(nombreArchivos.get(i));
+    	 }
+    	 Equipo arrayEquipos[]=new Equipo[nombreArchivos.size()];
     	 if(nombreArchivos.size()<numMinEquipos) {
     		 System.out.println("falta Inscripciones");
     	 }else {
+    		 int formulariosRechazados=0;
     		 for(int i=0;i<nombreArchivos.size();i++) {
         		 String nombreArchivo=nombreArchivos.get(i);
-        		 listaequipos.addAll(nuevaLectura.leerPdf(numMinJugadores,nombreTorneo,nombreArchivo));
-        	 }
-    		 if(listaequipos.size()<numMinEquipos) {
-    			 System.out.println("equipos insuficientes");
-    		 }else {
-    			 for(int i=0;i<listaequipos.size();i++) {
-    				 if(i==0) {
-    					 Object[] objetopnombredeEquipo=(listaequipos.get(i));
-    					 String nombreEquipo=objetopnombredeEquipo.toString();
-    				 }if(i==1) {
-    					 Object[] objetoemail=(listaequipos.get(i));
-    					 String email=objetoemail.toString();
-    				 }if(i==2) {
-    					 Object[] objetoDelegado=(listaequipos.get(i));
-//    					 Delegado nuevoDelegado= new Delegado(objetoDelegado);
-    				 }
-    			 }
-    		 }
-    		 
-    	 }
+        		 if (nuevaLectura.leerPdf(numMinJugadores,nombreTorneocombo,nombreArchivo)==null) {
+        			 System.out.println("pdf incorrecto");
+        			 formulariosRechazados++;
+        			 
+        		 }else {
+        			 arrayEquipos[i]=(nuevaLectura.leerPdf(numMinJugadores,nombreTorneocombo,nombreArchivo));
+        			 
+        		 }
+        		 
+        	
     	 
     	 
 
+    		 }
+    		 if(arrayEquipos.length-formulariosRechazados<numMinEquipos) {
+    			 System.out.println("no hay suficientes equipos correctamente inscritos");
+    		 }else {
+    			 //consulta para extraer id de torneo
+    			 for(int i=0;i<arrayEquipos.length;i++) {
+    				 if(arrayEquipos[i]!=null) {
+    					 String nombre=arrayEquipos[i].getNombre();
+    					 String email=arrayEquipos[i].getEmail();
+    					 // insertar en base de Datos id de torneo, nombre de equipo y correo electronico
+    					 int idequipo=0;
+    					 //consulta para estraer id de equipo y poder insertar los jugadores con su id de equipo
+    					 Delegado nuevoDelegado=arrayEquipos[i].getResponsable();
+    					 ///extraer campos de delegado y e insertar un nuevo jugador delegado trrue
+    					 Arbitro nuevoArbitro=arrayEquipos[i].getArbitro();
+    					 //extraer campos de arbitro e insertar un nuevo jugador arbitro true
+    					 Jugador arrayJugadores[]=arrayEquipos[i].getJugadores();
+    					 for(int j =0;j<arrayJugadores.length;j++) {
+    						String  nombreJugador=arrayJugadores[j].getNombre();
+    						//extraer todos los campos e insertar un nuevo jugador dentro del bucle
+    					 }
+    					
+    					 //una vez subidos todos los jugadores obtenemos el id del delegado y el arbitro ylos aññadimos a la tabla equipo
+    				 }
+    				 
+    			 }
+    		 }
     	
-    	
-    	return true;
+    	///aqui generamoo fiuncion para partidos
     	
     	
 		
     	
+    }
+    	 return true;
     }
     public static List<String> nombreArchivos(String nombreTorneo){
     	List<String> archivos=new ArrayList<String>();
@@ -283,7 +312,8 @@ public class IniciaTorneo extends JFrame {
     		for (int i=0 ;i <af.length;i++) {
     			File afa=af[i];
     			if (afa.isFile()) {
-    				archivos.add(afa.getName());
+    				archivos.add(i,afa.getName());
+    				System.out.println(afa.getName());
     			}
     		}
     	}

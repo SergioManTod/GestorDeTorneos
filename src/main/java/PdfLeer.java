@@ -1,5 +1,7 @@
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -16,12 +18,14 @@ import com.spire.pdf.widget.PdfTextBoxFieldWidget;
 public class PdfLeer {
 	
   
-public  ArrayList<Object[]> leerPdf(int minimoJugadores,String nombreTorneo, String nombreArchivo ) {
-	   ArrayList<Object[]> listaequipos = new ArrayList<Object[]>();
-		 
+public  Equipo leerPdf(int minimoJugadores,String nombreTorneo, String nombreArchivo ) {
+	   ArrayList<Object[]> listaequipos = new ArrayList<>();
+	   
 		// Cargar el documento PDF
         PdfDocument pdf = new PdfDocument();
-       pdf.loadFromFile("torneo_"+nombreTorneo+"/Inscripciones_recibidas/"+nombreArchivo);
+
+        System.out.println("torneo_"+nombreTorneo+"\\Inscripciones_recibidas\\"+nombreArchivo);
+        pdf.loadFromFile("torneo_"+nombreTorneo+"\\Inscripciones_recibidas\\"+nombreArchivo);
         	Metodos comprobar=new Metodos();
         // Obtener el widget del formulario
         PdfFormWidget formWidget = (PdfFormWidget) pdf.getForm();
@@ -44,16 +48,21 @@ public  ArrayList<Object[]> leerPdf(int minimoJugadores,String nombreTorneo, Str
         	String dni="";
         	
         	String fechaNacimiento=null;
-        	LocalDate fechaF = LocalDate.parse(fechaNacimiento);
+        	LocalDate fechaF = null ;
         	List<LocalDate> listaFechas=new List<LocalDate>();
         	StringBuilder sb = new StringBuilder();
-        	boolean inscribirEquipo=true;
         	
-        String texto1="";
+        	boolean inscribirEquipo=true;
+        	Delegado nuevoDelegado=new Delegado();
+        	Arbitro nuevoArbitro=new Arbitro();
+        	Jugador nuevoJugador=new Jugador();
+        	
+       
         // Recorrer la colección de widgets de campos y extraer los valores
         for (int i = 0; i < 2; i++) {
+        	System.out.println("aqui no");
         	PdfField field = (PdfField) formWidget.getFieldsWidget().getList().get(i);
-
+        	System.out.println("aqui tampoco");
         	if(i==0) {
         		nombreEquipo=leerCampo(pdf,formWidget,field);
         		if(!comprobar.validarNombreEquipo(listaNombresEquipo, nombreEquipo)) {
@@ -70,99 +79,65 @@ public  ArrayList<Object[]> leerPdf(int minimoJugadores,String nombreTorneo, Str
             
 
         }
+//        
         for (int i = 2; i < formWidget.getFieldsWidget().getCount(); i++) {
-        	boolean inscribirJugador=true;
-        	PdfField field = (PdfField) formWidget.getFieldsWidget().getList().get(i);
-            for(int j=0;j<4;j++) {
-            	switch (j) {
-				case 0: {
-					nombreJugador=leerCampo(pdf,formWidget,field);
-					System.out.println("nombre jugador ="+nombreJugador);
-					if(!comprobar.validarNombre(nombreJugador)) {
-						inscribirJugador=false;
-					}
-					break;
-					}
-				case 1: {
-					
-					apellido1=leerCampo(pdf,formWidget,field);
-					System.out.println("apellido1 ="+apellido1);
-					if(!comprobar.validarApellido1(apellido1)) {
-						inscribirJugador=false;
-					}
-					break;
-					}
-				case 2: {
-					apellido2=leerCampo(pdf,formWidget,field);
-					System.out.println("apellido2 = "+apellido2);
-					if(!comprobar.validarApellido2(apellido2)) {
-						inscribirJugador=false;
-					}
-					break;
-					}
-				case 3: {
-					dni=leerCampo(pdf,formWidget,field);
-					System.out.println("dni= "+dni);
-					if(!comprobar.validaDni(dni)) {
-						inscribirJugador=false;
-					}
-					break;
-					}
-				case 4: {
-					fechaNacimiento=leerCampo(pdf,formWidget,field);
-					System.out.println("fecha nacimiento ="+fechaNacimiento);
-					if(!comprobar.validarEdad(fechaF)) {
-						inscribirJugador=false;
-					}
-					
-					break;
-					}
-				}
-            	
-            	if(inscribirJugador) {
-            		listaNombresjugador.add(nombreJugador);
-            		listaApellidos1.add(apellido1);
-            		listaApellidos2.add(apellido2);
-            		listaDni.add(dni);
-            		listaFechas.add(fechaF);
-            	}
-            	
-                 
+        	System.out.println("aqui???");
+            boolean inscribirJugador = true;
+            PdfField field = (PdfField) formWidget.getFieldsWidget().getList().get(i);
+
+            nombreJugador = leerCampo(pdf, formWidget, field);
+            apellido1 = leerCampo(pdf, formWidget, field);
+             apellido2 = leerCampo(pdf, formWidget, field);
+             dni = leerCampo(pdf, formWidget, field);
+             fechaNacimiento = leerCampo(pdf, formWidget, field);
+
+             fechaF = stringToLocalDate(fechaNacimiento);
+
+            if (!comprobar.validarNombre(nombreJugador) ||
+                !comprobar.validarApellido1(apellido1) ||
+                !comprobar.validarApellido2(apellido2) ||
+                !comprobar.validaDni(dni)) {
+                inscribirJugador = false;
             }
-        
+
+            if (inscribirJugador) {
+                listaNombresjugador.add(nombreJugador);
+                listaApellidos1.add(apellido1);
+                listaApellidos2.add(apellido2);
+                listaDni.add(dni);
+                listaFechas.add(fechaF);
+            }
             
-            
-           
         }
+        Jugador[] arrayJugadores=new Jugador[listaNombresjugador.size()];
         if(inscribirEquipo==true&& listaNombresjugador.size()>=minimoJugadores ) {
         	for(int i=0;i<listaNombresjugador.size();i++) {
         		  
-        		Object[] objNomEquipo= {nombreEquipo}; 
-        		Object[] objEmail= {email}; 
-        		listaequipos.add(objNomEquipo);
-        		listaequipos.add(objEmail);
+        		
+        		
         		
         		if(i==0) {
         			
         			
-        			Delegado nuevodelegado= new Delegado(listaNombresjugador.get_Item(i),listaApellidos1.get_Item(i),listaApellidos2.get_Item(i),listaFechas.get_Item(i),listaEmail.get_Item(i));
-        			Object[] objetoDelegado= {nuevodelegado};
-        			listaequipos.add(objetoDelegado);
+        			nuevoDelegado= new Delegado(listaNombresjugador.get(i).toString(),listaApellidos1.get(i).toString(),listaApellidos2.get(i).toString(),listaFechas.get(i),listaDni.get(i).toString());
+        			
+        			
         		}else {
         			if(i==1) {
-        				Arbitro nuevoArbitro= new Arbitro(listaNombresjugador.get_Item(i),listaApellidos1.get_Item(i),listaApellidos2.get_Item(i),listaFechas.get_Item(i),listaEmail.get_Item(i));
-        				Object[] objetoArbitro= {nuevoArbitro};
-            			listaequipos.add(objetoArbitro);
+        				nuevoArbitro= new Arbitro(listaNombresjugador.get(i).toString(),listaApellidos1.get(i).toString(),listaApellidos2.get(i).toString(),listaFechas.get(i),listaDni.get(i).toString());
+        				
         						}else {
-        				Jugador nuevoJugador= new Jugador(listaNombresjugador.get_Item(i),listaApellidos1.get_Item(i),listaApellidos2.get_Item(i),listaFechas.get_Item(i),listaEmail.get_Item(i));
-        				Object[] objetojugador= {nuevoJugador};
-            			listaequipos.add(objetojugador);
+        				nuevoJugador= new Jugador(listaNombresjugador.get(i).toString(),listaApellidos1.get(i).toString(),listaApellidos2.get(i).toString(),listaFechas.get(i),listaDni.get(i).toString());
+        				
+            			
         			}
         			
         		}
+        		
         	}
+        	Equipo nuevoEquipo=new Equipo(nombreEquipo,email,nuevoDelegado,nuevoArbitro,arrayJugadores);	
         	pdf.close();
-        	return listaequipos;
+        	return  nuevoEquipo;
         }else {
             pdf.close();
         	return null;
@@ -179,13 +154,23 @@ public  ArrayList<Object[]> leerPdf(int minimoJugadores,String nombreTorneo, Str
 	   if (field instanceof PdfTextBoxFieldWidget) {
            PdfTextBoxFieldWidget textBoxField = (PdfTextBoxFieldWidget) field;
            campo = textBoxField.getText();
-           System.out.println(campo + "\r\n");
+           
            
        }
 	   
-	return campo;
+	return campo ;
 	   
    }
    
-
+   public static LocalDate stringToLocalDate(String date) {
+       final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+       LocalDate localDate;
+       try {
+           localDate = LocalDate.parse(date, dateTimeFormatter);
+       } catch (DateTimeParseException e) {
+           return null;
+       }
+       return localDate;
+   }
 }
+

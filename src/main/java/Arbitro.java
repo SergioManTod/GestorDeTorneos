@@ -2,6 +2,12 @@ import java.time.LocalDate;
 
 
 public class Arbitro extends Jugador{
+	
+	public Arbitro() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	private boolean esArbitro=true;
 	
 	// CONSTRUCTORES

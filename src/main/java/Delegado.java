@@ -15,6 +15,10 @@ public class Delegado extends Jugador{
 
 	
 
+	public Delegado() {
+		super();// TODO Auto-generated constructor stub
+	}
+
 	public void setEsDelegado(boolean esDelegado) {
 		this.esDelegado = esDelegado;
 	}
