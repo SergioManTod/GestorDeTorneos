@@ -1,3 +1,8 @@
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Locale;
+
 import com.spire.ms.System.Collections.Generic.List;
 import com.spire.pdf.PdfDocument;
 import com.spire.pdf.fields.PdfField;
@@ -18,88 +23,117 @@ public  PdfLeer leerPdf() {
 
         // Obtener el widget del formulario
         PdfFormWidget formWidget = (PdfFormWidget) pdf.getForm();
-
+        String email="";	
+        String nombreEquipo="";
+        String nombreJugador="";
+        	String apellido1="";
+        	String apellido2="";
+        	String dni="";
+        	String fechaNacimiento=null;
+        	
         StringBuilder sb = new StringBuilder();
         String texto1="";
         // Recorrer la colección de widgets de campos y extraer los valores
         for (int i = 0; i < 2; i++) {
-        	
-        	if(i==0) {
-        		texto1="el nombre de equipo es ";
-        	}else {
-        		texto1="el correo de contacto es ";
-        	}
-            PdfField field = (PdfField) formWidget.getFieldsWidget().getList().get(i);
+        	PdfField field = (PdfField) formWidget.getFieldsWidget().getList().get(i);
 
-            if (field instanceof PdfTextBoxFieldWidget) {
-                PdfTextBoxFieldWidget textBoxField = (PdfTextBoxFieldWidget) field;
-                String texto = textBoxField.getText();
-                System.out.println(texto1 + texto + "\r\n");
-                sb.append("El texto en el campo de texto es: " + texto + "\r\n");
-            }
+        	if(i==0) {
+        		nombreEquipo=leerCampo(pdf,formWidget,field);
+        	}else {
+        		email=leerCampo(pdf,formWidget,field);
+        	}
+            
+//            if (field instanceof PdfTextBoxFieldWidget) {
+//                PdfTextBoxFieldWidget textBoxField = (PdfTextBoxFieldWidget) field;
+//                Strin= textBoxField.getText();
+//                System.out.println(texto1 + texto + "\r\n");
+//                sb.append("El texto en el campo de texto es: " + texto + "\r\n");
+//            }
             // También puedes manejar otros tipos de campos aquí (listas desplegables, etc.).
 
             // ...
         }
         for (int i = 2; i < formWidget.getFieldsWidget().getCount(); i++) {
             
-        		
+        	PdfField field = (PdfField) formWidget.getFieldsWidget().getList().get(i);
             for(int j=0;j<5;j++) {
             	switch (j) {
 				case 0: {
-					texto1="nombre de jugador= ";
+					nombreJugador=leerCampo(pdf,formWidget,field);
 					break;
 					}
 				case 1: {
-					texto1="apellido 1 de jugador= ";
+					apellido1=leerCampo(pdf,formWidget,field);
 					break;
 					}
 				case 2: {
-					texto1="apellido 2 de jugador= ";
+					apellido2=leerCampo(pdf,formWidget,field);
 					break;
 					}
 				case 3: {
-					texto1="dni de jugador= ";
+					dni=leerCampo(pdf,formWidget,field);
 					break;
 					}
 				case 4: {
-					texto1="fecha de nacimiento de jugador= ";
+					fechaNacimiento=leerCampo(pdf,formWidget,field);
 					break;
 					}
 				}
-            	PdfField field = (PdfField) formWidget.getFieldsWidget().getList().get(i);
-            	 if (field instanceof PdfTextBoxFieldWidget) {
-                     PdfTextBoxFieldWidget textBoxField = (PdfTextBoxFieldWidget) field;
-                     String texto = textBoxField.getText();
-                     System.out.println(texto1 + texto + "\r\n");
-                     sb.append("El texto en el campo de texto es: " + texto + "\r\n");
-                 }
+//            	
+//            	 if (field instanceof PdfTextBoxFieldWidget) {
+//                     PdfTextBoxFieldWidget textBoxField = (PdfTextBoxFieldWidget) field;
+//                     String texto = textBoxField.getText();
+//                     System.out.println(texto1 + texto + "\r\n");
+//                     sb.append("El texto en el campo de texto es: " + texto + "\r\n");
+//                 }
             	 if(j!=4) {
             		 i++; 
             	 }
+            	 if(i==2) {
+            		 LocalDate fechaF = LocalDate.parse(fechaNacimiento);
+                     
+                	 Delegado nuevodelegado= new Delegado(nombreJugador,apellido1,apellido2,fechaF,dni);
+                	 
+            	 }else {
+            		 if(i==3) {
+            			 LocalDate fechaF = LocalDate.parse(fechaNacimiento);
+                         
+                    	 Arbitro nuevoArbitro= new Arbitro(nombreJugador,apellido1,apellido2,fechaF,dni);
+                    	 
+            		 }else {
+            			 LocalDate fechaF = LocalDate.parse(fechaNacimiento);
+                         
+                    	 Jugador nuevo= new Jugador(nombreJugador,apellido1,apellido2,fechaF,dni);
+            		 }
+            	 }
             	
+                 
             }
 
+         
+         
            
-            // También puedes manejar otros tipos de campos aquí (listas desplegables, etc.).
-
-            // ...
         }
 
-       // try {
-            // Escribir los valores en un archivo .txt
-            //FileWriter writer = new FileWriter("ValoresDeTodosLosCampos.txt");
-        //writer.write(sb.toString());
-        // writer.flush();
-        // writer.close();
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        //}
+        
 
         pdf.close();
 		
 		return null;
 		
 	}
+   public String leerCampo( PdfDocument pdf,PdfFormWidget formWidget, PdfField field) {
+	  String campo="";
+	   if (field instanceof PdfTextBoxFieldWidget) {
+           PdfTextBoxFieldWidget textBoxField = (PdfTextBoxFieldWidget) field;
+           campo = textBoxField.getText();
+           System.out.println(campo + "\r\n");
+           
+       }
+	   
+	return campo;
+	   
+   }
+   
 
 }

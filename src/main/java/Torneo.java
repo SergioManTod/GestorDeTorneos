@@ -8,7 +8,7 @@ public class Torneo {
 	private int cantEquipos;
 	private int cantJugadores;
 	private Connection con;
-	
+	private String email;
 	//CONSTRUCTORES
 	public Torneo(String nombTorneo, int cantEquipos, int cantJugadores) throws SQLException {
 		super();

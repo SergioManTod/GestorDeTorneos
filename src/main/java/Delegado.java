@@ -1,25 +1,19 @@
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class Delegado extends Jugador{
 	private boolean esDelegado=true;
 
 	// CONSTRUCTORES
-	public Delegado(String nombre, String apellidoUno, String apellidoDos, Date fechaNacimiento, String dni,
-			boolean esMayor, int puntosJugador, int amarillaJugador, int rojasJugador, boolean esDelegado) {
-		super(nombre, apellidoUno, apellidoDos, fechaNacimiento, dni, esMayor, puntosJugador, amarillaJugador,
-				rojasJugador);
-		this.esDelegado = esDelegado;
-	}
-
-	public Delegado() {
-		super();
-		
+	public Delegado(String nombre, String apellidoUno, String apellidoDos, LocalDate fechaNacimiento, String dni) {
+		super(nombre, apellidoUno, apellidoDos, fechaNacimiento, dni);
+		// TODO Auto-generated constructor stub
 	}
 
 	// GETTERS Y SETTERS
-	public boolean isEsDelegado() {
-		return esDelegado;
-	}
+	
+
+	
 
 	public void setEsDelegado(boolean esDelegado) {
 		this.esDelegado = esDelegado;

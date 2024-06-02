@@ -1,21 +1,19 @@
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class Arbitro extends Jugador{
 	private boolean esArbitro=true;
 	
 	// CONSTRUCTORES
-	public Arbitro(String nombre, String apellidoUno, String apellidoDos, Date fechaNacimiento, String dni,
-			boolean esMayor, int puntosJugador, int amarillaJugador, int rojasJugador, boolean esArbitro) {
-		super(nombre, apellidoUno, apellidoDos, fechaNacimiento, dni, esMayor, puntosJugador, amarillaJugador,
-				rojasJugador);
-		this.esArbitro = esArbitro;
+	public Arbitro(String nombre, String apellidoUno, String apellidoDos, LocalDate fechaNacimiento, String dni) {
+		super(nombre, apellidoUno, apellidoDos, fechaNacimiento, dni);
+		// TODO Auto-generated constructor stub
 	}
 	
-	public Arbitro() {
-		super();
-		
-	}
 	
+	
+	
+
 	// GETTERS Y SETTERS
 	public boolean isEsArbitro() {
 		return esArbitro;

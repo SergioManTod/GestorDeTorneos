@@ -39,7 +39,7 @@ public class BaseDeDatos {
 
         Properties prop = new Properties();
 
-        try (InputStream is = new FileInputStream("src/main/resources/bd_casa_sergio.properties")) {
+        try (InputStream is = new FileInputStream("src/main/resources/bd.properties")) {
             prop.load(is);
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,7 +115,7 @@ public class BaseDeDatos {
 	}	
 	
 	//CONSULTA PARA LISTAR TODOS LOS TORNEOS
-	public List<Object[]> listarTorneosInactivos() throws SQLException {
+	public List<Object[]> listarTorneos() throws SQLException {
         List<Object[]> torneos = new ArrayList<>();
         Statement st = con.createStatement();
         String sql = "SELECT id, nombre FROM torneos ORDER BY id ASC;";
@@ -130,6 +130,28 @@ public class BaseDeDatos {
         return torneos;
     }
 	
+	// listar torneos inactivos
+	public List<String> listarTorneosInactivos(){
+		List<String> torneos=new ArrayList<String>();
+		
+		try {
+			Statement st = con.createStatement();
+	        String sql = "SELECT nombre FROM torneos where estaActivo=0  ORDER BY id ASC;";
+	        ResultSet rs;
+			rs = st.executeQuery(sql);
+			while (rs.next()) {
+		           
+	            String nombre = rs.getString("nombre");
+	            torneos.add( nombre);}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
+		return torneos;
+		
+	}
 	//CONSULTA PARA CAMBIAR ESTADO DE TORNEO
 	public List<Object[]> listarIdTorIna() throws SQLException {
 		List<Object[]> selTorIna = new ArrayList<>();

@@ -8,7 +8,7 @@ public class Jugador{
 	private String nombre;
 	private String apellidoUno;
 	private String apellidoDos;
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
 	private String dni;
 	private boolean esMayor=true;
 	private int puntosJugador=0;
@@ -17,8 +17,7 @@ public class Jugador{
 	
 	// CONSTRUCTORES
 	
-	public Jugador(String nombre, String apellidoUno, String apellidoDos, Date fechaNacimiento, String dni,
-			boolean esMayor, int puntosJugador, int amarillaJugador, int rojasJugador) {
+	public Jugador(String nombre, String apellidoUno, String apellidoDos, LocalDate fechaNacimiento, String dni) {
 		super();
 		this.nombre = nombre;
 		this.apellidoUno = apellidoUno;
@@ -26,16 +25,9 @@ public class Jugador{
 		this.fechaNacimiento = fechaNacimiento;
 		this.dni = dni;
 		this.esMayor = esMayor;
-		this.puntosJugador = puntosJugador;
-		this.amarillaJugador = amarillaJugador;
-		this.rojasJugador = rojasJugador;
-	}
-	
-	public Jugador() {
-		super();
 		
 	}
-
+	
 	// GETTERS Y SETTERS
 	public String getNombre() {
 		return nombre;
@@ -61,11 +53,11 @@ public class Jugador{
 		this.apellidoDos = apellidoDos;
 	}
 
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
@@ -130,7 +122,7 @@ public class Jugador{
 	                .atZone(ZoneId.systemDefault())
 	                .toLocalDate();
 	        
-	        // CALCULAMOS LOS AÑOS QUE HAY ENTRE LA FECHA DE NACIMEINTO Y LA FECHA ACTUAL
+	        // CALCULAMOS LOS Aï¿½OS QUE HAY ENTRE LA FECHA DE NACIMEINTO Y LA FECHA ACTUAL
 	        Period diferencia = Period.between(fechaNacimientoLocal, fechaActual);
 	        
 	        // VERIFICAMOS SI LA PERSONA ES MAYOR DE EDAD

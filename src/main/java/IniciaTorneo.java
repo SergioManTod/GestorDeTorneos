@@ -6,11 +6,16 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,12 +28,16 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import com.toedter.calendar.JCalendar;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class IniciaTorneo extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-    private JSpinner JspinnerSelTorneo; // Mover a una variable de instancia
+    private JTextField numPartidosDia;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -68,63 +77,45 @@ public class IniciaTorneo extends JFrame {
 
         // Obtener los datos de la base de datos y llenar el modelo
         BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(null);
-        try {
-            List<Object[]> torneos = baseDeDatos.listarTorneosInactivos();
-            for (Object[] torneo : torneos) {
-                modelo.addRow(torneo);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // Crear la tabla con el modelo
-        JTable tablaEquipos = new JTable(modelo);
-        tablaEquipos.setSurrendersFocusOnKeystroke(true);
-        tablaEquipos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//        try {
+//            List<Object[]> torneos = baseDeDatos.listarTorneosInactivos();
+//            for (Object[] torneo : torneos) {
+//                modelo.addRow(torneo);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
         // Ajustar el ancho de las columnas
-        for (int i = 0; i < tablaEquipos.getColumnCount(); i++) {
-            TableColumn columna = tablaEquipos.getColumnModel().getColumn(i);
-            int width = (int) tablaEquipos.getTableHeader().getDefaultRenderer()
-                    .getTableCellRendererComponent(tablaEquipos, columna.getHeaderValue(), false, false, -1, i)
-                    .getPreferredSize().getWidth();
-            for (int j = 0; j < tablaEquipos.getRowCount(); j++) {
-                int preferedWidth = (int) tablaEquipos.getCellRenderer(j, i)
-                        .getTableCellRendererComponent(tablaEquipos, tablaEquipos.getValueAt(j, i), false, false, j, i)
-                        .getPreferredSize().getWidth();
-                width = Math.max(width, preferedWidth);
-            }
-            columna.setPreferredWidth(width + 10);
-        }
-        // Ajustar el ancho de la última columna
-        TableColumn ultimaColumna = tablaEquipos.getColumnModel().getColumn(tablaEquipos.getColumnCount() - 1);
-        ultimaColumna.setPreferredWidth(260);
-
-        // Crear el JScrollPane y agregar la tabla
-        JScrollPane scrollPane = new JScrollPane(tablaEquipos);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(300, 1, 285, 360);
-        contentPane.add(scrollPane);
-
-        // AQUI SE SELECCIONA AL EQUIPO
-        JLabel tagSelTorneo = new JLabel("INGRESA EL NÚMERO DEL TORNEO SELECCIONADO");
-        tagSelTorneo.setBackground(new Color(240, 240, 240));
-        tagSelTorneo.setHorizontalAlignment(SwingConstants.LEFT);
-        tagSelTorneo.setForeground(new Color(255, 255, 255));
-        tagSelTorneo.setFont(new Font("Tahoma", Font.BOLD, 9));
-        tagSelTorneo.setBounds(10, 15, 250, 25);
-        contentPane.add(tagSelTorneo);
-
-        // EN ESTE SPINNER SELECCIONAMOS EL NUMERO, EN REFERENCIA A LA TABLA
-        JspinnerSelTorneo = new JSpinner();
-        JspinnerSelTorneo.setBounds(249, 15, 50, 25);
-        contentPane.add(JspinnerSelTorneo);
-
-        // Configurar el spinner después de inicializarlo
-        configurarJSpinner();
+//        for (int i = 0; i < tablaEquipos.getColumnCount(); i++) {
+//            TableColumn columna = tablaEquipos.getColumnModel().getColumn(i);
+//            int width = (int) tablaEquipos.getTableHeader().getDefaultRenderer()
+//                    .getTableCellRendererComponent(tablaEquipos, columna.getHeaderValue(), false, false, -1, i)
+//                    .getPreferredSize().getWidth();
+//            for (int j = 0; j < tablaEquipos.getRowCount(); j++) {
+//                int preferedWidth = (int) tablaEquipos.getCellRenderer(j, i)
+//                        .getTableCellRendererComponent(tablaEquipos, tablaEquipos.getValueAt(j, i), false, false, j, i)
+//                        .getPreferredSize().getWidth();
+//                width = Math.max(width, preferedWidth);
+//            }
+//            columna.setPreferredWidth(width + 10);
+//        }
+//        ultimaColumna.setPreferredWidth(260);
+//
+//        // AQUI SE SELECCIONA AL EQUIPO
+//        JLabel tagSelTorneo = new JLabel("selecciona torneo");
+//        tagSelTorneo.setBackground(new Color(240, 240, 240));
+//        tagSelTorneo.setHorizontalAlignment(SwingConstants.LEFT);
+//        tagSelTorneo.setForeground(new Color(255, 255, 255));
+//        tagSelTorneo.setFont(new Font("Tahoma", Font.BOLD, 9));
+//        tagSelTorneo.setBounds(10, 15, 114, 25);
+//        contentPane.add(tagSelTorneo);
+//
+//        // Configurar el spinner después de inicializarlo
+//        configurarJSpinner();
 
         // AQUI SELECCIONAMOS LA FECHA DE INICIO DEL TORNEO
-        JLabel tagSelFecha = new JLabel("SELECCIONE FECHA DE INICIO:");
+        JLabel tagSelFecha = new JLabel("seleccione fecha yn pulse añadir");
         tagSelFecha.setHorizontalAlignment(SwingConstants.CENTER);
         tagSelFecha.setForeground(Color.WHITE);
         tagSelFecha.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -149,7 +140,7 @@ public class IniciaTorneo extends JFrame {
         // BOTON PARA CREAR EL CALENDARIO
         JButton botonCrearCalendario = new JButton("CREAR CALENDARIO");
         botonCrearCalendario.setFont(new Font("Tahoma", Font.PLAIN, 9));
-        botonCrearCalendario.setBounds(10, 320, 135, 23);
+        botonCrearCalendario.setBounds(10, 358, 135, 23);
         // INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
         botonCrearCalendario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -204,7 +195,7 @@ public class IniciaTorneo extends JFrame {
         // BOTON PARA VOLVER AL MENU PRINCIPAL
         JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
         botonMenuPrincipal.setFont(new Font("Tahoma", Font.PLAIN, 9));
-        botonMenuPrincipal.setBounds(155, 320, 135, 23);
+        botonMenuPrincipal.setBounds(164, 358, 135, 23);
         // INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
         botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -230,27 +221,85 @@ public class IniciaTorneo extends JFrame {
             }
         });
         contentPane.add(botonMenuPrincipal);
+        
+        List<String> torneos =baseDeDatos.listarTorneosInactivos();
+        JComboBox comboBox = new JComboBox<>(torneos.toArray(new String[0]));
+        comboBox.setBounds(114, 16, 176, 22);
+        contentPane.add(comboBox);
+        
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(388, 80, 114, 241);
+        contentPane.add(scrollPane);
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        JList<String> list= new JList<>(listModel);
+        scrollPane.setViewportView(list);
+        
+        List<String> lista = new ArrayList<>();
+       
+        JButton botonAñadirFecha = new JButton("AÑADIR FECHA");
+        botonAñadirFecha.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Date selectedDate = calendario.getDate();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedDate = dateFormat.format(selectedDate);
+                boolean fechaValida=true;
+                for (int i = 0; i < listModel.size(); i++) {
+                	System.out.println(listModel.getElementAt(i));
+                   if(formattedDate.equals(listModel.getElementAt(i))) {
+                	   fechaValida=false;
+                   }
+                }
+                if(fechaValida) {
+                	listModel.addElement(formattedDate);
+                }else {
+                	//aqui va un cartel de aviso de que esta repetida la fecha
+                }
+                
+                
+        	}
+        });
+        botonAñadirFecha.setBounds(98, 321, 114, 23);
+        contentPane.add(botonAñadirFecha);
+        
+        JLabel lblNewLabel = new JLabel("numero de partidos por dia");
+        lblNewLabel.setBounds(332, 15, 156, 14);
+        contentPane.add(lblNewLabel);
+        
+        numPartidosDia = new JTextField();
+        numPartidosDia.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyTyped(KeyEvent e) {
+        		char car = e.getKeyChar();
+        	    if ((car < '0' || car > '9')) {
+        	        e.consume(); // Evita que se ingrese el carácter no permitido
+        	    }
+        	}
+        });
+        numPartidosDia.setBounds(498, 12, 49, 20);
+        contentPane.add(numPartidosDia);
+        numPartidosDia.setColumns(10);
     }
 
+    
     // METODO PARA CONFIGUAR EL JSPINNER
-    private void configurarJSpinner() {
-        BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(new JLabel());
-        List<Object[]> torneosInactivos = null;
-        try {
-            torneosInactivos = baseDeDatos.listarIdTorIna();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        if (torneosInactivos != null && !torneosInactivos.isEmpty()) {
-            Integer[] ids = torneosInactivos.stream()
-                    .map(torneo -> (Integer) torneo[0])
-                    .toArray(Integer[]::new);
-
-            SpinnerListModel model = new SpinnerListModel(ids);
-            JspinnerSelTorneo.setModel(model);
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay torneos inactivos disponibles.");
-        }
-    }
+//    private void configurarJSpinner() {
+//        BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(new JLabel());
+//        List<Object[]> torneosInactivos = null;
+//        try {
+//            torneosInactivos = baseDeDatos.listarIdTorIna();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (torneosInactivos != null && !torneosInactivos.isEmpty()) {
+//            Integer[] ids = torneosInactivos.stream()
+//                    .map(torneo -> (Integer) torneo[0])
+//                    .toArray(Integer[]::new);
+//
+//            SpinnerListModel model = new SpinnerListModel(ids);
+//            JspinnerSelTorneo.setModel(model);
+//        } else {
+//            JOptionPane.showMessageDialog(this, "No hay torneos inactivos disponibles.");
+//        }
+//    }
 }
