@@ -166,7 +166,7 @@ public class Goleadores extends JFrame {
 		            public void actionPerformed(ActionEvent e) {
 		                setVisible(false); // OCULTA LA CLASE ACTUAL
 		                
-		                Gestor gestor = new Gestor();
+		                Gestor gestor = new Gestor(null);
 		                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA EL JFRAME ACTUAL
 		                gestor.setVisible(true);
 		            }
