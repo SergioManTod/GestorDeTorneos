@@ -77,42 +77,7 @@ public class IniciaTorneo extends JFrame {
 
         // Obtener los datos de la base de datos y llenar el modelo
         BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(null);
-//        try {
-//            List<Object[]> torneos = baseDeDatos.listarTorneosInactivos();
-//            for (Object[] torneo : torneos) {
-//                modelo.addRow(torneo);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-
-        // Ajustar el ancho de las columnas
-//        for (int i = 0; i < tablaEquipos.getColumnCount(); i++) {
-//            TableColumn columna = tablaEquipos.getColumnModel().getColumn(i);
-//            int width = (int) tablaEquipos.getTableHeader().getDefaultRenderer()
-//                    .getTableCellRendererComponent(tablaEquipos, columna.getHeaderValue(), false, false, -1, i)
-//                    .getPreferredSize().getWidth();
-//            for (int j = 0; j < tablaEquipos.getRowCount(); j++) {
-//                int preferedWidth = (int) tablaEquipos.getCellRenderer(j, i)
-//                        .getTableCellRendererComponent(tablaEquipos, tablaEquipos.getValueAt(j, i), false, false, j, i)
-//                        .getPreferredSize().getWidth();
-//                width = Math.max(width, preferedWidth);
-//            }
-//            columna.setPreferredWidth(width + 10);
-//        }
-//        ultimaColumna.setPreferredWidth(260);
-//
-//        // AQUI SE SELECCIONA AL EQUIPO
-//        JLabel tagSelTorneo = new JLabel("selecciona torneo");
-//        tagSelTorneo.setBackground(new Color(240, 240, 240));
-//        tagSelTorneo.setHorizontalAlignment(SwingConstants.LEFT);
-//        tagSelTorneo.setForeground(new Color(255, 255, 255));
-//        tagSelTorneo.setFont(new Font("Tahoma", Font.BOLD, 9));
-//        tagSelTorneo.setBounds(10, 15, 114, 25);
-//        contentPane.add(tagSelTorneo);
-//
-//        // Configurar el spinner después de inicializarlo
-//        configurarJSpinner();
+        
 
         // AQUI SELECCIONAMOS LA FECHA DE INICIO DEL TORNEO
         JLabel tagSelFecha = new JLabel("seleccione fecha yn pulse añadir");
@@ -154,42 +119,7 @@ public class IniciaTorneo extends JFrame {
             }
         });
         // FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
-        botonCrearCalendario.addActionListener(new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		       /* tagMsgeActTorneoBbDd.setText("");
-		        String nombreTorneo = textFieldNomTorneo.getText();
-		        int cantEquipos = (int) jSpinnerCantEquipos.getValue();
-		        int cantJugadores = (int) jSpinnerCantJugadores.getValue();
-		        JLabel tagMsgeConBbDd = new JLabel();
-				Torneo nuevoTorneo = new Torneo(nombreTorneo, cantEquipos, cantJugadores, BaseDeDatos.obtenerInstancia(tagMsgeConBbDd).obtenerConexion());
-		        String mensajeError = null;
-		        try {
-		            boolean nombreTorneoValido = nuevoTorneo.comprobarNombreTorneo(nombreTorneo);
-		            if (nombreTorneo.length() == 0) {
-		                mensajeError = "No puede estar el campo nombre vacío.";
-		            } else if (!nombreTorneoValido) {
-		                mensajeError = "<html>El torneo "+nombreTorneo+" ya existe en la base de datos.<br>Intentalo asignando otro nombre.</html>";
-		            }
-		            if (mensajeError == null) {
-		                BaseDeDatos baseDeDatos = new BaseDeDatos(tagMsgeConBbDd);
-		                baseDeDatos.insertaTorneoNuevo(nuevoTorneo);
-		                tagMsgeActTorneoBbDd.setText("<html>El Torneo " + nuevoTorneo.getNombTorneo() + "<br>se ha guardado correctamente en la Base de Datos.<br>Con un mínimo de " + nuevoTorneo.getCantEquipos() + " equipos participantes <br>y un mínimo de " + nuevoTorneo.getCantJugadores() + " jugadores por equipo.</html>");
-		                PdfCrear inscripcion = new PdfCrear();
-		                inscripcion.crearpdfFormulario(nombreTorneo, cantJugadores);
-		                CreaDirectorios nuevoArbolDeDirectorios = new CreaDirectorios();
-		                nuevoArbolDeDirectorios.arbolDeCarpetas(nombreTorneo);
-		            } else {
-		            	tagMsgeActTorneoBbDd.setText(mensajeError);
-		            }
-		        } catch (SQLException ex) {
-		            JOptionPane.showMessageDialog(contentPane, "Error al hacer la consulta en la base de datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-		        }
-		        contentPane.revalidate();
-		        contentPane.repaint();*/
-		    	
-		    }
-		});
+        
         contentPane.add(botonCrearCalendario);
 
         // BOTON PARA VOLVER AL MENU PRINCIPAL
@@ -278,28 +208,42 @@ public class IniciaTorneo extends JFrame {
         numPartidosDia.setBounds(498, 12, 49, 20);
         contentPane.add(numPartidosDia);
         numPartidosDia.setColumns(10);
+        
+        botonCrearCalendario.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	String nombreTorneo =(String)comboBox.getSelectedItem();
+		      if(crearTorneo(nombreTorneo,baseDeDatos)) {
+		    	  
+		      };
+		    	
+		    }
+		});
     }
 
+    public static boolean crearTorneo(String nombreTorneo, BaseDeDatos baseDeDatos) {
+    	List <String[]> datosTorneo=new ArrayList<>();
+    	PdfLeer nuevaLectura=new PdfLeer();
+    	try {
+			datosTorneo=baseDeDatos.consultaTorneo(nombreTorneo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	int id=Integer.parseInt(datosTorneo.get(0)[0]);
+    	nombreTorneo=datosTorneo.get(0)[1];
+    	int numMinJugadores=Integer.parseInt(datosTorneo.get(0)[2]);
+    	int numMinEquipos=Integer.parseInt(datosTorneo.get(0)[3]);
+    	
+    	
+    	 ArrayList<Object[]> listaequipos = new ArrayList<Object[]>();
+    	listaequipos=nuevaLectura.leerPdf(numMinJugadores);
+    	
+    	return true;
+    	
+    	
+		
+    	
+    }
     
-    // METODO PARA CONFIGUAR EL JSPINNER
-//    private void configurarJSpinner() {
-//        BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(new JLabel());
-//        List<Object[]> torneosInactivos = null;
-//        try {
-//            torneosInactivos = baseDeDatos.listarIdTorIna();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (torneosInactivos != null && !torneosInactivos.isEmpty()) {
-//            Integer[] ids = torneosInactivos.stream()
-//                    .map(torneo -> (Integer) torneo[0])
-//                    .toArray(Integer[]::new);
-//
-//            SpinnerListModel model = new SpinnerListModel(ids);
-//            JspinnerSelTorneo.setModel(model);
-//        } else {
-//            JOptionPane.showMessageDialog(this, "No hay torneos inactivos disponibles.");
-//        }
-//    }
 }

@@ -171,4 +171,47 @@ public class BaseDeDatos {
 				
 		return selTorIna;
 	}
+	public List<String[]> consultaTorneo(String nombre) throws SQLException {
+		List<String[]> selTorNom = new ArrayList<>();
+		Statement st = con.createStatement();
+		String sql = "SELECT * FROM torneos where nombre=nombre;";
+		ResultSet rs = st.executeQuery(sql);
+		
+		while(rs.next()) {
+			
+			int id = rs.getInt("id");
+			nombre=rs.getString("nombre");
+			int numJug = rs.getInt("numero_jugadores");
+			int numEquip = rs.getInt("numero_equipos");
+			int estaActivo = rs.getInt("estaActivo");
+			selTorNom.add(new String[] {String.valueOf(id),nombre,String.valueOf(numJug),String.valueOf(numEquip),String.valueOf(estaActivo)});
+		}
+				
+		return selTorNom;
+	}
+	public void insertarNuevoEquipo(Torneo nuevoTorneo ) {
+		 String nombre=nuevoTorneo.getNombTorneo();
+		 int numero_jugadores=nuevoTorneo.getCantJugadores();
+		 int numero_equipos=nuevoTorneo.getCantEquipos();
+		PreparedStatement statement = null; 
+		try {
+			statement = con.prepareStatement("INSERT INTO torneos (nombre,numero_jugadores,numero_equipos) "
+					+ "VALUES (?,?,?)");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		try {
+			statement.setString(1,nombre);
+			statement.setInt(2, numero_jugadores);
+			statement.setInt(3, numero_equipos);
+			
+			statement.executeUpdate(); 
+			statement.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}	
+	
 }
