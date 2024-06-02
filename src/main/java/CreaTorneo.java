@@ -157,9 +157,10 @@ public class CreaTorneo extends JFrame {
 		                baseDeDatos.insertaTorneoNuevo(nuevoTorneo);
 		                tagMsgeIntroNuevoTorneoBbDd.setText("<html>El Torneo " + nuevoTorneo.getNombTorneo() + "<br>se ha guardado correctamente en la Base de Datos.<br>Con un mínimo de " + nuevoTorneo.getCantEquipos() + " equipos participantes <br>y un mínimo de " + nuevoTorneo.getCantJugadores() + " jugadores por equipo.</html>");
 		                PdfCrear inscripcion = new PdfCrear();
-		                inscripcion.crearpdfFormulario(nombreTorneo, cantJugadores);
+		               
 		                CreaDirectorios nuevoArbolDeDirectorios = new CreaDirectorios();
 		                nuevoArbolDeDirectorios.arbolDeCarpetas(nombreTorneo);
+		                inscripcion.crearpdfFormulario(nombreTorneo, cantJugadores);
 		            } else {
 		                tagMsgeIntroNuevoTorneoBbDd.setText(mensajeError);
 		            }

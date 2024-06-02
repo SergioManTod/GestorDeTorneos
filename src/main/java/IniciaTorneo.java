@@ -32,6 +32,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 public class IniciaTorneo extends JFrame {
 
@@ -237,12 +238,62 @@ public class IniciaTorneo extends JFrame {
     	
     	
     	 ArrayList<Object[]> listaequipos = new ArrayList<Object[]>();
-    	listaequipos=nuevaLectura.leerPdf(numMinJugadores);
+    	 List<String> nombreArchivos=nombreArchivos(nombreTorneo);
+    	 if(nombreArchivos.size()<numMinEquipos) {
+    		 System.out.println("falta Inscripciones");
+    	 }else {
+    		 for(int i=0;i<nombreArchivos.size();i++) {
+        		 String nombreArchivo=nombreArchivos.get(i);
+        		 listaequipos.addAll(nuevaLectura.leerPdf(numMinJugadores,nombreTorneo,nombreArchivo));
+        	 }
+    		 if(listaequipos.size()<numMinEquipos) {
+    			 System.out.println("equipos insuficientes");
+    		 }else {
+    			 for(int i=0;i<listaequipos.size();i++) {
+    				 if(i==0) {
+    					 Object[] objetopnombredeEquipo=(listaequipos.get(i));
+    					 String nombreEquipo=objetopnombredeEquipo.toString();
+    				 }if(i==1) {
+    					 Object[] objetoemail=(listaequipos.get(i));
+    					 String email=objetoemail.toString();
+    				 }if(i==2) {
+    					 Object[] objetoDelegado=(listaequipos.get(i));
+//    					 Delegado nuevoDelegado= new Delegado(objetoDelegado);
+    				 }
+    			 }
+    		 }
+    		 
+    	 }
+    	 
+    	 
+
+    	
     	
     	return true;
     	
     	
 		
+    	
+    }
+    public static List<String> nombreArchivos(String nombreTorneo){
+    	List<String> archivos=new ArrayList<String>();
+    	File carpeta=new File("torneo_"+nombreTorneo+"/Inscripciones_recibidas/");
+    	File[]af =carpeta.listFiles();
+    	if(af!=null) {
+    		for (int i=0 ;i <af.length;i++) {
+    			File afa=af[i];
+    			if (afa.isFile()) {
+    				archivos.add(afa.getName());
+    			}
+    		}
+    	}
+    	
+    	
+
+    		
+        
+    	
+		return archivos;
     	
     }
     

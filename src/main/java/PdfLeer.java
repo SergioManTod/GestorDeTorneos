@@ -16,12 +16,12 @@ import com.spire.pdf.widget.PdfTextBoxFieldWidget;
 public class PdfLeer {
 	
   
-public  ArrayList<Object[]> leerPdf(int minimoJugadores) {
+public  ArrayList<Object[]> leerPdf(int minimoJugadores,String nombreTorneo, String nombreArchivo ) {
 	   ArrayList<Object[]> listaequipos = new ArrayList<Object[]>();
 		 
 		// Cargar el documento PDF
         PdfDocument pdf = new PdfDocument();
-       // pdf.loadFromFile("torneo_"+nombre+"/Inscripciones_recibidas/Formulario_Inscripcion_torneo_"+nombre+".pdf");
+       pdf.loadFromFile("torneo_"+nombreTorneo+"/Inscripciones_recibidas/"+nombreArchivo);
         	Metodos comprobar=new Metodos();
         // Obtener el widget del formulario
         PdfFormWidget formWidget = (PdfFormWidget) pdf.getForm();
