@@ -110,56 +110,6 @@ public class Jugador{
 	}
 
 	
-	//-----METODOS
 	
-	//--- METODO PARA VERIFICAR LA EDAD
-		public static boolean validaEdad(Date fechaNacimiento) {
-	        // OBTENEMOS AL FECHA ACTUAL
-	        LocalDate fechaActual = LocalDate.now();
-	        
-	        // CONVERTIMOS LA FECHA DE NACIMIENTO DE DATA A LOCALDATE
-	        LocalDate fechaNacimientoLocal = fechaNacimiento.toInstant()
-	                .atZone(ZoneId.systemDefault())
-	                .toLocalDate();
-	        
-	        // CALCULAMOS LOS A�OS QUE HAY ENTRE LA FECHA DE NACIMEINTO Y LA FECHA ACTUAL
-	        Period diferencia = Period.between(fechaNacimientoLocal, fechaActual);
-	        
-	        // VERIFICAMOS SI LA PERSONA ES MAYOR DE EDAD
-	        return diferencia.getYears() >= 18;
-	    }
-	
-	
-	// METODO PARA VERIFICAR SI EL DNI ES VALIDO
-		public static boolean validaDni(String dni) {
-	        
-			// ELIMINAMOS ESPACIOS EN BLANCO DEL DNI INGRESADO
-	        dni = dni.trim();
-
-	        // VERIFICAMOS QUE EL DNI TENGA LA LONGITUD CORRECTA (9 CARACTERES)
-	        if (dni.length() != 9) {
-	            return false;
-	        }
-
-	        // SEPARAMOS LA PARTE NUMERICA DE LA LETRA
-	        int parteNumerica;
-	        char letra;
-	        try {
-	            parteNumerica = Integer.parseInt(dni.substring(0, 8));
-	            letra = Character.toUpperCase(dni.charAt(8));
-	        } catch (NumberFormatException e) {
-	            return false;
-	        }
-
-	        // DEFINIMOS LAS LETRAS VALIDAS 
-	        char[] letrasValidas = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
-
-	        // CALCULAMOS LA LETRA QUE DEBERIA PERTENECER A LA PARTE NUMERICA
-	        int resto = parteNumerica % 23;
-	        char letraCorrecta = letrasValidas[resto];
-
-	        // VERIFICAMOS QUE LA LETRA INGRESADA ES IGUAL A LA LETRA CALCULADA
-	        return letra == letraCorrecta;
-	    }
 	
 }

@@ -6,7 +6,8 @@ public class Equipo {
 	private Jugador responsable;
 	private  Jugador arbitro;
 	private Torneo troneo;
-	public Equipo( String nombre, String email, Jugador responsable, Jugador arbitro, Torneo troneo) {
+	private Jugador jugadores[];
+	public Equipo( String nombre, String email, Jugador responsable, Jugador arbitro, Torneo troneo,Jugador []jugadores) {
 		super();
 		this.id = 0;
 		this.nombre = nombre;
