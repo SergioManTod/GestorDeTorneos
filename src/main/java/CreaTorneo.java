@@ -3,10 +3,10 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,7 +27,7 @@ public class CreaTorneo extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldNomTorneo;
 	private JLabel tagMsgeIntroNuevoTorneoBbDd;
-
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,7 +42,8 @@ public class CreaTorneo extends JFrame {
 	}
 
 	public CreaTorneo() {
-		
+		//llamar a la conexion de bbdd 
+		BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(null);
 		// FORMATO DEL CONTENTPANE
 				setForeground(new Color(255, 255, 255));
 				setResizable(false);
@@ -153,23 +154,23 @@ public class CreaTorneo extends JFrame {
 		                mensajeError = "<html>El torneo "+nombreTorneo+" ya existe en la base de datos.<br>Intentalo asignando otro nombre.</html>";
 		            }
 		            if (mensajeError == null) {
-		                BaseDeDatos baseDeDatos = new BaseDeDatos(tagMsgeConBbDd);
-		                baseDeDatos.insertaTorneoNuevo(nuevoTorneo);
-		                tagMsgeIntroNuevoTorneoBbDd.setText("<html>El Torneo " + nuevoTorneo.getNombTorneo() + "<br>se ha guardado correctamente en la Base de Datos.<br>Con un mínimo de " + nuevoTorneo.getCantEquipos() + " equipos participantes <br>y un mínimo de " + nuevoTorneo.getCantJugadores() + " jugadores por equipo.</html>");
-		                PdfCrear inscripcion = new PdfCrear();
-		                inscripcion.crearpdfFormulario(nombreTorneo, cantJugadores);
-		                CreaDirectorios nuevoArbolDeDirectorios = new CreaDirectorios();
-		                nuevoArbolDeDirectorios.arbolDeCarpetas(nombreTorneo);
-		            } else {
-		                tagMsgeIntroNuevoTorneoBbDd.setText(mensajeError);
-		            }
-		        } catch (SQLException ex) {
-		            JOptionPane.showMessageDialog(contentPane, "Error al hacer la consulta en la base de datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-		        }
-		        contentPane.revalidate();
-		        contentPane.repaint();
-		    }
-		});
+		            	
+	                    baseDeDatos.insertaTorneoNuevo(nuevoTorneo);
+	                    tagMsgeIntroNuevoTorneoBbDd.setText("<html>El Torneo " + nuevoTorneo.getNombTorneo() + "<br>se ha guardado correctamente en la Base de Datos.<br>Con un mínimo de " + nuevoTorneo.getCantEquipos() + " equipos participantes <br>y un mínimo de " + nuevoTorneo.getCantJugadores() + " jugadores por equipo.</html>");
+	                    PdfCrear inscripcion = new PdfCrear();
+	                    inscripcion.crearpdfFormulario(nombreTorneo, cantJugadores);
+	                    CreaDirectorios nuevoArbolDeDirectorios = new CreaDirectorios();
+	                    nuevoArbolDeDirectorios.arbolDeCarpetas(nombreTorneo);
+	                } else {
+	                    tagMsgeIntroNuevoTorneoBbDd.setText(mensajeError);
+	                }
+	            } catch (SQLException ex) {
+	                JOptionPane.showMessageDialog(contentPane, "Error al hacer la consulta en la base de datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+	            }
+	            contentPane.revalidate();
+	            contentPane.repaint();
+	        }
+	    });
 		contentPane.add(botonCrearTorneo);
 	
 		
@@ -195,7 +196,7 @@ public class CreaTorneo extends JFrame {
 		            public void actionPerformed(ActionEvent e) {
 		                setVisible(false); // OCULTAMOS LA CLASE EN LA QUE ESTAMOS
 		                
-		                Gestor gestor = new Gestor();
+		                Gestor gestor = new Gestor(null);
 		                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA CLASE EN LA QUE ESTAMOS
 		                gestor.setVisible(true);
 		            }
@@ -213,4 +214,6 @@ public class CreaTorneo extends JFrame {
         tagImagenDeFondo.setBounds(300, 150, 512, 512);
         getContentPane().add(tagImagenDeFondo);
 	}
-}	
+}
+
+

@@ -36,7 +36,8 @@ public class InscripcionesRecibidas extends JFrame {
 
 	
 	public InscripcionesRecibidas() {
-		
+		//llamar a la conexion de bbdd 
+				BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(null);
 		// FORMATO DEL CONTENTPANE
 				setForeground(new Color(255, 255, 255));
 				setResizable(false);
@@ -202,7 +203,7 @@ public class InscripcionesRecibidas extends JFrame {
 		            public void actionPerformed(ActionEvent e) {
 		                setVisible(false); // SE OCULTA LA CLASE EN LA QUE ESTAMOS
 		                
-		                Gestor gestor = new Gestor();
+		                Gestor gestor = new Gestor(null);
 		                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA LA APLICACI�N AL CERRAR ESTA VENTANA
 		                gestor.setVisible(true);
 		            }

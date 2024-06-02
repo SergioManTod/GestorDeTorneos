@@ -3,9 +3,9 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -42,6 +42,8 @@ public class Clasificaciones extends JFrame {
 	}
 
 	public Clasificaciones() {
+		//llamar a la conexion de bbdd 
+				BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(null);
 		// FORMATO DEL CONTENTPANE
 				setForeground(new Color(255, 255, 255));
 				setResizable(false);
@@ -168,7 +170,7 @@ public class Clasificaciones extends JFrame {
 				            public void actionPerformed(ActionEvent e) {
 				                setVisible(false); // OCULTA LA CLASE ACTUAL
 				                
-				                Gestor gestor = new Gestor();
+				                Gestor gestor = new Gestor(null);
 				                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA EL JFRAME ACTUAL
 				                gestor.setVisible(true);
 				            }

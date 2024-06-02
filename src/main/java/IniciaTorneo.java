@@ -5,33 +5,26 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SpinnerListModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import com.toedter.calendar.JCalendar;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.ScrollPaneConstants;
 
 public class IniciaTorneo extends JFrame {
 
@@ -115,17 +108,17 @@ public class IniciaTorneo extends JFrame {
 //        configurarJSpinner();
 
         // AQUI SELECCIONAMOS LA FECHA DE INICIO DEL TORNEO
-        JLabel tagSelFecha = new JLabel("seleccione fecha yn pulse añadir");
+        JLabel tagSelFecha = new JLabel("Seleccione una fecha y pulse el botón \"Añadir fecha\"");
         tagSelFecha.setHorizontalAlignment(SwingConstants.CENTER);
         tagSelFecha.setForeground(Color.WHITE);
         tagSelFecha.setFont(new Font("Tahoma", Font.BOLD, 10));
         tagSelFecha.setBackground(UIManager.getColor("Button.background"));
-        tagSelFecha.setBounds(10, 45, 280, 25);
+        tagSelFecha.setBounds(10, 50, 290, 25);
         contentPane.add(tagSelFecha);
 
         // ES EN ESTE CALENDARIO DONDE SE SELECCIONA LA FECHA
         JCalendar calendario = new JCalendar();
-        calendario.setBounds(5, 80, 290, 197);
+        calendario.setBounds(10, 80, 290, 200);
         contentPane.add(calendario);
 
         // ESTA ETIQUETA VA VACIA Y SOLO MUESTRA EL MENSAJE SI SE CREO CON EXITO O SI NO SE PUDO CREAR
@@ -134,13 +127,13 @@ public class IniciaTorneo extends JFrame {
         tagStatusCal.setForeground(Color.WHITE);
         tagStatusCal.setFont(new Font("Tahoma", Font.BOLD, 10));
         tagStatusCal.setBackground(UIManager.getColor("Button.background"));
-        tagStatusCal.setBounds(10, 275, 280, 35);
+        tagStatusCal.setBounds(10, 285, 290, 44);
         contentPane.add(tagStatusCal);
 
         // BOTON PARA CREAR EL CALENDARIO
         JButton botonCrearCalendario = new JButton("CREAR CALENDARIO");
         botonCrearCalendario.setFont(new Font("Tahoma", Font.PLAIN, 9));
-        botonCrearCalendario.setBounds(10, 358, 135, 23);
+        botonCrearCalendario.setBounds(230, 350, 140, 25);
         // INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
         botonCrearCalendario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -195,7 +188,7 @@ public class IniciaTorneo extends JFrame {
         // BOTON PARA VOLVER AL MENU PRINCIPAL
         JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
         botonMenuPrincipal.setFont(new Font("Tahoma", Font.PLAIN, 9));
-        botonMenuPrincipal.setBounds(164, 358, 135, 23);
+        botonMenuPrincipal.setBounds(400, 350, 140, 25);
         // INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
         botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -215,7 +208,7 @@ public class IniciaTorneo extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false); // OCULTA LA CLASE ACTUAL
 
-                Gestor gestor = new Gestor();
+                Gestor gestor = new Gestor(null);
                 gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //
                 gestor.setVisible(true);
             }
@@ -224,20 +217,33 @@ public class IniciaTorneo extends JFrame {
         
         List<String> torneos =baseDeDatos.listarTorneosInactivos();
         JComboBox comboBox = new JComboBox<>(torneos.toArray(new String[0]));
-        comboBox.setBounds(114, 16, 176, 22);
+        comboBox.setBounds(10, 20, 290, 25);
         contentPane.add(comboBox);
         
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(388, 80, 114, 241);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBounds(310, 55, 265, 283);
         contentPane.add(scrollPane);
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        JList<String> list= new JList<>(listModel);
-        scrollPane.setViewportView(list);
         
         List<String> lista = new ArrayList<>();
        
-        JButton botonAñadirFecha = new JButton("AÑADIR FECHA");
-        botonAñadirFecha.addActionListener(new ActionListener() {
+        JButton botonAniadirFecha = new JButton("AÑADIR FECHA");
+        botonAniadirFecha.setBounds(50, 350, 140, 25);
+     // INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+        botonAniadirFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+            	botonAniadirFecha.setBackground(Color.LIGHT_GRAY);
+            	botonAniadirFecha.setForeground(Color.WHITE);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+            	botonAniadirFecha.setBackground(Color.WHITE);
+            	botonAniadirFecha.setForeground(Color.BLACK);
+            }
+        });
+        // FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+        botonAniadirFecha.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Date selectedDate = calendario.getDate();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -258,11 +264,13 @@ public class IniciaTorneo extends JFrame {
                 
         	}
         });
-        botonAñadirFecha.setBounds(98, 321, 114, 23);
-        contentPane.add(botonAñadirFecha);
+        contentPane.add(botonAniadirFecha);
         
-        JLabel lblNewLabel = new JLabel("numero de partidos por dia");
-        lblNewLabel.setBounds(332, 15, 156, 14);
+        JLabel lblNewLabel = new JLabel("Número de partidos por dia");
+        lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        lblNewLabel.setForeground(new Color(255, 255, 255));
+        lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 9));
+        lblNewLabel.setBounds(330, 20, 160, 25);
         contentPane.add(lblNewLabel);
         
         numPartidosDia = new JTextField();
@@ -275,9 +283,12 @@ public class IniciaTorneo extends JFrame {
         	    }
         	}
         });
-        numPartidosDia.setBounds(498, 12, 49, 20);
+        numPartidosDia.setBounds(500, 20, 50, 25);
         contentPane.add(numPartidosDia);
         numPartidosDia.setColumns(10);
+        JList<String> list= new JList<>(listModel);
+        list.setBounds(330, 80, 112, 239);
+        contentPane.add(list);
     }
 
     
