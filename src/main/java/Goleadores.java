@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -33,7 +32,7 @@ public class Goleadores extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Goleadores frame = new Goleadores(null);
+					Goleadores frame = new Goleadores();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,10 +42,7 @@ public class Goleadores extends JFrame {
 	}
 
 	public Goleadores() {
-		
-		//llamar a la conexion de bbdd 
-				BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(null);
-				// FORMATO DEL CONTENTPANE
+		// FORMATO DEL CONTENTPANE
 				setForeground(new Color(255, 255, 255));
 				setResizable(false);
 				setType(Type.POPUP);
