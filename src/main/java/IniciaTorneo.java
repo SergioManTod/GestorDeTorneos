@@ -184,7 +184,14 @@ public class IniciaTorneo extends JFrame {
             }
         });
         // FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+     // AVISO DE OPCION NO DISPONIBLE
         botonAniadirFecha.addActionListener(new ActionListener() {
+     			@Override
+     			public void actionPerformed(ActionEvent e) {
+     				FueraDeServicio.avisoNoDisponible();
+     			}
+     		});
+      /*  botonAniadirFecha.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Date selectedDate = calendario.getDate();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -204,7 +211,7 @@ public class IniciaTorneo extends JFrame {
                 
                 
         	}
-        });
+        });*/
         contentPane.add(botonAniadirFecha);
         
         JLabel lblNewLabel = new JLabel("Número de partidos por dia");
@@ -270,7 +277,7 @@ public class IniciaTorneo extends JFrame {
     	 }
     	 Equipo arrayEquipos[]=new Equipo[nombreArchivos.size()];
     	 if(nombreArchivos.size()<numMinEquipos) {
-    		 tagStatusCal.setText("<html><p align=center>No se pude iniciar el torneo "+nombreTorneocombo+".<br>"
+    		 tagStatusCal.setText("<html><p align=center>No se puede iniciar el torneo "+nombreTorneocombo+".<br>"
     		 		+ "Hacen fallta al menos "+numMinEquipos+" equipos inscritos.</p></html>");;
     	 }else {
     		 int formulariosRechazados=0;
