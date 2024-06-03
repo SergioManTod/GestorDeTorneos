@@ -50,7 +50,7 @@ public class Inicio extends JFrame {
         setForeground(new Color(255, 255, 255));
         setResizable(false);
         setIconImage(Toolkit.getDefaultToolkit().getImage("img/icono_trofeo.png"));
-        setTitle("Aplicación Gestora de Torneos  -  Bienvenido!");
+        setTitle("Gestor de Torneos 1.0  -  Bienvenido!");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 600, 420);
         contentPane = new JPanel();
@@ -141,6 +141,13 @@ public class Inicio extends JFrame {
             }
         });
         // FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		// AVISO DE OPCION NO DISPONIBLE
+		botonNuevaConexion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FueraDeServicio.avisoNoDisponible();
+			}
+		});
         contentPane.add(botonNuevaConexion);
         setLocationRelativeTo(null);
     }

@@ -3,18 +3,18 @@ public class Equipo {
 	 private int id;
 	private String nombre;
 	private String email;
-	private Jugador responsable;
-	private  Jugador arbitro;
+	private Delegado responsable;
+	private  Arbitro arbitro;
 	private Torneo troneo;
 	private Jugador jugadores[];
-	public Equipo( String nombre, String email, Jugador responsable, Jugador arbitro, Torneo troneo,Jugador []jugadores) {
+	public Equipo( String nombre, String email, Delegado responsable, Arbitro arbitro,Jugador []jugadores) {
 		super();
-		this.id = 0;
+	
 		this.nombre = nombre;
 		this.email = email;
 		this.responsable = responsable;
 		this.arbitro = arbitro;
-		this.troneo = troneo;
+		
 	}
 	public int getId() {
 		return id;
@@ -34,16 +34,16 @@ public class Equipo {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Jugador getResponsable() {
+	public Delegado getResponsable() {
 		return responsable;
 	}
-	public void setResponsable(Jugador responsable) {
+	public void setResponsable(Delegado responsable) {
 		this.responsable = responsable;
 	}
-	public Jugador getArbitro() {
+	public Arbitro getArbitro() {
 		return arbitro;
 	}
-	public void setArbitro(Jugador arbitro) {
+	public void setArbitro(Arbitro arbitro) {
 		this.arbitro = arbitro;
 	}
 	public Torneo getTroneo() {
@@ -51,6 +51,12 @@ public class Equipo {
 	}
 	public void setTroneo(Torneo troneo) {
 		this.troneo = troneo;
+	}
+	public Jugador[] getJugadores() {
+		return jugadores;
+	}
+	public void setJugadores(Jugador[] jugadores) {
+		this.jugadores = jugadores;
 	}
 	
 	

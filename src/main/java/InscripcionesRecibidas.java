@@ -43,7 +43,7 @@ public class InscripcionesRecibidas extends JFrame {
 				setResizable(false);
 				setType(Type.POPUP);
 				setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-				setTitle("Aplicación Gestora de Torneos  -  Inscripciones recibidas");
+				setTitle("Gestor de Torneos 1.0  -  Inscripciones recibidas");
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				setBounds(100, 100, 600, 420);
 				contentPane = new JPanel();
@@ -139,6 +139,13 @@ public class InscripcionesRecibidas extends JFrame {
 		    }
 		});
 		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		//AVISO DE OPCION NO DISPONIBLE
+		botonRechazados.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               FueraDeServicio.avisoNoDisponible();
+            }
+        });
 		contentPane.add(botonRechazados);
 		
 		// BOTON PARA LISTAR SOLO LAS INSCRIPCIONES VALIDAS
@@ -158,7 +165,13 @@ public class InscripcionesRecibidas extends JFrame {
 		    }
 		});
 		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
-		
+		//AVISO DE OPCION NO DISPONIBLE
+		botonValidas.addActionListener(new ActionListener() {
+		            @Override
+		            public void actionPerformed(ActionEvent e) {
+		               FueraDeServicio.avisoNoDisponible();
+		            }
+		        });
 		contentPane.add(botonValidas);
 		
 		//BOTON PARA GENERAR MAIL O ARCHIVO QUE NOTIFIQUE A LOS EQUIPOS RECHAZADOS
@@ -178,6 +191,13 @@ public class InscripcionesRecibidas extends JFrame {
 		    }
 		});
 		// FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+		// AVISO DE OPCION NO DISPONIBLE
+		botonNotificar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				FueraDeServicio.avisoNoDisponible();
+			}
+		});
 		contentPane.add(botonNotificar);
 		
 		// BOTON PARA VOLVER AL MENU PRINCIPAL

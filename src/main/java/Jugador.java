@@ -28,6 +28,13 @@ public class Jugador{
 		
 	}
 	
+	
+	public Jugador() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	// GETTERS Y SETTERS
 	public String getNombre() {
 		return nombre;
