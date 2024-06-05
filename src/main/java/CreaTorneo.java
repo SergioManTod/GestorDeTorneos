@@ -48,7 +48,7 @@ public class CreaTorneo extends JFrame {
 				setResizable(false);
 				setType(Type.POPUP);
 				setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-				setTitle("Gestor de Torneos 1.0  -  Crear nuevo torneo");
+				setTitle("Gestor de Torneos V. Gamma  -  Crear nuevo torneo");
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				setBounds(100, 100, 600, 420);
 				contentPane = new JPanel();

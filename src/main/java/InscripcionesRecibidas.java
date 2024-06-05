@@ -43,7 +43,7 @@ public class InscripcionesRecibidas extends JFrame {
 				setResizable(false);
 				setType(Type.POPUP);
 				setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-				setTitle("Gestor de Torneos 1.0  -  Inscripciones recibidas");
+				setTitle("Gestor de Torneos V. Gamma  -  Inscripciones recibidas");
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				setBounds(100, 100, 600, 420);
 				contentPane = new JPanel();

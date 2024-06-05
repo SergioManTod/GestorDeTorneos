@@ -50,7 +50,7 @@ public class ModificaDatosEquipo extends JFrame {
 		setResizable(false);
 		setType(Type.POPUP);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-		setTitle("Gestor de Torneos 1.0  -  Modificar datos de equipo o jugador");
+		setTitle("Gestor de Torneos V. Gamma  -  Modificar datos de equipo o jugador");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 420);
 		contentPane = new JPanel();
