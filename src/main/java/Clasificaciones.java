@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -19,6 +20,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -80,47 +82,28 @@ public class Clasificaciones extends JFrame {
 				contentPane.add(tagSelTorneo);
 				
 				// COMOBOX DEL LISTADO DE TORNEOS
-				JComboBox comboBoxTorneo = new JComboBox();
-				comboBoxTorneo.setModel(new DefaultComboBoxModel(new String[] {"-->SELECCIONE TORNEO<--", "Los gauchitos", "Diseminados por el viento", "LA MARINA","Los gauchitos", "Diseminados por el viento", "LA MARINA","Los gauchitos", "Diseminados por el viento", "LA MARINA", "Cuatro locos"}));//AQUI VA LA CONEXION CON LA BBDD
-				comboBoxTorneo.setBounds(70, 60, 190, 25);
+				 List<String> torneosAct = baseDeDatos.listarTorneosActivos();
+			        torneosAct.add(0, "SELECCIONE UN TORNEO"); // Agrega el mensaje al principio de la lista
+			        JComboBox<String> comboBoxTorneo = new JComboBox<>(torneosAct.toArray(new String[0]));
+			     // Agregar un ActionListener al JComboBox
+			        String nom="";
+			        comboBoxTorneo.addActionListener(new ActionListener() {
+			            @Override
+			            public void actionPerformed(ActionEvent e) {
+			                // Obtener el archivo seleccionado
+			                nom = (String) comboBoxTorneo.getSelectedItem();
+			            }
+			        });
+			        comboBoxTorneo.setBounds(70, 60, 190, 25);
 				contentPane.add(comboBoxTorneo);
 				
 				//ARRAY DE OBJETOS DE PRUEBA CON LOS NOMBRES DE LOS EQUIPOS CLASIFICACION
 				String[] tituloColumna = {"POS.","EQUIPO", "PUNTOS"};
-				Object[][] equipos = {
-				    {1,"TORNEO lA MARINA",52},
-				    {2,"TORNEO DEL ANIVERSARIO",50 },
-				    {3,"TORNEO VIEJAS GLORIAS",50},
-				    {4,"TORNEO POLICIAS CONTRA",40},
-				    {5,"TORNEO DE INVIERNO",39},
-				    {6,"TORNEO DE VERANO",38},
-				    {1,"TORNEO lA MARINA",38},
-				    {2,"TORNEO DEL ANIVERSARIO",37 },
-				    {3,"TORNEO VIEJAS GLORIAS",26},
-				    {4,"TORNEO POLICIAS CONTRA",23},
-				    {5,"TORNEO DE INVIERNO",21},
-				    {6,"TORNEO DE VERANO",20},
-				    {1,"TORNEO lA MARINA",20},
-				    {2,"TORNEO DEL ANIVERSARIO",20},
-				    {1,"TORNEO lA MARINA",52},
-				    {2,"TORNEO DEL ANIVERSARIO",50 },
-				    {3,"TORNEO VIEJAS GLORIAS",50},
-				    {4,"TORNEO POLICIAS CONTRA",40},
-				    {5,"TORNEO DE INVIERNO",39},
-				    {6,"TORNEO DE VERANO",38},
-				    {1,"TORNEO lA MARINA",38},
-				    {2,"TORNEO DEL ANIVERSARIO",37 },
-				    {3,"TORNEO VIEJAS GLORIAS",26},
-				    {4,"TORNEO POLICIAS CONTRA",23},
-				    {5,"TORNEO DE INVIERNO",21},
-				    {6,"TORNEO DE VERANO",20},
-				    {1,"TORNEO lA MARINA",20},
-				    {2,"TORNEO DEL ANIVERSARIO",20},
-				    {3,"TORNEO VIEJAS GLORIAS",19}
-				    };
+				
+				Object[][] clasificacion = {baseDeDatos.listaClasificacion(nom)};
 				
 				//TABLA PARA MOSTRAR LOS EQUIPOS
-				DefaultTableModel modelo = new DefaultTableModel(equipos, tituloColumna);// CREA UN MODELO DE LA TABLA CON LOS EQUIPOS Y LOS TITULOS DE LAS COLUMNAS
+				DefaultTableModel modelo = new DefaultTableModel(clasificacion, tituloColumna);// CREA UN MODELO DE LA TABLA CON LOS EQUIPOS Y LOS TITULOS DE LAS COLUMNAS
 				JTable tablaEquipos = new JTable(modelo);// CREA LA TABLA CON EL MODELO
 		        tablaEquipos.setSurrendersFocusOnKeystroke(true);
 		        tablaEquipos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // DESACTIVA EL ANCHO AUTOMATICO DE LAS COLUMNAS
@@ -165,6 +148,7 @@ public class Clasificaciones extends JFrame {
 				});
 				// FIN DE CODIGO PARA DAR ESTILO HOVER AL BOTON
 				// CODIGO PARA LINKEAR AL LA CLASE GESTOR
+				
 				botonMenuPrincipal.addActionListener(new ActionListener() {
 				            @Override
 				            public void actionPerformed(ActionEvent e) {

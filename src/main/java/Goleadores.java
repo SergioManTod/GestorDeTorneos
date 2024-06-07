@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -42,6 +43,7 @@ public class Goleadores extends JFrame {
 	}
 
 	public Goleadores() {
+		BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(null);
 		// FORMATO DEL CONTENTPANE
 				setForeground(new Color(255, 255, 255));
 				setResizable(false);
@@ -78,8 +80,9 @@ public class Goleadores extends JFrame {
 		contentPane.add(tagSelTorneo);
 		
 		// COMOBOX DEL LISTADO DE TORNEOS
-		JComboBox comboBoxTorneo = new JComboBox();
-		comboBoxTorneo.setModel(new DefaultComboBoxModel(new String[] {"-->SELECCIONE TORNEO<--", "Los gauchitos", "Diseminados por el viento", "LA MARINA","Los gauchitos", "Diseminados por el viento", "LA MARINA","Los gauchitos", "Diseminados por el viento", "LA MARINA", "Cuatro locos"}));//AQUI VA LA CONEXION CON LA BBDD
+		 List<String> torneosAct = baseDeDatos.listarTorneosActivos();
+	     torneosAct.add(0, "SELECCIONE UN TORNEO"); // Agrega el mensaje al principio de la lista
+	    JComboBox<String> comboBoxTorneo = new JComboBox<>(torneosAct.toArray(new String[0]));
 		comboBoxTorneo.setBounds(70, 60, 190, 25);
 		contentPane.add(comboBoxTorneo);
 		
