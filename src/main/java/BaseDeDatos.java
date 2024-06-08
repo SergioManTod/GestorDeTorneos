@@ -178,31 +178,27 @@ public class BaseDeDatos {
 
 	// listar torneos activos
 	public List<String> listarTorneosActivos() {
-		List<String> torneosAct = new ArrayList<String>();
+	    List<String> torneosAct = new ArrayList<String>();
 
-		try {
-			Statement st = con.createStatement();
-			String sql = "SELECT nombre FROM torneos where estaActivo=1  ORDER BY id ASC;";
-			ResultSet rs;
-			rs = st.executeQuery(sql);
-			
-         if (rs.getRow() == 0 ) {
-        	 String vacio = "No hay torneos activos";
-				torneosAct.add(vacio);
-         }
-         else {
-        	 while (rs.next()) {
- 				String nombre = rs.getString("nombre");
- 				torneosAct.add(nombre);
- 			}
-         }
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    try {
+	        Statement st = con.createStatement();
+	        String sql = "SELECT nombre FROM torneos WHERE estaActivo = 1 ORDER BY id ASC;";
+	        ResultSet rs = st.executeQuery(sql);
+	        
+	        if (!rs.next()) {
+	            String vacio = "No hay torneos activos";
+	            torneosAct.add(vacio);
+	        } else {
+	            do {
+	                String nombre = rs.getString("nombre");
+	                torneosAct.add(nombre);
+	            } while (rs.next());
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 
-		return torneosAct;
-
+	    return torneosAct;
 	}
 
 	// CONSULTA PARA CAMBIAR ESTADO DE TORNEO
@@ -246,23 +242,58 @@ public class BaseDeDatos {
 	}
 	
 	
-// listado casificacion
-	public Object[] listaClasificacion(String nom) throws SQLException {
-		Object[] clasificacion = (Object[]) new Object();
+	// listado clasificación
+	public List<Object[]> listaClasificacion(String nom) throws SQLException {
+		List<Object[]> clasificacion = new ArrayList<>();
 		Statement st = con.createStatement();
-		String sql = "SELECT e.nombre , e.puntos FROM equipos e JOIN torneos ON e.torneo=t.id WHERE t.nombre = '"+nom+"' ORDER by e.puntos DESC;";
+		String sql = "SELECT e.nombre, e.puntos FROM equipos e JOIN torneos t ON e.torneo = t.id WHERE t.nombre = '"
+				+ nom + "' ORDER BY e.puntos DESC;";
 		ResultSet rs = st.executeQuery(sql);
 
+		int cont = 1;
 		while (rs.next()) {
 			String nombreEquipo = rs.getString("nombre");
 			int puntos = rs.getInt("puntos");
-			int cont=1;
+			clasificacion.add(new Object[] { cont, nombreEquipo, puntos });
 			cont++;
-			clasificacion.add(new Object[] {String.valueOf(cont), nombreEquipo, String.valueOf(puntos) });
 		}
 
 		return clasificacion;
 	}
+	   // listado goleador
+    public List<Object[]> listaGoleadores(String nom) throws SQLException {
+        List<Object[]> goleadores = new ArrayList<>();
+        Statement st = con.createStatement();
+        String sql = "SELECT j.nombre, j.apellido1, j.apellido2, e.nombre AS nombre_equipo, SUM(g.gol) AS total_goles " +
+                     "FROM goles g " +
+                     "JOIN jugadores j ON g.jugador = j.id " +
+                     "JOIN equipos e ON j.equipo = e.id " +
+                     "JOIN torneos t ON e.torneo = t.id " +
+                     "WHERE t.nombre = '" + nom + "' " +
+                     "GROUP BY j.id, j.nombre, j.apellido1, j.apellido2, e.nombre " +
+                     "HAVING total_goles > 0 " +
+                     "ORDER BY total_goles DESC;";
+        ResultSet rs = st.executeQuery(sql);
+
+        int cont = 1;
+        while (rs.next()) {
+            String nombreEquipo = rs.getString("nombre_equipo");
+            String nombreJugador = rs.getString("nombre");
+            String apellido1Jugador = rs.getString("apellido1");
+            String apellido2Jugador = rs.getString("apellido2");
+            String jugador = nombreJugador + " " + apellido1Jugador + " " + apellido2Jugador;
+            int totalGolesJugador = rs.getInt("total_goles");
+            goleadores.add(new Object[]{cont, jugador, nombreEquipo, totalGolesJugador});
+            cont++;
+        }
+
+        rs.close();
+        st.close();
+
+        return goleadores;
+    }
+
+
 
 	public void insertarNuevoEquipo(Torneo nuevoTorneo) {
 		String nombre = nuevoTorneo.getNombTorneo();

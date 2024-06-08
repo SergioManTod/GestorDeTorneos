@@ -37,6 +37,9 @@ public class Gestor extends JFrame {
     public Gestor(Connection conn) {
         this.con = con;
         this.baseDeDatos = BaseDeDatos.obtenerInstancia(null);
+        // CONEXION A LA BB DD
+        baseDeDatos = BaseDeDatos.obtenerInstancia(tagMsgeConBbDd);
+
 
         // FORMATO DEL CONTENTPANE
         setForeground(new Color(255, 255, 255));
@@ -55,18 +58,9 @@ public class Gestor extends JFrame {
         setLocationRelativeTo(null);
         // FIN DEL FORMATO DEL CONTENTPANE
 
-        // JLABLE MENSAJE DE CONEXION EN LA BBDD
-        tagMsgeConBbDd = new JLabel();
-        tagMsgeConBbDd.setToolTipText("");
-        tagMsgeConBbDd.setHorizontalAlignment(SwingConstants.CENTER);
-        tagMsgeConBbDd.setForeground(Color.WHITE);
-        tagMsgeConBbDd.setFont(new Font("Tahoma", Font.BOLD, 12));
-        tagMsgeConBbDd.setBounds(20, 300, 350, 75);
-        contentPane.add(tagMsgeConBbDd);
+        
 
-        // CONEXION A LA BB DD
-        baseDeDatos = BaseDeDatos.obtenerInstancia(tagMsgeConBbDd);
-
+        
         // CREAR NUEVO TORNEO
         JLabel tagNuevoTorneo = new JLabel("Crear nuevo torneo:");
         tagNuevoTorneo.setForeground(new Color(255, 255, 255));

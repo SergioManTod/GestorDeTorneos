@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -26,105 +27,145 @@ import javax.swing.table.TableColumn;
 
 public class Goleadores extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTable tablaEquipos;
+    private DefaultTableModel modelo;
+    private JComboBox<String> comboBoxTorneo;
+    private BaseDeDatos baseDeDatos;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Goleadores frame = new Goleadores();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Goleadores frame = new Goleadores();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-	public Goleadores() {
-		BaseDeDatos baseDeDatos = BaseDeDatos.obtenerInstancia(null);
-		// FORMATO DEL CONTENTPANE
-				setForeground(new Color(255, 255, 255));
-				setResizable(false);
-				setType(Type.POPUP);
-				setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
-				setTitle("Gestor de Torneos V. Gamma  -  Goleadores");
-				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				setBounds(100, 100, 600, 420);
-				contentPane = new JPanel();
-				contentPane.setBorder(UIManager.getBorder("TitledBorder.border"));
-				contentPane.setPreferredSize(new Dimension(600, 420));
-		        contentPane.setBackground(new Color(152, 180, 216));
-				setContentPane(contentPane);
-				contentPane.setLayout(null);
-				setLocationRelativeTo(null);
-				// FIN DEL FORMATO DEL CONTENTPANE
-		
-		JLabel tagInstrucciones = new JLabel("SELECCIONA EL TORNEO DEL QUE QUIERES VER LA CLASIFICACIÓN DE GOLES");
-		tagInstrucciones.setToolTipText("");
-		tagInstrucciones.setFont(new Font("Tahoma", Font.BOLD, 12));
-		tagInstrucciones.setForeground(new Color(255, 255, 255));
-		tagInstrucciones.setHorizontalAlignment(SwingConstants.CENTER);
-		tagInstrucciones.setBounds(10, 11, 564, 25);
-		contentPane.add(tagInstrucciones);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 47, 584, 2);
-		contentPane.add(separator);
-		
-		// SELECCION DE TORNEO
-		JLabel tagSelTorneo = new JLabel("TORNEO:");
-		tagSelTorneo.setForeground(new Color(255, 255, 255));
-		tagSelTorneo.setBounds(10, 60, 68, 25);
-		contentPane.add(tagSelTorneo);
-		
-		// COMOBOX DEL LISTADO DE TORNEOS
-		 List<String> torneosAct = baseDeDatos.listarTorneosActivos();
-	     torneosAct.add(0, "SELECCIONE UN TORNEO"); // Agrega el mensaje al principio de la lista
-	    JComboBox<String> comboBoxTorneo = new JComboBox<>(torneosAct.toArray(new String[0]));
-		comboBoxTorneo.setBounds(70, 60, 190, 25);
-		contentPane.add(comboBoxTorneo);
-		
-		//ARRAY DE OBJETOS DE PRUEBA CON LOS NOMBRES DE LOS EQUIPOS CLASIFICACION
-		String[] tituloColumna = {"POS.","JUGADOR","EQUIPO", "GOLES"};
-		Object[][] equipos = {
-				{1,"Paco Martinez","TORNEO lA MARINA",52},
-			    {2,"Paco Martinez","TORNEO DEL ANIVERSARIO",50 },
-			    {3,"Paco Martinez","TORNEO VIEJAS GLORIAS",50},
-			    {4,"Paco Martinez","TORNEO POLICIAS CONTRA",40},
-			    {5,"Paco Martinez","TORNEO DE INVIERNO",39},
-			    {6,"Paco Martinez","TORNEO DE VERANO",38},
-			    {1,"Jose Alberto Medina Cuesta","TORNEO lA MARINA",38},
-			    {1,"Paco Martinez","TORNEO lA MARINA",52},
-			    {2,"Paco Martinez","TORNEO DEL ANIVERSARIO",50 },
-			    {3,"Paco Martinez","TORNEO VIEJAS GLORIAS",50},
-			    {4,"Paco Martinez","TORNEO POLICIAS CONTRA",40},
-			    {5,"Paco Martinez","TORNEO DE INVIERNO",39},
-			    {6,"Paco Martinez","TORNEO DE VERANO",38},
-			    {1,"Paco Martinez","TORNEO lA MARINA",52},
-			    {2,"Paco Martinez","TORNEO DEL ANIVERSARIO",50 },
-			    {3,"Paco Martinez","TORNEO VIEJAS GLORIAS",50},
-			    {4,"Paco Martinez","TORNEO POLICIAS CONTRA",40},
-			    {5,"Paco Martinez","TORNEO DE INVIERNO",39},
-			    {6,"Paco Martinez","TORNEO DE VERANO",38},
-			    {1,"Jose Alberto Medina Cuesta","TORNEO lA MARINA",38},
-			    {1,"Paco Martinez","TORNEO lA MARINA",52},
-			    {2,"Paco Martinez","TORNEO DEL ANIVERSARIO",50 },
-			    {3,"Paco Martinez","TORNEO VIEJAS GLORIAS",50},
-			    {4,"Paco Martinez","TORNEO POLICIAS CONTRA",40},
-			    {5,"Paco Martinez","TORNEO DE INVIERNO",39},
-			    {6,"Paco Martinez","TORNEO DE VERANO",38},
-			    {1,"Jose Alberto Medina Cuesta","TORNEO lA MARINA",38}
-		    };
-		
-		//TABLA PARA MOSTRAR LOS EQUIPOS
-		DefaultTableModel modelo = new DefaultTableModel(equipos, tituloColumna);// CREA UN MODELO DE LA TABLA CON LOS EQUIPOS Y LOS TITULOS DE LAS COLUMNAS
-		JTable tablaEquipos = new JTable(modelo);// CREA LA TABLA CON EL MODELO
+    public Goleadores() {
+        baseDeDatos = BaseDeDatos.obtenerInstancia(null);
+        
+        // FORMATO DEL CONTENTPANE
+        setForeground(new Color(255, 255, 255));
+        setResizable(false);
+        setType(Type.POPUP);
+        setIconImage(Toolkit.getDefaultToolkit().getImage("img\\icono_trofeo.png"));
+        setTitle("Gestor de Torneos V. Gamma  -  Goleadores");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 600, 420);
+        contentPane = new JPanel();
+        contentPane.setBorder(UIManager.getBorder("TitledBorder.border"));
+        contentPane.setPreferredSize(new Dimension(600, 420));
+        contentPane.setBackground(new Color(152, 180, 216));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+        setLocationRelativeTo(null);
+
+        JLabel tagInstrucciones = new JLabel("SELECCIONA EL TORNEO DEL QUE QUIERES VER LA CLASIFICACIÓN DE GOLES");
+        tagInstrucciones.setToolTipText("");
+        tagInstrucciones.setFont(new Font("Tahoma", Font.BOLD, 12));
+        tagInstrucciones.setForeground(new Color(255, 255, 255));
+        tagInstrucciones.setHorizontalAlignment(SwingConstants.CENTER);
+        tagInstrucciones.setBounds(10, 11, 564, 25);
+        contentPane.add(tagInstrucciones);
+
+        JSeparator separator = new JSeparator();
+        separator.setBounds(0, 47, 584, 2);
+        contentPane.add(separator);
+
+        JLabel tagSelTorneo = new JLabel("TORNEO:");
+        tagSelTorneo.setForeground(new Color(255, 255, 255));
+        tagSelTorneo.setBounds(10, 60, 68, 25);
+        contentPane.add(tagSelTorneo);
+
+        // COMBOBOX DEL LISTADO DE TORNEOS
+        List<String> torneosAct = baseDeDatos.listarTorneosActivos();
+        torneosAct.add(0, "SELECCIONE UN TORNEO");
+        comboBoxTorneo = new JComboBox<>(torneosAct.toArray(new String[0]));
+        comboBoxTorneo.setBounds(70, 60, 190, 25);
+        contentPane.add(comboBoxTorneo);
+
+        // EVENTO PARA CARGAR LA LISTA DE GOLEADORES CUANDO SE SELECCIONA UN TORNEO
+        comboBoxTorneo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nom = (String) comboBoxTorneo.getSelectedItem();
+                if (!nom.equals("SELECCIONE UN TORNEO")) {
+                    try {
+                        List<Object[]> goleadores = baseDeDatos.listaGoleadores(nom);
+                        actualizarTablaGoleadores(goleadores);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        // TITULOS DE COLUMNAS
+        String[] tituloColumna = {"POS.", "JUGADOR", "EQUIPO", "GOLES"};
+        
+        // TABLA PARA MOSTRAR LOS GOLEADORES
+        modelo = new DefaultTableModel(new Object[0][0], tituloColumna);
+        tablaEquipos = new JTable(modelo);
         tablaEquipos.setSurrendersFocusOnKeystroke(true);
-        tablaEquipos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // DESACTIVA EL ANCHO AUTOMATICO DE LAS COLUMNAS
+        tablaEquipos.setAutoResizeMode(JTable.WIDTH);
 
-        // AJUSTA EL ANCHO DE CADA COLUMNA A SU CONTENIDO
+        JScrollPane scrollPane = new JScrollPane(tablaEquipos);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBounds(75, 90, 450, 265);
+        contentPane.add(scrollPane);
+
+        // BOTON PARA VOLVER AL MENU PRINCIPAL
+        JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
+        botonMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 10));
+        botonMenuPrincipal.setBounds(330, 60, 200, 25);
+        
+        botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botonMenuPrincipal.setBackground(Color.LIGHT_GRAY);
+                botonMenuPrincipal.setForeground(Color.WHITE);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botonMenuPrincipal.setBackground(Color.WHITE);
+                botonMenuPrincipal.setForeground(Color.BLACK);
+            }
+        });
+
+        botonMenuPrincipal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                Gestor gestor = new Gestor(null);
+                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                gestor.setVisible(true);
+            }
+        });
+        contentPane.add(botonMenuPrincipal);
+
+        // IMAGEN DE FONDO
+        JLabel tagImagenDeFondo = new JLabel();
+        ImageIcon copa = new ImageIcon("img\\balon.png");
+        tagImagenDeFondo.setIcon(copa);
+        tagImagenDeFondo.setBounds(80, 35, 512, 512);
+        getContentPane().add(tagImagenDeFondo);
+    }
+
+    private void actualizarTablaGoleadores(List<Object[]> goleadores) {
+        // LIMPIAR LA TABLA ACTUAL
+        modelo.setRowCount(0);
+
+        // AGREGAR NUEVAS FILAS A LA TABLA
+        for (Object[] goleador : goleadores) {
+            modelo.addRow(goleador);
+        }
+
+        // AJUSTAR EL ANCHO DE CADA COLUMNA
         for (int i = 0; i < tablaEquipos.getColumnCount(); i++) {
             TableColumn columna = tablaEquipos.getColumnModel().getColumn(i);
             int width = (int) tablaEquipos.getTableHeader().getDefaultRenderer()
@@ -138,52 +179,7 @@ public class Goleadores extends JFrame {
             }
             columna.setPreferredWidth(width + 10);
         }
-        // AJUSTA EL ANCHO DE LA ULTIMA COLUMNA PARA QUE OCUPE TODO
         TableColumn ultimaColumna = tablaEquipos.getColumnModel().getColumn(tablaEquipos.getColumnCount() - 1);
-        ultimaColumna.setPreferredWidth(55); 
-        JScrollPane scrollPane = new JScrollPane(tablaEquipos);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(75, 90,450, 265); 
-        contentPane.add(scrollPane);
-        
-     // BOTON PARA VOLVER AL MENU PRINCIPAL
-		JButton botonMenuPrincipal = new JButton("MENÚ PRINCIPAL");
-		botonMenuPrincipal.setFont(new Font("Tahoma", Font.BOLD, 10));
-		botonMenuPrincipal.setBounds(330, 60, 200, 25);
-		// INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
-		botonMenuPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	botonMenuPrincipal.setBackground(Color.LIGHT_GRAY);
-		    	botonMenuPrincipal.setForeground(Color.WHITE);
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	botonMenuPrincipal.setBackground(Color.WHITE);
-		    	botonMenuPrincipal.setForeground(Color.BLACK);
-		    }
-		});
-		// FIN DE CODIGO PARA DAR ESTILO HOVER AL BOTON
-		// CODIGO PARA LINKEAR AL LA CLASE GESTOR
-		botonMenuPrincipal.addActionListener(new ActionListener() {
-		            @Override
-		            public void actionPerformed(ActionEvent e) {
-		                setVisible(false); // OCULTA LA CLASE ACTUAL
-		                
-		                Gestor gestor = new Gestor(null);
-		                gestor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // CIERRA EL JFRAME ACTUAL
-		                gestor.setVisible(true);
-		            }
-		        });
-		contentPane.add(botonMenuPrincipal);
-		
-		// IMAGEN DE FONDO
-        JLabel tagImagenDeFondo = new JLabel();
-        // SE CREA UN IMAGEICON CON LA IMAGEN DE FONDO
-        ImageIcon copa = new ImageIcon("img\\balon.png");
-        // SE LE ASIGNA EL IMAGEICON A LA ETIQUETA
-        tagImagenDeFondo.setIcon(copa);
-        tagImagenDeFondo.setBounds(80, 35, 512, 512); 
-        getContentPane().add(tagImagenDeFondo);
-	}
-
+        ultimaColumna.setPreferredWidth(55);
+    }
 }
