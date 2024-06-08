@@ -40,7 +40,7 @@ public class BaseDeDatos {
 	// específico
 	public Connection conectar(String propertiesFileName) {
 		if (con != null) {
-			return con; // Si la conexión ya está establecida, no hacer nada
+			return con; // 99Si la conexión ya está establecida, no hacer nada
 		}
 
 		Properties prop = new Properties();
