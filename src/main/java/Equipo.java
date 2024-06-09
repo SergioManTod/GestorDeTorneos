@@ -7,7 +7,7 @@ public class Equipo {
 	private  Arbitro arbitro;
 	private Torneo troneo;
 	private int idTorneo;
-	private Jugador jugadores[];
+	public Jugador jugadores[];
 
 	public Equipo( String nombre, String email, Delegado responsable, Arbitro arbitro, Jugador[] jugadores) {
 		super();

@@ -352,7 +352,7 @@ public class BaseDeDatos {
 	     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	     // Formatear la fecha
 	      String fechaFormateada = fecha.format(formatter);
-	     System.out.println("Fecha formateada: " + fechaFormateada);
+	     
 	        
 	        
 	        
@@ -392,7 +392,7 @@ public void insertarNuevoJugador(Arbitro nuevoArbitro, int idEquipo) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     // Formatear la fecha
      String fechaFormateada = fecha.format(formatter);
-    System.out.println("Fecha formateada: " + fechaFormateada);
+    
 		int Equipo=idEquipo;
 		PreparedStatement statement = null;
 		try {
@@ -428,12 +428,12 @@ public void insertarNuevoJugador(Jugador nuevoJugador, int idEquipo) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     // Formatear la fecha
      String fechaFormateada = fecha.format(formatter);
-    System.out.println("Fecha formateada: " + fechaFormateada);
+   
 	int Equipo=idEquipo;
 	PreparedStatement statement = null;
 	try {
 		statement = con.prepareStatement(
-				"INSERT INTO jugadores(nombre,apellido1,apellido2,dni,fecha_nacimiento,equipo) " + "VALUES (?,?,?,?,?,?,)");
+				"INSERT INTO jugadores(nombre,apellido1,apellido2,dni,fecha_nacimiento,equipo) " + "VALUES (?,?,?,?,?,?)");
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

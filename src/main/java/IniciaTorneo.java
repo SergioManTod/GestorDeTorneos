@@ -277,9 +277,9 @@ public class IniciaTorneo extends JFrame {
    	 					formulariosRechazados++;
        			 
    	 				}else {
-   	 					arrayEquipos[i]=(nuevaLectura.leerPdf(nuevoTorneo.getCantJugadores(),nombreTorneocombo,nombreArchivo));
-   	 					
-   	 					System.out.println(arrayEquipos[i].getJugadores()[i].toString());
+   	 				Equipo nuevoEquipo=(nuevaLectura.leerPdf(nuevoTorneo.getCantJugadores(),nombreTorneocombo,nombreArchivo));
+   	 				 arrayEquipos[i]=nuevoEquipo;
+   	 				 
    	 				}
    	 			
    	 			}
@@ -357,7 +357,7 @@ public class IniciaTorneo extends JFrame {
 		 for(int i=0;i<nuevoEquipo.getJugadores().length;i++) {
 			 
 			 Jugador nuevojugador=nuevoEquipo.getJugadores()[i];
-			System.out.println(nuevojugador.toString());
+			 baseDeDatos.insertarNuevoJugador(nuevojugador, idEquipo);
 		 }
 		 
 		 
