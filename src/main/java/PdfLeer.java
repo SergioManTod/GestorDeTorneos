@@ -24,7 +24,7 @@ public  Equipo leerPdf(int minimoJugadores,String nombreTorneo, String nombreArc
 		// Cargar el documento PDF
         PdfDocument pdf = new PdfDocument();
 
-        System.out.println("torneo_"+nombreTorneo+"\\Inscripciones_recibidas\\"+nombreArchivo);
+        
         pdf.loadFromFile("torneo_"+nombreTorneo+"\\Inscripciones_recibidas\\"+nombreArchivo);
         	Metodos comprobar=new Metodos();
         // Obtener el widget del formulario
@@ -60,9 +60,9 @@ public  Equipo leerPdf(int minimoJugadores,String nombreTorneo, String nombreArc
        
         // Recorrer la colección de widgets de campos y extraer los valores
         for (int i = 0; i < 2; i++) {
-        	System.out.println("aqui no");
+        	System.out.println(formWidget.getFieldsWidget().getCount());
         	PdfField field = (PdfField) formWidget.getFieldsWidget().getList().get(i);
-        	System.out.println("aqui tampoco");
+        	
         	if(i==0) {
         		nombreEquipo=leerCampo(pdf,formWidget,field);
         		if(!comprobar.validarNombreEquipo(listaNombresEquipo, nombreEquipo)) {
@@ -80,36 +80,73 @@ public  Equipo leerPdf(int minimoJugadores,String nombreTorneo, String nombreArc
 
         }
 //        
-        for (int i = 2; i < formWidget.getFieldsWidget().getCount(); i++) {
-        	System.out.println("aqui???");
+        for (int i = 2; i < formWidget.getFieldsWidget().getCount(); ) {
+        	
             boolean inscribirJugador = true;
-            PdfField field = (PdfField) formWidget.getFieldsWidget().getList().get(i);
-
-            nombreJugador = leerCampo(pdf, formWidget, field);
-            apellido1 = leerCampo(pdf, formWidget, field);
-             apellido2 = leerCampo(pdf, formWidget, field);
-             dni = leerCampo(pdf, formWidget, field);
-             fechaNacimiento = leerCampo(pdf, formWidget, field);
-
-             fechaF = stringToLocalDate(fechaNacimiento);
-
-            if (!comprobar.validarNombre(nombreJugador) ||
-                !comprobar.validarApellido1(apellido1) ||
-                !comprobar.validarApellido2(apellido2) ||
-                !comprobar.validaDni(dni)) {
-                inscribirJugador = false;
+            
+            for(int j=0;j<5;j++,i++) {
+            	
+            	PdfField field = (PdfField) formWidget.getFieldsWidget().getList().get(i);
+            	switch (j) {
+				case 0: 
+					nombreJugador = leerCampo(pdf, formWidget, field);
+					
+				break;
+					case 1: 
+						apellido1 = leerCampo(pdf, formWidget, field);
+					
+				break;
+					case 2: 
+						apellido2 = leerCampo(pdf, formWidget, field);
+						break;
+					
+					case 3: 
+						dni = leerCampo(pdf, formWidget, field);
+						
+					break;
+					case 4: 
+						fechaNacimiento = leerCampo(pdf, formWidget, field);
+		             	
+		             fechaF = stringToLocalDate(fechaNacimiento);
+						
+					break;
+					default:
+					throw new IllegalArgumentException("Unexpected value: " + j);
+					}
             }
+            	 if (!comprobar.validarNombre(nombreJugador) ||
+                         !comprobar.validarApellido1(apellido1) ||
+                         !comprobar.validarApellido2(apellido2) ||
+                         !comprobar.validaDni(dni)) {
+                         inscribirJugador = false;
+                         System.out.println("erroooooooo");
+                     }
 
-            if (inscribirJugador) {
-                listaNombresjugador.add(nombreJugador);
-                listaApellidos1.add(apellido1);
-                listaApellidos2.add(apellido2);
-                listaDni.add(dni);
-                listaFechas.add(fechaF);
-            }
+                     if (inscribirJugador) {
+                         listaNombresjugador.add(nombreJugador);
+                         System.out.println(listaNombresjugador.size()+" el nombre "+nombreJugador);
+                         listaApellidos1.add(apellido1);
+                         System.out.println(listaApellidos1.size()+" el apellido1 "+apellido1);
+                         listaApellidos2.add(apellido2);
+                         System.out.println(listaApellidos2.size()+" el apellido 2  "+apellido2);
+                         listaDni.add(dni);
+                         System.out.println(listaDni.size()+" el dni "+ dni);
+                         listaFechas.add(fechaF);
+                         System.out.println(listaFechas.size()+" la fecha "+fechaF);
+                     }
+            	
+            
+            
+            
+             
+             
+             
+
+           
             
         }
         Jugador[] arrayJugadores=new Jugador[listaNombresjugador.size()];
+       System.out.println(listaNombresjugador.size());
         if(inscribirEquipo==true&& listaNombresjugador.size()>=minimoJugadores ) {
         	for(int i=0;i<listaNombresjugador.size();i++) {
         		  
@@ -127,24 +164,34 @@ public  Equipo leerPdf(int minimoJugadores,String nombreTorneo, String nombreArc
         				nuevoArbitro= new Arbitro(listaNombresjugador.get(i).toString(),listaApellidos1.get(i).toString(),listaApellidos2.get(i).toString(),listaFechas.get(i),listaDni.get(i).toString());
         				
         						}else {
-        				nuevoJugador= new Jugador(listaNombresjugador.get(i).toString(),listaApellidos1.get(i).toString(),listaApellidos2.get(i).toString(),listaFechas.get(i),listaDni.get(i).toString());
-        				
+        							
+        				 nuevoJugador=new Jugador(listaNombresjugador.get(i).toString(),listaApellidos1.get(i).toString(),listaApellidos2.get(i).toString(),listaFechas.get(i),listaDni.get(i).toString());			
+        				 System.out.println(nuevoJugador.toString());
+        				 arrayJugadores[i]=nuevoJugador ;
+        					
             			
         			}
         			
         		}
         		
         	}
-        	Equipo nuevoEquipo=new Equipo(nombreEquipo,email,nuevoDelegado,nuevoArbitro,arrayJugadores);	
+        	Equipo nuevoEquipo=new Equipo( nombreEquipo,email,nuevoDelegado,nuevoArbitro,arrayJugadores);
+        	if (nuevoEquipo.getJugadores() != null) {
+                System.out.println("Longitud: " + nuevoEquipo.getJugadores().length);
+            } else {
+                System.out.println("El array de jugadores es null");
+            }
         	pdf.close();
         	return  nuevoEquipo;
+        	
         }else {
             pdf.close();
         	return null;
         	}
         
 
-
+        
+    	
 		
 	
 		

@@ -6,21 +6,33 @@ public class Equipo {
 	private Delegado responsable;
 	private  Arbitro arbitro;
 	private Torneo troneo;
+	private int idTorneo;
 	private Jugador jugadores[];
-	public Equipo( String nombre, String email, Delegado responsable, Arbitro arbitro,Jugador []jugadores) {
+
+	public Equipo( String nombre, String email, Delegado responsable, Arbitro arbitro, Jugador[] jugadores) {
 		super();
-	
+		
 		this.nombre = nombre;
 		this.email = email;
 		this.responsable = responsable;
 		this.arbitro = arbitro;
-		
+		this.jugadores = jugadores!= null ? jugadores : new Jugador[0];
+	}
+	public Equipo() {
+		// TODO Auto-generated constructor stub
 	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public int getIdTorneo() {
+		return idTorneo;
+	}
+	public void setIdTorneo(int idTorneo) {
+		this.idTorneo = idTorneo;
 	}
 	public String getNombre() {
 		return nombre;

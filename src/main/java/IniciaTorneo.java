@@ -241,8 +241,8 @@ public class IniciaTorneo extends JFrame {
 		    @Override
 		    public void actionPerformed(ActionEvent e) {
 		    	String nombreTorneoCombo =(String)comboBox.getSelectedItem();
-		    	System.out.println("combo"+nombreTorneoCombo);
-		      if(crearTorneo(nombreTorneoCombo,baseDeDatos)) {
+		    	
+		      if(IniciarTorneo(nombreTorneoCombo,baseDeDatos)) {
 		    	  
 		      };
 		    	
@@ -250,75 +250,57 @@ public class IniciaTorneo extends JFrame {
 		});
     }
 
-    public static boolean crearTorneo(String nombreTorneocombo, BaseDeDatos baseDeDatos) {
-    	List <String[]> datosTorneo=new ArrayList<>();
+    public static boolean IniciarTorneo(String nombreTorneocombo, BaseDeDatos baseDeDatos) {
+    	Torneo nuevoTorneo=new Torneo();
     	PdfLeer nuevaLectura=new PdfLeer();
     	try {
-			datosTorneo=baseDeDatos.consultaTorneo(nombreTorneocombo);
+    		 nuevoTorneo=(Torneo) baseDeDatos.consultaTorneo(nombreTorneocombo);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	int id=Integer.parseInt(datosTorneo.get(0)[0]);
-    	System.out.println("id = "+id);
-    	 String nombreTorneo=datosTorneo.get(1)[0];
-    	 System.out.println("nombre torneo ="+nombreTorneo);
-    	int numMinJugadores=Integer.parseInt(datosTorneo.get(2)[0]);
-    	System.out.println("numero minimimos de jugaderos="+numMinJugadores);
-    	int numMinEquipos=Integer.parseInt(datosTorneo.get(3)[0]);
-    	System.out.println("numero minimimos de equipos ="+numMinEquipos);
-//    	int activo=Integer.parseInt(datosTorneo.get(4)[0]);
-//    	System.out.println("activo ="+activo);
     	
-    	 ArrayList<Object[]> listaequipos = new ArrayList<Object[]>();
-    	 List<String> nombreArchivos=nombreArchivos(nombreTorneocombo);
-    	 for(int i=0;i<nombreArchivos.size();i++) {
-    		 System.out.println(nombreArchivos.get(i));
-    	 }
-    	 Equipo arrayEquipos[]=new Equipo[nombreArchivos.size()];
-    	 if(nombreArchivos.size()<numMinEquipos) {
-    		 tagStatusCal.setText("<html><p align=center>No se puede iniciar el torneo "+nombreTorneocombo+".<br>"
-    		 		+ "Hacen fallta al menos "+numMinEquipos+" equipos inscritos.</p></html>");;
-    	 }else {
-    		 int formulariosRechazados=0;
-    		 for(int i=0;i<nombreArchivos.size();i++) {
-        		 String nombreArchivo=nombreArchivos.get(i);
-        		 if (nuevaLectura.leerPdf(numMinJugadores,nombreTorneocombo,nombreArchivo)==null) {
-        			 System.out.println("pdf incorrecto");
-        			 formulariosRechazados++;
-        			 
-        		 }else {
-        			 arrayEquipos[i]=(nuevaLectura.leerPdf(numMinJugadores,nombreTorneocombo,nombreArchivo));
-        			 
-        		 }
+    	///buscamos en la carpeta de inscripciones
+    	int formulariosRechazados=0;
+   	 	List<String> nombreArchivos=nombreArchivos(nombreTorneocombo);
+   	 	Equipo arrayEquipos[]=new Equipo[nombreArchivos.size()];
+   	 		if(nombreArchivos.size()<nuevoTorneo.getCantEquipos()) {
+   	 			tagStatusCal.setText("<html><p align=center>No se puede iniciar el torneo "+nombreTorneocombo+".<br>"
+   	 					+ "Hacen fallta al menos "+nuevoTorneo.getCantEquipos()+" equipos inscritos.</p></html>");
+   	 			return false;
+   	 		}else {
+   	 			for(int i=0;i<nombreArchivos.size();i++) {
+   	 			
+   	 				String nombreArchivo=nombreArchivos.get(i);
+   	 				if (nuevaLectura.leerPdf(nuevoTorneo.getCantJugadores(),nombreTorneocombo,nombreArchivo)==null) {
+   	 					System.out.println("pdf incorrecto");
+   	 					formulariosRechazados++;
+       			 
+   	 				}else {
+   	 					arrayEquipos[i]=(nuevaLectura.leerPdf(nuevoTorneo.getCantJugadores(),nombreTorneocombo,nombreArchivo));
+   	 					
+   	 					System.out.println(arrayEquipos[i].getJugadores()[i].toString());
+   	 				}
+   	 			
+   	 			}
         		 
-        	
-    	 
-    	 
-
     		 }
-    		 if(arrayEquipos.length-formulariosRechazados<numMinEquipos) {
-    			 System.out.println("no hay suficientes equipos correctamente inscritos");
+    		 
+    		 if(arrayEquipos.length-formulariosRechazados<nuevoTorneo.getCantEquipos()) {
+    			 tagStatusCal.setText("<html><p align=center>No se puede iniciar el torneo "+nombreTorneocombo+".<br>"
+    	    		 		+ "Hacen fallta al menos "+nuevoTorneo.getCantEquipos()+"  correctamente equipos inscritos.</p></html>");;
     		 }else {
-    			 //consulta para extraer id de torneo
-    			 for(int i=0;i<arrayEquipos.length;i++) {
+    			for(int i=0;i<arrayEquipos.length;i++) {
     				 if(arrayEquipos[i]!=null) {
-    					 String nombre=arrayEquipos[i].getNombre();
-    					 String email=arrayEquipos[i].getEmail();
-    					 // insertar en base de Datos id de torneo, nombre de equipo y correo electronico
-    					 int idequipo=0;
-    					 //consulta para estraer id de equipo y poder insertar los jugadores con su id de equipo
-    					 Delegado nuevoDelegado=arrayEquipos[i].getResponsable();
-    					 ///extraer campos de delegado y e insertar un nuevo jugador delegado trrue
-    					 Arbitro nuevoArbitro=arrayEquipos[i].getArbitro();
-    					 //extraer campos de arbitro e insertar un nuevo jugador arbitro true
-    					 Jugador arrayJugadores[]=arrayEquipos[i].getJugadores();
-    					 for(int j =0;j<arrayJugadores.length;j++) {
-    						String  nombreJugador=arrayJugadores[j].getNombre();
-    						//extraer todos los campos e insertar un nuevo jugador dentro del bucle
-    					 }
+    					 
+    					 // inscribir equipo y sus jugadores
+    					 inscribirEquipos(arrayEquipos[i],nuevoTorneo.getId(),baseDeDatos);
+    					 
+    					 
+    					 
     					
-    					 //una vez subidos todos los jugadores obtenemos el id del delegado y el arbitro ylos aññadimos a la tabla equipo
+    					 //consulta para estraer id de equipo y poder insertar los jugadores con su id de equipo
+    					
     				 }
     				 
     			 }
@@ -328,10 +310,11 @@ public class IniciaTorneo extends JFrame {
     	
     	
 		
+    		 return true;
+    }
     	
-    }
-    	 return true;
-    }
+    
+
     public static List<String> nombreArchivos(String nombreTorneo){
     	List<String> archivos=new ArrayList<String>();
     	File carpeta=new File("torneo_"+nombreTorneo+"/Inscripciones_recibidas/");
@@ -341,7 +324,7 @@ public class IniciaTorneo extends JFrame {
     			File afa=af[i];
     			if (afa.isFile()) {
     				archivos.add(i,afa.getName());
-    				System.out.println(afa.getName());
+    				
     			}
     		}
     	}
@@ -353,6 +336,31 @@ public class IniciaTorneo extends JFrame {
     	
 		return archivos;
     	
+    }
+    public static void inscribirEquipos(Equipo nuevoEquipo, int idTorneo, BaseDeDatos baseDeDatos) {
+    	int idEquipo=0;
+    	// insertar en base de Datos id de torneo, nombre de equipo y correo electronico
+		 baseDeDatos.insertarNuevoEquipo(nuevoEquipo,idTorneo);
+		//consulta para estraer id de equipo y poder insertar los jugadores con su id de equipo
+		 try {
+			 idEquipo=baseDeDatos.consultaIdEquipo(nuevoEquipo.getNombre());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 ///insertamos jugadores
+		 Delegado nuevoDelegado=nuevoEquipo.getResponsable();
+		 baseDeDatos.insertarNuevoJugador(nuevoDelegado, idEquipo);
+		 Arbitro nuevoArbitro=nuevoEquipo.getArbitro();
+		 baseDeDatos.insertarNuevoJugador(nuevoArbitro, idEquipo);
+		 
+		 for(int i=0;i<nuevoEquipo.getJugadores().length;i++) {
+			 
+			 Jugador nuevojugador=nuevoEquipo.getJugadores()[i];
+			System.out.println(nuevojugador.toString());
+		 }
+		 
+		 
     }
     
 }

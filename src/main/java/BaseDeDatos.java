@@ -4,7 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.io.FileInputStream;
@@ -221,24 +225,24 @@ public class BaseDeDatos {
 		return selTorIna;
 	}
 
-	public List<String[]> consultaTorneo(String nombre) throws SQLException {
-		List<String[]> selTorNom = new ArrayList<>();
+	public Torneo consultaTorneo(String nombre) throws SQLException {
+		Torneo nuevoTorneo=new Torneo();
 		Statement st = con.createStatement();
 		String sql = "SELECT * FROM torneos where nombre=nombre;";
 		ResultSet rs = st.executeQuery(sql);
 
 		while (rs.next()) {
 
-			int id = rs.getInt("id");
-			nombre = rs.getString("nombre");
-			int numJug = rs.getInt("numero_jugadores");
-			int numEquip = rs.getInt("numero_equipos");
-			int estaActivo = rs.getInt("estaActivo");
-			selTorNom.add(new String[] { String.valueOf(id), nombre, String.valueOf(numJug), String.valueOf(numEquip),
-					String.valueOf(estaActivo) });
+			nuevoTorneo.setId(rs.getInt("id")); 
+			nuevoTorneo.setNombTorneo(nombre);
+			nuevoTorneo.setCantJugadores(rs.getInt("numero_jugadores"));
+			nuevoTorneo.setCantEquipos(rs.getInt("numero_equipos"));
+			nuevoTorneo.setActivo(rs.getInt("estaActivo"));
+			
+			
 		}
 
-		return selTorNom;
+		return nuevoTorneo;
 	}
 	
 	
@@ -295,28 +299,162 @@ public class BaseDeDatos {
 
 
 
-	public void insertarNuevoEquipo(Torneo nuevoTorneo) {
-		String nombre = nuevoTorneo.getNombTorneo();
-		int numero_jugadores = nuevoTorneo.getCantJugadores();
-		int numero_equipos = nuevoTorneo.getCantEquipos();
+    public void insertarNuevoEquipo(Equipo nuevoEquipo, int idTorneoactual) {
+		String nombre = nuevoEquipo.getNombre();
+		String email=nuevoEquipo.getEmail();
+		int idTorneo=idTorneoactual;
 		PreparedStatement statement = null;
 		try {
 			statement = con.prepareStatement(
-					"INSERT INTO torneos (nombre,numero_jugadores,numero_equipos) " + "VALUES (?,?,?)");
+					"INSERT INTO equipos (nombre,email,torneo) " + "VALUES (?,?,?)");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			statement.setString(1, nombre);
-			statement.setInt(2, numero_jugadores);
-			statement.setInt(3, numero_equipos);
-
-			statement.executeUpdate();
+			statement.setString(2, email);
+			statement.setInt(3,idTorneo );
+			statement.executeUpdate() ;
 			statement.close();
+			
+		
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
+
+    public int consultaIdEquipo(String nombre) throws SQLException {
+		int idEquipo=0;
+		Statement st = con.createStatement();
+		String sql = "SELECT id FROM equipos where nombre=nombre;";
+		ResultSet rs = st.executeQuery(sql);
+
+		while (rs.next()) {
+				
+			idEquipo=rs.getInt("id");
+			
+		}
+		
+		return idEquipo;
+	}
+    public void insertarNuevoJugador(Delegado nuevoDelegado , int idEquipo) {
+		
+		
+		
+	      
+		 LocalDate fecha = nuevoDelegado.getFechaNacimiento(); // Reemplaza esto con tu objeto LocalDate
+	     // Crear un formateador con el patrón deseado
+	     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	     // Formatear la fecha
+	      String fechaFormateada = fecha.format(formatter);
+	     System.out.println("Fecha formateada: " + fechaFormateada);
+	        
+	        
+	        
+        
+        
+		int Equipo=idEquipo;
+		PreparedStatement statement = null;
+		try {
+			statement = con.prepareStatement(
+					"INSERT INTO jugadores(nombre,apellido1,apellido2,dni,fecha_nacimiento,equipo,delegado) " + "VALUES (?,?,?,?,?,?,?)");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			statement.setString(1, nuevoDelegado.getNombre());
+			statement.setString(2, nuevoDelegado.getApellidoUno());
+			statement.setString(3,nuevoDelegado.getApellidoDos());
+			statement.setString(4,nuevoDelegado.getDni());
+			statement.setString(5,fechaFormateada);
+			statement.setInt(6,idEquipo);
+			statement.setInt(7,1);
+			statement.executeUpdate();
+				statement.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+	}
+public void insertarNuevoJugador(Arbitro nuevoArbitro, int idEquipo) {
+		
+	LocalDate fecha = nuevoArbitro.getFechaNacimiento(); // Reemplaza esto con tu objeto LocalDate
+    // Crear un formateador con el patrón deseado
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    // Formatear la fecha
+     String fechaFormateada = fecha.format(formatter);
+    System.out.println("Fecha formateada: " + fechaFormateada);
+		int Equipo=idEquipo;
+		PreparedStatement statement = null;
+		try {
+			statement = con.prepareStatement(
+					"INSERT INTO jugadores(nombre,apellido1,apellido2,dni,fecha_nacimiento,equipo,arbitro) " + "VALUES (?,?,?,?,?,?,?)");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			statement.setString(1, nuevoArbitro.getNombre());
+			statement.setString(2, nuevoArbitro.getApellidoUno());
+			statement.setString(3,nuevoArbitro.getApellidoDos());
+			statement.setString(4,nuevoArbitro.getDni());
+			statement.setString(5,fechaFormateada);
+			statement.setInt(6,idEquipo);
+			statement.setInt(7, 1);
+			statement.executeUpdate();
+				statement.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+	}
+public void insertarNuevoJugador(Jugador nuevoJugador, int idEquipo) {
+	
+	LocalDate fecha=nuevoJugador.getFechaNacimiento();
+	
+	// Crear un formateador con el patrón deseado
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    // Formatear la fecha
+     String fechaFormateada = fecha.format(formatter);
+    System.out.println("Fecha formateada: " + fechaFormateada);
+	int Equipo=idEquipo;
+	PreparedStatement statement = null;
+	try {
+		statement = con.prepareStatement(
+				"INSERT INTO jugadores(nombre,apellido1,apellido2,dni,fecha_nacimiento,equipo) " + "VALUES (?,?,?,?,?,?,)");
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		statement.setString(1, nuevoJugador.getNombre());
+		statement.setString(2, nuevoJugador.getApellidoUno());
+		statement.setString(3,nuevoJugador.getApellidoDos());
+		statement.setString(4,nuevoJugador.getDni());
+		statement.setString(5,fechaFormateada);
+		statement.setInt(6,idEquipo);
+		
+		statement.executeUpdate();
+			statement.close();
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	
+}
+	
 }

@@ -8,7 +8,9 @@ public class Torneo {
 	private int cantEquipos;
 	private int cantJugadores;
 	private Connection con;
-	private String email;
+	private int activo;
+	private int id;
+	
 	//CONSTRUCTORES
 	public Torneo(String nombTorneo, int cantEquipos, int cantJugadores) throws SQLException {
 		super();
@@ -35,6 +37,22 @@ public class Torneo {
 		return nombTorneo;
 	}
 
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getActivo() {
+		return activo;
+	}
+
+	public void setActivo(int activo) {
+		this.activo = activo;
+	}
 
 	public void setNombTorneo(String nombTorneo) {
 		this.nombTorneo = nombTorneo;
