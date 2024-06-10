@@ -317,13 +317,15 @@ public class IniciaTorneo extends JFrame {
 
     public static List<String> nombreArchivos(String nombreTorneo){
     	List<String> archivos=new ArrayList<String>();
-    	File carpeta=new File("torneo_"+nombreTorneo+"/Inscripciones_recibidas/");
+    	File carpeta=new File("src/main/torneos/torneo_"+nombreTorneo+"/Inscripciones_recibidas/");
     	File[]af =carpeta.listFiles();
     	if(af!=null) {
     		for (int i=0 ;i <af.length;i++) {
     			File afa=af[i];
     			if (afa.isFile()) {
+    				
     				archivos.add(i,afa.getName());
+    				System.out.println(archivos.get(i));
     				
     			}
     		}

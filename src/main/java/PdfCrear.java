@@ -102,8 +102,8 @@ public class PdfCrear {
 	    y+=20;
 	    // etiquetas campos
 	    page.getCanvas().drawString("Nombre", font, brush, new Point2D.Float(50,y));
-	    page.getCanvas().drawString("Apellido 1", font, brush, new Point2D.Float(200,y));
-	    page.getCanvas().drawString("Apellido 2", font, brush, new Point2D.Float(400,y));
+	    page.getCanvas().drawString("Primer Apellido", font, brush, new Point2D.Float(200,y));
+	    page.getCanvas().drawString("Segundo Apellido", font, brush, new Point2D.Float(400,y));
 	    y+=10;
 		try {
 			PdfTextBoxField nombreCampo;
@@ -188,7 +188,7 @@ public class PdfCrear {
 	    }
 	    
 	    // Guardar el documento PDF
-	    doc.saveToFile("torneo_"+nombreTorneo+"/Formulario_de_inscripcion/Formulario_Inscripcion_torneo_"+nombreTorneo+".pdf");
+	    doc.saveToFile("src/main/torneos/torneo_"+nombreTorneo+"/Formulario_de_inscripcion/Formulario_Inscripcion_torneo_"+nombreTorneo+".pdf");
 	    doc.close();
 		return null;
 	}

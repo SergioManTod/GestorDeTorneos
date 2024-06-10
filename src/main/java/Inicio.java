@@ -68,7 +68,7 @@ public class Inicio extends JFrame {
         contentPane.setLayout(null);
         contentPane.add(tagMsgeConBbDd);
 
-        JLabel tagBienvenida = new JLabel("<html><p align='center'>Bienvenido al Gestor de Torneos 1.0<br>¿En qué Base de Datos quieres trabajar?</p></html>");
+        JLabel tagBienvenida = new JLabel("<html><p align='center'>Bienvenido al Gestor de Torneos V. Gamma<br>¿En qué Base de Datos quieres trabajar?</p></html>");
         tagBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
         tagBienvenida.setForeground(new Color(255, 255, 255));
         tagBienvenida.setFont(new Font("Tahoma", Font.BOLD, 20));
