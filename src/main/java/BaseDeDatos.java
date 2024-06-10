@@ -245,6 +245,10 @@ public class BaseDeDatos {
 		return nuevoTorneo;
 	}
 	
+	//modifica el estado del torneo
+	public void cambiaestadotorneo() {
+		
+	}
 	
 	// listado clasificación
 	public List<Object[]> listaClasificacion(String nom) throws SQLException {

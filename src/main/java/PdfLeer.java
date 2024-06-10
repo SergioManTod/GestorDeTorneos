@@ -23,9 +23,8 @@ public  Equipo leerPdf(int minimoJugadores,String nombreTorneo, String nombreArc
 	   
 		// Cargar el documento PDF
         PdfDocument pdf = new PdfDocument();
-
         
-        pdf.loadFromFile("torneo_"+nombreTorneo+"\\Inscripciones_recibidas\\"+nombreArchivo);
+        pdf.loadFromFile("src/main/torneos/torneo_"+nombreTorneo+"/Inscripciones_recibidas/"+nombreArchivo);
         	Metodos comprobar=new Metodos();
         // Obtener el widget del formulario
         PdfFormWidget formWidget = (PdfFormWidget) pdf.getForm();
@@ -179,7 +178,7 @@ public  Equipo leerPdf(int minimoJugadores,String nombreTorneo, String nombreArc
         	}
         	
         	Equipo nuevoEquipo=new Equipo( nombreEquipo,email,nuevoDelegado,nuevoArbitro,arrayJugadores);
-        	
+        	System.out.println(nuevoEquipo.getNombre());
         	pdf.close();
         	return  nuevoEquipo;
         	
