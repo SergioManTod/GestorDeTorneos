@@ -5,7 +5,7 @@ import java.io.File;
 	
 	    public static void arbolDeCarpetas(String nombTorneo) {
 	        // Define las rutas de los directorios
-	        String mainDirPath = "torneo_" + nombTorneo;
+	        String mainDirPath = "src/main/torneos/torneo_" + nombTorneo;
 	        String subDirPath1 = mainDirPath + File.separator + "Inscripciones_recibidas";
 	        String subDirPath2 = mainDirPath + File.separator + "Equipos_aceptados";
 	        String subDirPath3 = mainDirPath + File.separator + "Actas_de_partidos";
