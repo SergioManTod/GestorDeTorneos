@@ -178,7 +178,7 @@ public  Equipo leerPdf(int minimoJugadores,String nombreTorneo, String nombreArc
         	}
         	
         	Equipo nuevoEquipo=new Equipo( nombreEquipo,email,nuevoDelegado,nuevoArbitro,arrayJugadores);
-        	System.out.println(nuevoEquipo.getNombre());
+        	
         	pdf.close();
         	return  nuevoEquipo;
         	

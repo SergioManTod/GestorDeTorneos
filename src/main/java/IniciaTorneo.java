@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -273,7 +275,7 @@ public class IniciaTorneo extends JFrame {
    	 			
    	 				String nombreArchivo=nombreArchivos.get(i);
    	 				if (nuevaLectura.leerPdf(nuevoTorneo.getCantJugadores(),nombreTorneocombo,nombreArchivo)==null) {
-   	 					System.out.println("pdf incorrecto");
+   	 					
    	 					formulariosRechazados++;
        			 
    	 				}else {
@@ -299,42 +301,12 @@ public class IniciaTorneo extends JFrame {
     					 inscribirEquipos(arrayEquipos[i],nuevoTorneo.getId(),baseDeDatos);
     					 
     						 
-    					 }
-    					 
-    					 
-    					
-    					 //consulta para estraer id de equipo y poder insertar los jugadores con su id de equipo
-    					
+    					 }	 
     				 }
-    			int cantidad = arrayEquipos.length / 2;
-    			if (arrayEquipos.length % 2 != 0) {
-    			    cantidad++; // Agrega un partido para el equipo fantasma
+    			generarCalendario(arrayEquipos, nombreTorneocombo);
     			}
-
-    			Partido jornada[] = new Partido[cantidad];
-
-    			for (int i = 0; i < cantidad; i++) {
-    			    if (i == cantidad - 1 && arrayEquipos.length % 2 != 0) {
-    			        // Asigna el equipo fantasma
-    			        jornada[i] = new Partido(arrayEquipos[i], -1); // -1 representa el equipo fantasma
-    			    } else {
-    			        // Asigna los enfrentamientos normales
-    			        jornada[i] = new Partido(arrayEquipos[i], arrayEquipos[cantidad + i]);
-    			    }
-    			}
-
-    			// Ahora "jornada" contiene los enfrentamientos (incluido el equipo fantasma si es necesario)
-
-    			}
-
-    			// Ahora "jornada" contiene los enfrentamientos (incluido el equipo fantasma si es necesario)
-
-    				 
-    			 }
-    		 }
-    	
-    	///aqui generamoo fiuncion para partidos
-    	
+    		 
+    		 
     	
 		
     		 return true;
@@ -352,7 +324,7 @@ public class IniciaTorneo extends JFrame {
     			if (afa.isFile()) {
     				
     				archivos.add(i,afa.getName());
-    				System.out.println(archivos.get(i));
+    				
     				
     			}
     		}
@@ -391,5 +363,95 @@ public class IniciaTorneo extends JFrame {
 		 
 		 
     }
-    
+    public static int generarNumAle(int max, int local,int visitante) {
+    	int min=0;
+    	if(min==visitante) {
+    		min=1;
+    	}
+    	
+    	int numeroAleatorio = (int) (Math.random() * (max - min + 1)) + min;
+    	
+    	if(numeroAleatorio==local||numeroAleatorio==visitante) {
+    		generarNumAle(max, local, visitante);
+    	}
+    	return numeroAleatorio;
+    }
+    public static void generarCalendario(Equipo arrayEquipos[], String nombreTorneo) {
+    	 List<Partido> partidos = new ArrayList<>();
+	        Equipo arrayEquipoF[]=new Equipo [arrayEquipos.length+1];
+	        if (arrayEquipos.length % 2 != 0) {
+	        	for(int i=0;i<arrayEquipoF.length;i++) {
+	        		if (i==arrayEquipoF.length-1) {
+	        			 Equipo equipoFantasma = new Equipo("Descanso");
+	        			 arrayEquipoF[i]=equipoFantasma;
+	        		}else {
+	        		
+	        		 arrayEquipoF[i]=arrayEquipos[i];}
+	        	}
+//	        	
+	        	int n = arrayEquipoF.length;
+	        	for (int i = 0; i < n - 1; i++) {
+	        	    for (int j = 0; j < n / 2; j++) {
+	        	        int numero = n - 1 - j;
+	        	        int index = generarNumAle(arrayEquipos.length - 1, j, numero);
+	        	        
+	        	        Arbitro arbitro = arrayEquipos[index].getArbitro();
+	        	        partidos.add(new Partido(arrayEquipoF[j], arrayEquipoF[numero], arbitro));
+	        	    }
+	        	    Collections.rotate(Arrays.asList(arrayEquipoF).subList(1, n), 1);
+	        	}
+
+	             // Generar encuentros de vuelta
+	             for (int i = 0; i < n - 1; i++) {
+	                 for (int j = 0; j < n / 2; j++) {
+	                	 int numero= n - 1 - j;
+	                     Arbitro arbitro = arrayEquipos[generarNumAle(arrayEquipos.length - 1, j, numero)].getArbitro();
+	                     partidos.add(new Partido(arrayEquipoF[n - 1 - j], arrayEquipoF[j], arbitro));
+	                 }
+	                 Collections.rotate(Arrays.asList(arrayEquipoF).subList(1, n), 1);
+	             }
+	        	
+	        }else {int n = arrayEquipos.length;
+     	for (int i = 0; i < n - 1; i++) {
+     	    for (int j = 0; j < n / 2; j++) {
+     	        int numero = n - 1 - j;
+     	        int index = generarNumAle(arrayEquipos.length - 1, j, numero);
+     	        System.out.println("Index: " + index+ "numero "+ numero+ "j "+ j);
+     	        Arbitro arbitro = arrayEquipos[index].getArbitro();
+     	        partidos.add(new Partido(arrayEquipos[j], arrayEquipos[numero], arbitro));
+     	    }
+     	    Collections.rotate(Arrays.asList(arrayEquipos).subList(1, n), 1);
+     	}
+
+          // Generar encuentros de vuelta
+          for (int i = 0; i < n - 1; i++) {
+              for (int j = 0; j < n / 2; j++) {
+             	 int numero= n - 1 - j;
+                  Arbitro arbitro = arrayEquipos[generarNumAle(arrayEquipos.length - 1, j, numero)].getArbitro();
+                  partidos.add(new Partido(arrayEquipos[n - 1 - j], arrayEquipos[j], arbitro));
+              }
+              Collections.rotate(Arrays.asList(arrayEquipos).subList(1, n), 1);
+          }
+	        }
+	        
+			
+
+			
+	       
+	        	
+	        // Convertir la lista de partidos a un array
+	        Partido[] arrayPartidos = partidos.toArray(new Partido[0]);
+	        PdfCrear nuevopdf=new PdfCrear();
+	        nuevopdf.crearCalendario(arrayPartidos, nombreTorneo);
+	        for(int i=0;i<arrayPartidos.length;i++) {
+	        	if(!arrayPartidos[i].getEquipoLocal().getNombre().equalsIgnoreCase("descanso")&&!arrayPartidos[i].getEquipoVisitante().getNombre().equalsIgnoreCase("descanso")) {
+	        		nuevopdf.crearActa(arrayPartidos[i], nombreTorneo);
+	        	}
+	        	
+	        }
+	        
+	       
+	        
+    	
+    } 
 }

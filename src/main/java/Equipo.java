@@ -8,7 +8,12 @@ public class Equipo {
 	private Torneo troneo;
 	private int idTorneo;
 	public Jugador jugadores[];
-
+	 
+	
+	public Equipo(String nombre) {
+		super();
+		this.nombre = nombre;
+	}
 	public Equipo( String nombre, String email, Delegado responsable, Arbitro arbitro, Jugador[] jugadores) {
 		super();
 		

@@ -1,7 +1,5 @@
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
+
 
 
 public class Jugador{
@@ -17,6 +15,16 @@ public class Jugador{
 	
 	// CONSTRUCTORES
 	
+
+	public Jugador() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Jugador(String nombre2) {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Jugador(String nombre, String apellidoUno, String apellidoDos, LocalDate fechaNacimiento, String dni) {
 		super();
 		this.nombre = nombre;
@@ -24,15 +32,20 @@ public class Jugador{
 		this.apellidoDos = apellidoDos;
 		this.fechaNacimiento = fechaNacimiento;
 		this.dni = dni;
-		this.esMayor = esMayor;
+	
 		
 	}
 	
 	
-	public Jugador() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
+
+
+
+
+
+
+
+	
 
 
 	// GETTERS Y SETTERS
@@ -104,17 +117,8 @@ public class Jugador{
 		return rojasJugador;
 	}
 
-	public void setRojasJugador(int rojasJugador) {
-		this.rojasJugador = rojasJugador;
-	}
-
-	//TOSTRING
-	@Override
-	public String toString() {
-		return "Jugador [nombre=" + nombre + ", apellidoUno=" + apellidoUno + ", apellidoDos=" + apellidoDos
-				+ ", fechaNacimiento=" + fechaNacimiento + ", dni=" + dni + ", esMayor=" + esMayor + ", puntosJugador="
-				+ puntosJugador + ", amarillaJugador=" + amarillaJugador + ", rojasJugador=" + rojasJugador + "]";
-	}
+	
+	
 
 	
 	

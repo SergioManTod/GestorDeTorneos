@@ -32,6 +32,7 @@ public class Partido {
 		this.equipoVisitante = equipoVisitante;
 	}
 	public Arbitro getArbitroPartido() {
+		 
 		return arbitroPartido;
 	}
 	public void setArbitroPartido(Arbitro arbitroPartido) {
@@ -41,8 +42,8 @@ public class Partido {
 	//tostring
 	@Override
 	public String toString() {
-		return "Partido [equipoLocal=" + equipoLocal + ", equipoVisitante=" + equipoVisitante + ", arbitroPartido="
-				+ arbitroPartido + "]";
+		return " equipoLocal=" + equipoLocal.getNombre() + " vs equipoVisitante=" + equipoVisitante.getNombre() + "  arbitroPartido="
+				+ arbitroPartido.getNombre() ;
 	}
 
 	
