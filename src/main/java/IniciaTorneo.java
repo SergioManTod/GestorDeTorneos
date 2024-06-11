@@ -311,7 +311,7 @@ public class IniciaTorneo extends JFrame {
     			    cantidad++; // Agrega un partido para el equipo fantasma
     			}
 
-    	/*		Partido jornada[] = new Partido[cantidad];
+    			Partido jornada[] = new Partido[cantidad];
 
     			for (int i = 0; i < cantidad; i++) {
     			    if (i == cantidad - 1 && arrayEquipos.length % 2 != 0) {
@@ -330,7 +330,7 @@ public class IniciaTorneo extends JFrame {
     			// Ahora "jornada" contiene los enfrentamientos (incluido el equipo fantasma si es necesario)
 
     				 
-    			 }*/
+    			 }
     		 }
     	
     	///aqui generamoo fiuncion para partidos
