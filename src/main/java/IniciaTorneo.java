@@ -288,12 +288,14 @@ public class IniciaTorneo extends JFrame {
     		 
     		 if(arrayEquipos.length-formulariosRechazados<nuevoTorneo.getCantEquipos()) {
     			 tagStatusCal.setText("<html><p align=center>No se puede iniciar el torneo "+nombreTorneocombo+".<br>"
-    	    		 		+ "Hacen fallta al menos "+nuevoTorneo.getCantEquipos()+"  correctamente equipos inscritos.</p></html>");;
+    	    		 		+ "Hacen fallta al menos "+nuevoTorneo.getCantEquipos()+"  correctamente equipos inscritos.</p></html>");
     		 }else {
     			for(int i=0;i<arrayEquipos.length;i++) {
     				 if(arrayEquipos[i]!=null) {
-    					 
+    					 tagStatusCal.setText("<html><p align=center>El "+nombreTorneocombo+".<br>"
+    	    	    		 		+ "ha sido creado correctamente.</p></html>");
     					 // inscribir equipo y sus jugadores
+    					 
     					 inscribirEquipos(arrayEquipos[i],nuevoTorneo.getId(),baseDeDatos);
     					 
     						 
@@ -309,7 +311,7 @@ public class IniciaTorneo extends JFrame {
     			    cantidad++; // Agrega un partido para el equipo fantasma
     			}
 
-    			Partido jornada[] = new Partido[cantidad];
+    	/*		Partido jornada[] = new Partido[cantidad];
 
     			for (int i = 0; i < cantidad; i++) {
     			    if (i == cantidad - 1 && arrayEquipos.length % 2 != 0) {
@@ -328,7 +330,7 @@ public class IniciaTorneo extends JFrame {
     			// Ahora "jornada" contiene los enfrentamientos (incluido el equipo fantasma si es necesario)
 
     				 
-    			 }
+    			 }*/
     		 }
     	
     	///aqui generamoo fiuncion para partidos
