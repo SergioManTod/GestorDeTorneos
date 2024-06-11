@@ -296,12 +296,37 @@ public class IniciaTorneo extends JFrame {
     					 // inscribir equipo y sus jugadores
     					 inscribirEquipos(arrayEquipos[i],nuevoTorneo.getId(),baseDeDatos);
     					 
+    						 
+    					 }
     					 
     					 
     					
     					 //consulta para estraer id de equipo y poder insertar los jugadores con su id de equipo
     					
     				 }
+    			int cantidad = arrayEquipos.length / 2;
+    			if (arrayEquipos.length % 2 != 0) {
+    			    cantidad++; // Agrega un partido para el equipo fantasma
+    			}
+
+    			Partido jornada[] = new Partido[cantidad];
+
+    			for (int i = 0; i < cantidad; i++) {
+    			    if (i == cantidad - 1 && arrayEquipos.length % 2 != 0) {
+    			        // Asigna el equipo fantasma
+    			        jornada[i] = new Partido(arrayEquipos[i], -1); // -1 representa el equipo fantasma
+    			    } else {
+    			        // Asigna los enfrentamientos normales
+    			        jornada[i] = new Partido(arrayEquipos[i], arrayEquipos[cantidad + i]);
+    			    }
+    			}
+
+    			// Ahora "jornada" contiene los enfrentamientos (incluido el equipo fantasma si es necesario)
+
+    			}
+
+    			// Ahora "jornada" contiene los enfrentamientos (incluido el equipo fantasma si es necesario)
+
     				 
     			 }
     		 }
