@@ -8,12 +8,24 @@ public class Equipo {
 	private Torneo troneo;
 	private int idTorneo;
 	public Jugador jugadores[];
+	public int goles;
+	
 	 
 	
 	public Equipo(String nombre) {
 		super();
 		this.nombre = nombre;
 	}
+	
+	
+	public Equipo(int id, String nombre, String email) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.email = email;
+	}
+
+
 	public Equipo( String nombre, String email, Delegado responsable, Arbitro arbitro, Jugador[] jugadores) {
 		super();
 		
@@ -25,6 +37,14 @@ public class Equipo {
 	}
 	public Equipo() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public int getGoles() {
+		return goles;
+	}
+	public void setGoles(int goles) {
+		this.goles = goles;
 	}
 	public int getId() {
 		return id;

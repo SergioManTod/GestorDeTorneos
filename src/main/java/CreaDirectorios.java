@@ -11,6 +11,8 @@ import java.io.File;
 	        String subDirPath3 = mainDirPath + File.separator + "Actas_de_partidos";
 	        String subDirPath4 = mainDirPath + File.separator + "Calendario";
 	        String subDirPath5 = mainDirPath + File.separator + "Formulario_de_inscripcion";
+	        String subDirPath6 = mainDirPath + File.separator + "Actas_rellenas";
+	        String subDirPath7 = mainDirPath + File.separator + "Actas_Procesadas";
 
 	        // Crea los directorios
 	        createDirectory(mainDirPath);
@@ -19,6 +21,8 @@ import java.io.File;
 	        createDirectory(subDirPath3);
 	        createDirectory(subDirPath4);
 	        createDirectory(subDirPath5);
+	        createDirectory(subDirPath6);
+	        createDirectory(subDirPath7);
 	    }
 
 	    // Método para crear un directorio

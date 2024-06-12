@@ -467,5 +467,107 @@ public void insertarNuevoJugador(Jugador nuevoJugador, int idEquipo) {
 
 	
 }
-	
+
+	 public void InsertarPartidos(Partido partido, BaseDeDatos baseDeDatos) {
+		 int idArbitro=0;
+		 try {
+			 idArbitro=consultaIdArbitro(partido.getArbitroPartido().getIdEquipo());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 PreparedStatement statement = null;
+			try {
+				statement = con.prepareStatement(
+						"INSERT INTO partidos(e_visitante,e_local,arbitro) " + "VALUES (?,?,?)");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				
+					statement.setInt(1,partido.getEquipoLocal().getId());
+					statement.setInt(2, partido.getEquipoVisitante().getId());
+					statement.setInt(3,idArbitro);
+					
+					
+					
+					statement.executeUpdate();
+				
+				
+					statement.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	 }
+	 
+	 public int  consultaIdArbitro(int idEquipo) throws SQLException {
+		 int idArbitro=0;
+		 String sql = "SELECT id FROM jugadores WHERE equipo =? and arbitro=1";
+	        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+	            try {
+					stmt.setInt(1, idEquipo);
+					ResultSet rs = stmt.executeQuery();
+
+		            while (rs.next()) {
+		                idArbitro = rs.getInt("id");
+		            }
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            
+	        }
+		
+		 return idArbitro;
+	 }
+	public Equipo consultarEquipo(String nombreTorneo, String nombreEquipo) throws SQLException {
+		Equipo Equipo1 = null;
+	    String sql = "SELECT equipos.email, equipos.id FROM equipos, torneos WHERE equipos.torneo = torneos.id AND torneos.nombre = ? AND equipos.nombre = ?";
+	    try (PreparedStatement stmt = con.prepareStatement(sql)) {
+	        stmt.setString(1, nombreTorneo);
+	        stmt.setString(2, nombreEquipo);
+	        ResultSet rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            Equipo1 = new Equipo(); // Inicializar el objeto aquí
+	            String email = rs.getString("email");
+	            int idEquipo = rs.getInt("id");
+	            System.out.println("id equipo: " + idEquipo);
+	            Equipo1.setId(idEquipo);
+	            Equipo1.setNombre(nombreEquipo);
+	            Equipo1.setEmail(email);
+	            System.out.println("nombre equipo: " + Equipo1.getNombre());
+	        } else {
+	            System.out.println("No se encontró el equipo con el nombre: " + nombreEquipo);
+	        }
+	    }
+	    return Equipo1;
+	}
+	public Jugador[]  consultaJugadores(int idEquipo) throws SQLException {
+	    ArrayList<Jugador> listaJugadores = new ArrayList<>();
+	    String sql = "SELECT id, nombre FROM jugadores WHERE equipo = ?";
+	    
+	    try (PreparedStatement stmt = con.prepareStatement(sql)) {
+	        stmt.setInt(1, idEquipo);
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        while (rs.next()) {
+	            int id = rs.getInt("id");
+	            String nombre = rs.getString("nombre");
+	            System.out.println("nombre rs"+ nombre);
+	            System.out.println("id rs"+ id);
+	            Jugador nuevoJugador = new Jugador(nombre, id);
+	            listaJugadores.add(nuevoJugador);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new SQLException("Error al consultar los jugadores: " + e.getMessage());
+	    }
+	    Jugador[] jugadoresLocal=listaJugadores.toArray(new Jugador[0] );
+	    return jugadoresLocal;
+	}
 }

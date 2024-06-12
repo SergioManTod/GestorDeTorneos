@@ -351,7 +351,9 @@ for(int i=0;i<partido.getEquipoVisitante().jugadores.length+2;i++) {
 	    
 	    doc.close();
 	    }
+	   
+	    	
+	    }
 	    
-	    
-	}
+	
 

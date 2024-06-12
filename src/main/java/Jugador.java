@@ -12,19 +12,30 @@ public class Jugador{
 	private int puntosJugador=0;
 	private int amarillaJugador=0;
 	private int rojasJugador=0;
-	
+	private int id;
+	private String NombreEquipo;
+	private int idEquipo;
+	private int goles;
 	// CONSTRUCTORES
 	
 
+	
+	
 	public Jugador() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+
 	public Jugador(String nombre2) {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Jugador(String nombre, int id) {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+
 	public Jugador(String nombre, String apellidoUno, String apellidoDos, LocalDate fechaNacimiento, String dni) {
 		super();
 		this.nombre = nombre;
@@ -49,10 +60,42 @@ public class Jugador{
 
 
 	// GETTERS Y SETTERS
+	
+	
 	public String getNombre() {
 		return nombre;
 	}
 
+	public int getGoles() {
+		return goles;
+	}
+
+	public void setGoles(int goles) {
+		this.goles = goles;
+	}
+
+	public int getIdEquipo() {
+		return idEquipo;
+	}
+
+	public void setIdEquipo(int idEquipo) {
+		this.idEquipo = idEquipo;
+	}
+
+	public String getNombreEquipo() {
+		return NombreEquipo;
+	}
+
+	public void setNombreEquipo(String nombreEquipo) {
+		NombreEquipo = nombreEquipo;
+	}
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}

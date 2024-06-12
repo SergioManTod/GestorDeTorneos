@@ -3,7 +3,12 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -107,10 +112,68 @@ public class Clasificaciones extends EstilosFrame {
     }
 
     private void actualizarTablaClasificacion(String nom) throws SQLException {
-        List<Object[]> clasificacion = baseDeDatos.listaClasificacion(nom);
+    	PdfLeer nuevalectura =new PdfLeer(); 
+    	List<String> nombreArchivos=nombreArchivos(nom);
+    	String path="src/main/torneos/torneo_"+nom+"/Actas_Procesadas/";
+    
+    	for(int i=0;i<nombreArchivos.size();i++) {
+    		String nombreArchivo=nombreArchivos.get(i);
+    		System.out.println("nombre archivo"+ nombreArchivo);
+    		nuevalectura.leerActa(nombreArchivo,baseDeDatos,nom);
+    		//copiarYBorrar(nombreArchivo, nom);
+    		
+    	}
+    	
+    	
+    	
+    	List<Object[]> clasificacion = baseDeDatos.listaClasificacion(nom);
         modelo.setRowCount(0);
         for (Object[] row : clasificacion) {
             modelo.addRow(row);
+        }
+    }
+    public static List<String> nombreArchivos(String nombreTorneo){
+    	System.out.println("leemos carpeta");
+    	List<String> archivos=new ArrayList<String>();
+    	File carpeta=new File("src/main/torneos/torneo_"+nombreTorneo+"/Actas_rellenas/");
+    	File[]af =carpeta.listFiles();
+    	if(af!=null) {
+    		for (int i=0 ;i <af.length;i++) {
+    			File afa=af[i];
+    			if (afa.isFile()) {
+    				
+    				archivos.add(i,afa.getName());
+    				
+    				
+    			}
+    		}
+    	}
+		return archivos;
+}
+    public void copiarYBorrar(String nombreArchivo, String nombretorneo) {
+    	
+    	// Ruta del archivo original
+        String rutaActa = "src/main/torneos/torneo_"+nombretorneo+"/Actas_rellenas/"+nombreArchivo;
+        // Ruta del archivo de destino
+        String rutaDestino = "src/main/torneos/torneo_"+nombretorneo+"/Actas_Procesadas/"+nombreArchivo;
+
+        // Crear objetos File para el archivo original y el archivo de destino
+        File sourceFile = new File(rutaActa);
+        File destinationFile = new File(rutaDestino);
+
+        try {
+            // Copiar el archivo a la nueva ubicación
+            Files.copy(sourceFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Archivo copiado exitosamente.");
+
+            // Borrar el archivo original
+            if (sourceFile.delete()) {
+                System.out.println("Archivo original borrado exitosamente.");
+            } else {
+                System.out.println("No se pudo borrar el archivo original.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -303,7 +303,7 @@ public class IniciaTorneo extends JFrame {
     						 
     					 }	 
     				 }
-    			generarCalendario(arrayEquipos, nombreTorneocombo);
+    			generarCalendario(arrayEquipos, nombreTorneocombo,baseDeDatos);
     			baseDeDatos.activaTorneo(nombreTorneocombo);
     			}
     		 
@@ -350,10 +350,13 @@ public class IniciaTorneo extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 nuevoEquipo.setId(idEquipo);
 		 ///insertamos jugadores
 		 Delegado nuevoDelegado=nuevoEquipo.getResponsable();
 		 baseDeDatos.insertarNuevoJugador(nuevoDelegado, idEquipo);
+		 
 		 Arbitro nuevoArbitro=nuevoEquipo.getArbitro();
+		 nuevoArbitro.setIdEquipo(idEquipo);
 		 baseDeDatos.insertarNuevoJugador(nuevoArbitro, idEquipo);
 		 
 		 for(int i=0;i<nuevoEquipo.getJugadores().length;i++) {
@@ -367,9 +370,6 @@ public class IniciaTorneo extends JFrame {
     
     public static int generarNumAle(int max, int local,int visitante) {
     	int min=0;
-    	if(min==visitante) {
-    		min=1;
-    	}
     	
     	int numeroAleatorio = (int) (Math.random() * (max - min + 1)) + min;
     	
@@ -378,7 +378,7 @@ public class IniciaTorneo extends JFrame {
     	}
     	return numeroAleatorio;
     }
-    public static void generarCalendario(Equipo arrayEquipos[], String nombreTorneo) {
+    public static void generarCalendario(Equipo arrayEquipos[], String nombreTorneo, BaseDeDatos baseDeDatos) {
     	 List<Partido> partidos = new ArrayList<>();
 	        Equipo arrayEquipoF[]=new Equipo [arrayEquipos.length+1];
 	        if (arrayEquipos.length % 2 != 0) {
@@ -444,10 +444,14 @@ public class IniciaTorneo extends JFrame {
 	        // Convertir la lista de partidos a un array
 	        Partido[] arrayPartidos = partidos.toArray(new Partido[0]);
 	        PdfCrear nuevopdf=new PdfCrear();
+	        
 	        nuevopdf.crearCalendario(arrayPartidos, nombreTorneo);
 	        for(int i=0;i<arrayPartidos.length;i++) {
 	        	if(!arrayPartidos[i].getEquipoLocal().getNombre().equalsIgnoreCase("descanso")&&!arrayPartidos[i].getEquipoVisitante().getNombre().equalsIgnoreCase("descanso")) {
 	        		nuevopdf.crearActa(arrayPartidos[i], nombreTorneo);
+	        		//insertar partidos en bbdd
+	        		baseDeDatos.InsertarPartidos(arrayPartidos[i], baseDeDatos);
+	        		
 	        	}
 	        	
 	        }

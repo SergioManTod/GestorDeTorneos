@@ -14,6 +14,57 @@ public class Arbitro extends Jugador{
 	}
 
 
+	public Arbitro(String nombre, int id, String nombreEquipo) {
+		super(nombre, id);
+	
+	}
+
+
+	
+
+
+	@Override
+	public int getIdEquipo() {
+		// TODO Auto-generated method stub
+		return super.getIdEquipo();
+	}
+
+
+	@Override
+	public void setIdEquipo(int idEquipo) {
+		// TODO Auto-generated method stub
+		super.setIdEquipo(idEquipo);
+	}
+
+
+	@Override
+	public String getNombreEquipo() {
+		// TODO Auto-generated method stub
+		return super.getNombreEquipo();
+	}
+
+
+	@Override
+	public void setNombreEquipo(String nombreEquipo) {
+		// TODO Auto-generated method stub
+		super.setNombreEquipo(nombreEquipo);
+	}
+
+
+	@Override
+	public int getId() {
+		// TODO Auto-generated method stub
+		return super.getId();
+	}
+
+
+	@Override
+	public void setId(int id) {
+		// TODO Auto-generated method stub
+		super.setId(id);
+	}
+
+
 	private boolean esArbitro=true;
 	
 	// CONSTRUCTORES

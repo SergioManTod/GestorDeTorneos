@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -217,5 +218,97 @@ public  Equipo leerPdf(int minimoJugadores,String nombreTorneo, String nombreArc
        }
        return localDate;
    }
+   public void leerActa(String nombreArchivo,BaseDeDatos baseDeDatos, String NombreTorneo) throws SQLException {
+	   System.out.println("inicia lectura");
+	   String []nombresEquipos=dividirNombre(nombreArchivo);
+	   System.out.println(nombresEquipos[0]);
+	   System.out.println(nombresEquipos[1]);
+	  
+	   
+		 Equipo equipoLocal =baseDeDatos.consultarEquipo(NombreTorneo, nombresEquipos[0]);
+		Equipo equipoVisitante =baseDeDatos.consultarEquipo(NombreTorneo, nombresEquipos[1]); 
+		if (equipoLocal != null) {
+		    System.out.println(equipoLocal.getId());
+		} else {
+		    System.out.println("El equipo local es null");
+		}
+
+		if (equipoVisitante != null) {
+		    System.out.println(equipoVisitante.getId());
+		} else {
+		    System.out.println("El equipo visitante es null");
+		}
+		 ArrayList<Jugador> listaJugadoresLocal=new ArrayList<Jugador>();
+		   ArrayList<Jugador> listaJugadoresVisitate=new ArrayList<Jugador>();
+	
+		
+	
+	   Jugador[] jugadoresLocal=(Jugador[]) baseDeDatos.consultaJugadores(equipoLocal.getId());
+	   Jugador[] jugadoresVisitante=(Jugador[]) baseDeDatos.consultaJugadores(equipoLocal.getId());
+	   System.out.println(jugadoresLocal[0].getNombre());
+	   
+	  	equipoLocal.setJugadores(jugadoresLocal);
+	  	equipoVisitante.setJugadores(jugadoresVisitante);
+	   
+	  	
+	   
+	  	
+	   // Cargar el documento PDF
+	   PdfDocument pdf = new PdfDocument();
+       pdf.loadFromFile("src\\main\\torneos\\torneo_"+NombreTorneo+"\\Actas_rellenas\\"+nombreArchivo);
+       PdfFormWidget formWidget = (PdfFormWidget) pdf.getForm();
+       int contadorJugadoreslocal=0;
+       int contadorJugadoresVisitante=0;
+       int sumagLocal=0;
+       int sumagVisitante=0;
+       
+       for (int i = 0; i < formWidget.getFieldsWidget().getCount(); i++) {
+           PdfField field = (PdfField) formWidget.getFieldsWidget().getList().get(i);
+           if (i <formWidget.getFieldsWidget().getCount()/2) {
+               equipoLocal.getJugadores()[contadorJugadoreslocal].setGoles(Integer.parseInt(leerCampo(pdf, formWidget, field)));
+               System.out.println("local" +equipoLocal.getJugadores()[contadorJugadoreslocal].getGoles()+ equipoLocal.getJugadores()[contadorJugadoreslocal].getNombre());
+               sumagLocal += equipoLocal.getJugadores()[contadorJugadoreslocal].getGoles();
+               contadorJugadoreslocal++;
+           } else {
+               equipoVisitante.getJugadores()[contadorJugadoresVisitante].setGoles(Integer.parseInt(leerCampo(pdf, formWidget, field)));
+               sumagVisitante += equipoVisitante.getJugadores()[contadorJugadoresVisitante].getGoles();
+               System.out.println("visitantte"+ equipoLocal.getJugadores()[contadorJugadoresVisitante].getGoles());
+               contadorJugadoresVisitante++;
+           }
+       }
+
+       System.out.println("La suma de goles del equipo local es: " + sumagLocal);
+       System.out.println("La suma de goles del equipo visitante es: " + sumagVisitante);
+       pdf.close();
+   }
+   
+		
+   
+   
+   
+   public String[] dividirNombre(String nombreArchivo) {
+	    String[] nombreArray = new String[2];
+
+	    try {
+	        // Eliminar la parte "acta_" y la extensión ".pdf"
+	        String nameWithoutPrefixAndExtension = nombreArchivo.replace("Acta_", "").replace(".pdf", "");
+
+	        // Dividir el nombre en dos partes utilizando el guion bajo como separador
+	        String[] nameParts = nameWithoutPrefixAndExtension.split("_");
+
+	        // Verificar que el nombre tenga al menos dos partes
+	        if (nameParts.length >= 2) {
+	            nombreArray[0] = nameParts[0];
+	            nombreArray[1] = nameParts[1];
+	        } else {
+	            throw new IllegalArgumentException("El nombre del archivo no tiene el formato esperado.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw new RuntimeException("Error al dividir el nombre del archivo: " + e.getMessage());
+	    }
+
+	    return nombreArray;
+	}
 }
 
