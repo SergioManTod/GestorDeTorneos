@@ -50,10 +50,10 @@ public class Inicio extends JFrame {
         tagMsgeConBbDd.setHorizontalAlignment(SwingConstants.CENTER);
         tagMsgeConBbDd.setForeground(Color.WHITE);
         tagMsgeConBbDd.setFont(new Font("Tahoma", Font.BOLD, 15));
-        tagMsgeConBbDd.setBounds(20, 250, 560, 100);
+        tagMsgeConBbDd.setBounds(20, 250, 560, 63);
 
         
-
+        // FORMATO DEL CONTENTPANE
         setForeground(new Color(255, 255, 255));
         setResizable(false);
         setIconImage(Toolkit.getDefaultToolkit().getImage("img/icono_trofeo.png"));
@@ -67,6 +67,7 @@ public class Inicio extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
         contentPane.add(tagMsgeConBbDd);
+        //FIN FORMATO DEL CONTENTPANE
 
         JLabel tagBienvenida = new JLabel("<html><p align='center'>Bienvenido al Gestor de Torneos V. Gamma<br>¿En qué Base de Datos quieres trabajar?</p></html>");
         tagBienvenida.setHorizontalAlignment(SwingConstants.CENTER);
@@ -124,13 +125,14 @@ public class Inicio extends JFrame {
             }
         });
         contentPane.add(botonNuevaConexion);
-
+        
         panelDatosConexion = new JPanel();
-        panelDatosConexion.setBounds(10, 150, 600, 150);
+        panelDatosConexion.setBounds(10, 150, 580, 100);
         panelDatosConexion.setBackground(new Color(152, 180, 216));
         panelDatosConexion.setLayout(null);
         panelDatosConexion.setVisible(false);
         contentPane.add(panelDatosConexion);
+        
         
         JButton btnDescargarSQL = new JButton("Descargar BB DD");
         btnDescargarSQL.setBounds(10, 0, 140, 25);
@@ -232,6 +234,35 @@ public class Inicio extends JFrame {
         panelDatosConexion.add(btnCrearConfiguracion);
 
         setLocationRelativeTo(null);
+        
+     // BOTON PARA CERRAR LA APLICACION
+        JButton botonCerrar = new JButton("CERRAR APLICACIÓN");
+        botonCerrar.setBounds(200, 320, 200, 25);
+        // INICIO DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+        botonCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botonCerrar.setBackground(Color.LIGHT_GRAY);
+                botonCerrar.setForeground(Color.WHITE);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botonCerrar.setBackground(Color.WHITE);
+                botonCerrar.setForeground(Color.BLACK);
+            }
+        });
+        // FIN DEL CODIGO PARA DAR ESTILO AL BOTON CUANDO HACEMOS HOVER
+        // AQUI LINKEAMOS A OTRA CLASE
+        botonCerrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Cerrar la conexión a la base de datos al cerrar la aplicación
+            	if (baseDeDatos.obtenerConexion()!=null) {
+                baseDeDatos.cerrarConexion();
+                setVisible(false); // OCULTAMOS LA CLASE EN LA QUE ESTAMOS
+        		}else setVisible(false);
+            }
+        });
+        contentPane.add(botonCerrar);
     }
 }
 

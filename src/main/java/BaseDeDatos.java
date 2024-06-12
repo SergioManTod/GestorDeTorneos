@@ -44,7 +44,7 @@ public class BaseDeDatos {
 	// específico
 	public Connection conectar(String propertiesFileName) {
 		if (con != null) {
-			return con; // 99Si la conexión ya está establecida, no hacer nada
+			return con; // Si la conexión ya está establecida, no hacer nada
 		}
 
 		Properties prop = new Properties();
@@ -205,7 +205,7 @@ public class BaseDeDatos {
 	    return torneosAct;
 	}
 
-	// CONSULTA PARA CAMBIAR ESTADO DE TORNEO
+	// CONSULTA PARA listar TORNEO
 	public List<Object[]> listarIdTorIna() throws SQLException {
 		List<Object[]> selTorIna = new ArrayList<>();
 		Statement st = con.createStatement();
@@ -226,29 +226,27 @@ public class BaseDeDatos {
 	}
 
 	public Torneo consultaTorneo(String nombre) throws SQLException {
-		Torneo nuevoTorneo=new Torneo();
-		Statement st = con.createStatement();
-		String sql = "SELECT * FROM torneos where nombre=nombre;";
-		ResultSet rs = st.executeQuery(sql);
-
-		while (rs.next()) {
-
-			nuevoTorneo.setId(rs.getInt("id")); 
-			nuevoTorneo.setNombTorneo(nombre);
-			nuevoTorneo.setCantJugadores(rs.getInt("numero_jugadores"));
-			nuevoTorneo.setCantEquipos(rs.getInt("numero_equipos"));
-			nuevoTorneo.setActivo(rs.getInt("estaActivo"));
-			
-			
-		}
-
-		return nuevoTorneo;
+	    Torneo nuevoTorneo = null;
+	    String sql = "SELECT * FROM torneos WHERE nombre = ?";
+	    
+	    try (PreparedStatement pst = con.prepareStatement(sql)) {
+	        pst.setString(1, nombre);
+	        try (ResultSet rs = pst.executeQuery()) {
+	            if (rs.next()) {
+	                nuevoTorneo = new Torneo();
+	                nuevoTorneo.setId(rs.getInt("id"));
+	                nuevoTorneo.setNombTorneo(rs.getString("nombre"));
+	                nuevoTorneo.setCantJugadores(rs.getInt("numero_jugadores"));
+	                nuevoTorneo.setCantEquipos(rs.getInt("numero_equipos"));
+	                nuevoTorneo.setActivo(rs.getInt("estaActivo"));
+	            }
+	        }
+	    }
+	    
+	    return nuevoTorneo;
 	}
-	
-	//modifica el estado del torneo
-	public void cambiaestadotorneo() {
-		
-	}
+
+
 	
 	// listado clasificación
 	public List<Object[]> listaClasificacion(String nom) throws SQLException {
@@ -332,20 +330,29 @@ public class BaseDeDatos {
 		
 	}
 
+    public void activaTorneo(String nombreTorneocombo) {
+        String sql = "UPDATE torneos SET estaActivo = 1 WHERE nombre = ?";
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+            st.setString(1, nombreTorneocombo);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public int consultaIdEquipo(String nombre) throws SQLException {
-		int idEquipo=0;
-		Statement st = con.createStatement();
-		String sql = "SELECT id FROM equipos where nombre=nombre;";
-		ResultSet rs = st.executeQuery(sql);
+        int idEquipo = 0;
+        String sql = "SELECT id FROM equipos WHERE nombre = ?";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, nombre);
+            ResultSet rs = stmt.executeQuery();
 
-		while (rs.next()) {
-				
-			idEquipo=rs.getInt("id");
-			
-		}
-		
-		return idEquipo;
-	}
+            while (rs.next()) {
+                idEquipo = rs.getInt("id");
+            }
+        }
+        return idEquipo;
+    }
     public void insertarNuevoJugador(Delegado nuevoDelegado , int idEquipo) {
 		
 		

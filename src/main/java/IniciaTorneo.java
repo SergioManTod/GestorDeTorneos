@@ -304,6 +304,7 @@ public class IniciaTorneo extends JFrame {
     					 }	 
     				 }
     			generarCalendario(arrayEquipos, nombreTorneocombo);
+    			baseDeDatos.activaTorneo(nombreTorneocombo);
     			}
     		 
     		 
@@ -363,6 +364,7 @@ public class IniciaTorneo extends JFrame {
 		 
 		 
     }
+    
     public static int generarNumAle(int max, int local,int visitante) {
     	int min=0;
     	if(min==visitante) {
