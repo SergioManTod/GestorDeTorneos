@@ -120,7 +120,7 @@ public class Clasificaciones extends EstilosFrame {
     		String nombreArchivo=nombreArchivos.get(i);
     		System.out.println("nombre archivo"+ nombreArchivo);
     		nuevalectura.leerActa(nombreArchivo,baseDeDatos,nom);
-    		//copiarYBorrar(nombreArchivo, nom);
+    		copiarYBorrar(nombreArchivo, nom);
     		
     	}
     	

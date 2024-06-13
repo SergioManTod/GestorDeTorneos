@@ -268,19 +268,46 @@ public  Equipo leerPdf(int minimoJugadores,String nombreTorneo, String nombreArc
                equipoLocal.getJugadores()[contadorJugadoreslocal].setGoles(Integer.parseInt(leerCampo(pdf, formWidget, field)));
                System.out.println("local" +equipoLocal.getJugadores()[contadorJugadoreslocal].getGoles()+ equipoLocal.getJugadores()[contadorJugadoreslocal].getNombre());
                sumagLocal += equipoLocal.getJugadores()[contadorJugadoreslocal].getGoles();
+               
+               int idJugador=equipoLocal.getJugadores()[contadorJugadoreslocal].getId();
+               int goleJugador=Integer.parseInt(leerCampo(pdf, formWidget, field));
+               baseDeDatos.actualizaGoles(idJugador, goleJugador);
                contadorJugadoreslocal++;
            } else {
                equipoVisitante.getJugadores()[contadorJugadoresVisitante].setGoles(Integer.parseInt(leerCampo(pdf, formWidget, field)));
                sumagVisitante += equipoVisitante.getJugadores()[contadorJugadoresVisitante].getGoles();
                System.out.println("visitantte"+ equipoLocal.getJugadores()[contadorJugadoresVisitante].getGoles());
+              
+               int idJugador=equipoVisitante.getJugadores()[contadorJugadoresVisitante].getId();
+               int goleJugador=Integer.parseInt(leerCampo(pdf, formWidget, field));
+               baseDeDatos.actualizaGoles(idJugador, goleJugador);
                contadorJugadoresVisitante++;
            }
        }
 
        System.out.println("La suma de goles del equipo local es: " + sumagLocal);
        System.out.println("La suma de goles del equipo visitante es: " + sumagVisitante);
+       int puntosPartidoLocal=0;
+       int puntosPartidoVisitante=0;
+       
+       if(sumagLocal>sumagVisitante) {
+    	   puntosPartidoLocal=3;
+    	   System.out.println("El partido lo ganó en equipo local");
+    	   baseDeDatos.actualizaPuntos(nombresEquipos[0]);
+       }else if (sumagLocal<sumagVisitante) {
+    	   puntosPartidoVisitante=3;
+    	   System.out.println("El partido lo ganó en equipo Visitante");
+    	   baseDeDatos.actualizaPuntos(nombresEquipos[1]);
+       }else {
+    	   puntosPartidoLocal=1;
+           puntosPartidoVisitante=1;
+           System.out.println("El partido terminó en empate");
+       }
+       
+       
        pdf.close();
    }
+
    
 		
    

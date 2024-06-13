@@ -267,34 +267,29 @@ public class BaseDeDatos {
 		return clasificacion;
 	}
 	   // listado goleador
-    public List<Object[]> listaGoleadores(String nom) throws SQLException {
+    public List<Object[]> listaGoleadores(int idTorneo) throws SQLException {
         List<Object[]> goleadores = new ArrayList<>();
-        Statement st = con.createStatement();
-        String sql = "SELECT j.nombre, j.apellido1, j.apellido2, e.nombre AS nombre_equipo, SUM(g.gol) AS total_goles " +
-                     "FROM goles g " +
-                     "JOIN jugadores j ON g.jugador = j.id " +
-                     "JOIN equipos e ON j.equipo = e.id " +
-                     "JOIN torneos t ON e.torneo = t.id " +
-                     "WHERE t.nombre = '" + nom + "' " +
-                     "GROUP BY j.id, j.nombre, j.apellido1, j.apellido2, e.nombre " +
-                     "HAVING total_goles > 0 " +
-                     "ORDER BY total_goles DESC;";
-        ResultSet rs = st.executeQuery(sql);
+        
+           
+        String sql = "SELECT j.nombre, j.apellido1, j.apellido2, e.nombre, j.gol FROM jugadores j JOIN equipos e ON j.equipo = e.id WHERE e.torneo = ? AND j.gol > 0 ORDER BY j.gol DESC";
+        PreparedStatement stmt = con.prepareStatement(sql);
+        stmt.setInt(1, idTorneo); // Establecemos el valor del parámetro
+        ResultSet rs = stmt.executeQuery(); 
 
         int cont = 1;
         while (rs.next()) {
-            String nombreEquipo = rs.getString("nombre_equipo");
-            String nombreJugador = rs.getString("nombre");
-            String apellido1Jugador = rs.getString("apellido1");
-            String apellido2Jugador = rs.getString("apellido2");
+            String nombreEquipo = rs.getString(4);
+            String nombreJugador = rs.getString(1);
+            String apellido1Jugador = rs.getString(2);
+            String apellido2Jugador = rs.getString(3);
             String jugador = nombreJugador + " " + apellido1Jugador + " " + apellido2Jugador;
-            int totalGolesJugador = rs.getInt("total_goles");
+            int totalGolesJugador = rs.getInt(5);
             goleadores.add(new Object[]{cont, jugador, nombreEquipo, totalGolesJugador});
             cont++;
         }
 
         rs.close();
-        st.close();
+        stmt.close();
 
         return goleadores;
     }
@@ -570,4 +565,27 @@ public void insertarNuevoJugador(Jugador nuevoJugador, int idEquipo) {
 	    Jugador[] jugadoresLocal=listaJugadores.toArray(new Jugador[0] );
 	    return jugadoresLocal;
 	}
+	
+	
+	
+	 public void actualizaPuntos(String nombreEquipo) {
+	        String sql = "UPDATE equipos SET puntos = puntos+3 WHERE nombre = ?";
+	        try (PreparedStatement st = con.prepareStatement(sql)) {
+	            st.setString(1, nombreEquipo);
+	            st.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	 public void actualizaGoles(int id, int goles) {
+		 
+	        String sql = "UPDATE jugadores SET gol = gol+? WHERE id = ?";
+	        try (PreparedStatement st = con.prepareStatement(sql)) {
+	            st.setInt(2, id);
+	            st.setInt(1, goles);
+	            st.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 }

@@ -32,7 +32,8 @@ public class Jugador{
 	
 	public Jugador(String nombre, int id) {
 		super();
-		// TODO Auto-generated constructor stub
+		this.nombre = nombre;
+		this.id = id;
 	}
 	
 

@@ -97,7 +97,9 @@ public class Goleadores extends JFrame {
                 String nom = (String) comboBoxTorneo.getSelectedItem();
                 if (!nom.equals("SELECCIONE UN TORNEO")) {
                     try {
-                        List<Object[]> goleadores = baseDeDatos.listaGoleadores(nom);
+                    	Torneo nuevoTorneo= baseDeDatos.consultaTorneo(nom);
+                    	int idTorneo=nuevoTorneo.getId();
+                        List<Object[]> goleadores = baseDeDatos.listaGoleadores(idTorneo);
                         actualizarTablaGoleadores(goleadores);
                     } catch (SQLException ex) {
                         ex.printStackTrace();
